@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tester — 3 устройства</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .devices {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .device {
+            border: 12px solid #333;
+            border-radius: 30px;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Mobile */
+        .device-mobile {
+            width: 375px;
+            height: 667px;
+        }
+
+        /* Tablet */
+        .device-tablet {
+            width: 768px;
+            height: 1024px;
+        }
+
+        /* Desktop */
+        .device-desktop {
+            width: 1200px;
+            height: 800px;
+        }
+
+        .device-header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100% - 36px);
+            border: none;
+        }
+
+        .label {
+            text-align: center;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Responsive Tester — Сравнение 3 версий</h1>
+    
+    <div class="devices">
+        
+        <!-- Mobile -->
+        <div>
+            <div class="device device-mobile">
+                <div class="device-header">Мобильный (375px)</div>
+                <iframe src="index.php"></iframe>
+            </div>
+            <div class="label">📱 Смартфон</div>
+        </div>
+
+        <!-- Tablet -->
+        <div>
+            <div class="device device-tablet">
+                <div class="device-header">Планшет (768px)</div>
+                <iframe src="index.php"></iframe>
+            </div>
+            <div class="label">📟 Планшет</div>
+        </div>
+
+        <!-- Desktop -->
+        <div>
+            <div class="device device-desktop">
+                <div class="device-header">Десктоп (1200px)</div>
+                <iframe src="index.php"></iframe>
+            </div>
+            <div class="label">💻 Компьютер</div>
+        </div>
+
+    </div>
+</body>
+</html>
