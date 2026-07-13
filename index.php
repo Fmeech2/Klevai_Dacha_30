@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Крутая Дача 30</title>
+  <link rel="icon" href="img/Logo_zaglyshka_icon.png">
 </head>
 
 <body>
@@ -219,7 +220,7 @@
 
     .nav_link button {
       margin: 8px;
-      background: linear-gradient(0deg, #0A0A0A, transparent 275%);
+      background: linear-gradient(0deg, #0a0a0ab5, #0a0a0ab5);
       padding: 0px 20px;
       border-radius: 0 0 8px 8px;
       transition: 0.2s linear;
