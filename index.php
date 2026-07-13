@@ -22,7 +22,6 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      background-color: #0A0A0A;
       color: white;
       margin: 0;
       border: 0;
@@ -31,10 +30,19 @@
       align-content: flex-start;
       flex-wrap: nowrap;
       align-items: center;
+      /* Главное для закрепления */
+      position: fixed;
+      /* или fixed */
+      top: 0;
+      /* обязательно */
+      z-index: 1000;
+      /* чтобы шапка была поверх всего */
     }
 
     .shapka {
-      width: 1200px;
+      background: linear-gradient(180deg, #0A0A0A, transparent 390%);
+      width: 100%;
+      height: 108px;
       display: flex;
       color: white;
       margin: 0;
@@ -42,10 +50,26 @@
       padding: 0;
     }
 
+    .shapka_center {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     .logo {
-      width: 180px;
+      width: 100px;
       height: auto;
-      margin: 20px;
+      margin: 10px;
+      flex-shrink: 0;
+      /* чтобы не сжимался слишком сильно */
+      object-fit: contain;
+      /* сохраняет пропорции */
+      transition: all 0.4s ease;
+      filter: brightness(1) invert(0);
     }
 
     .prev_logo_text {
@@ -97,34 +121,121 @@
       margin-left: auto;
     }
 
-    a.nav_link:active,
-    a.nav_link {
-      text-decoration: none;
-      color: #d3d3d3;
+    /* Класс, который будет добавляться при прокрутке */
+    .shapka.shrink {
+      height: 50px;
+      transition: all 0.4s ease;
     }
 
-    a.nav_link:hover {
-      text-decoration: none;
-      color: #afafaf;
-      background-color: #4b4b4b;
+    .shapka.shrink .shapka_center {
+      display: flex;
+      justify-content: flex-start;
+
     }
+
+    /* Скрываем ненужные блоки */
+    .shapka.shrink .shapka_text_center,
+    .shapka.shrink .shapka_text_right {
+      margin-right: 400px;
+      margin-left: -300px;
+      opacity: 0;
+      transform: translateX(200px);
+      /* улетание вправо */
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .shapka.shrink .shapka_text_center_1,
+    .shapka.shrink .shapka_text_center_2,
+    .shapka.shrink .shapka_text_center_3,
+    .shapka.shrink .shapka_text_right_1,
+    .shapka.shrink .shapka_text_right_2 {
+      height: 21px;
+      width: 320px;
+    }
+
+    .shapka.shrink .logo {
+      transition: all 0.4s ease;
+      height: auto;
+      width: 45px;
+      margin-left: 100px;
+      filter: brightness(0) invert(1) opacity(1);
+    }
+
+    .shapka.shrink .prev_logo_text {
+      display: flex;
+      flex-direction: row;
+      width: 820px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment {
+      display: flex;
+      align-items: end;
+      width: max-content;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_1 {
+      margin-left: 40px;
+      font-size: 18px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_2 {
+      margin-left: 10px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_3 {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_4 {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+
 
     .nav {
       padding-bottom: 20px;
-      background-color: #66666600;
       font-size: 20px;
+      margin-top: 0px;
+      display: flex;
     }
 
-    .nav_link {
-      margin: 8px;
-      background-color: #2e2e2e;
-      padding: 8px 24px;
-      border-radius: 10px;
+    a.nav_link button:active,
+    a.nav_link button,
+    a.nav_link button:hover {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      border: none;
+      height: 45px;
+      margin-top: 0px;
+      font-size: 18px;
     }
+
+    a.nav_link button:hover {
+      background: linear-gradient(0deg, #0A0A0A, transparent 75%);
+      transition: 0.2s linear;
+    }
+
+    .nav_link button {
+      margin: 8px;
+      background: linear-gradient(0deg, #0A0A0A, transparent 275%);
+      padding: 0px 20px;
+      border-radius: 0 0 8px 8px;
+      transition: 0.2s linear;
+    }
+
+    a.nav_link {
+      height: 40px;
+      text-decoration: none;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
 
 
     main {
-      width: 1200px;
+      width: 100%;
       display: flex;
       margin-left: auto;
       margin-right: auto;
@@ -132,14 +243,20 @@
       color: white;
       font-size: 18px;
       flex-direction: column;
-
+      margin-top: 0px;
     }
+
+    .header_background {
+      width: 100%;
+      height: 108px;
+      background-color: #0A0A0A;
+      margin-top: 10px;
+    }
+
 
     section {
-      margin: 20px;
-
+      margin: 0px;
     }
-
 
     .hero_start {
       display: flex;
@@ -300,53 +417,55 @@
 
   <header>
     <div class="shapka">
-      <img src="img/Logo_zaglyshka.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo" />
-      <div class="prev_logo_text">
-        <div class="prev_logo_text_attachment prev_logo_text_attachment_1">
-          Гостевой комплекс
+      <div class="shapka_center">
+        <img src="img/Logo_zaglyshka.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo" />
+        <div class="prev_logo_text">
+          <div class="prev_logo_text_attachment prev_logo_text_attachment_1">
+            Гостевой комплекс
+          </div>
+          <div class="prev_logo_text_attachment prev_logo_text_attachment_2">
+            КЛЁВАЯ ДАЧА
+          </div>
+          <div class="prev_logo_text_attachment prev_logo_text_attachment_3">
+            Аренда дома на Реке
+          </div>
+          <div class="prev_logo_text_attachment prev_logo_text_attachment_4">
+            в дельте Волги
+          </div>
         </div>
-        <div class="prev_logo_text_attachment prev_logo_text_attachment_2">
-          КЛЁВАЯ ДАЧА
-        </div>
-        <div class="prev_logo_text_attachment prev_logo_text_attachment_3">
-          Аренда дома на Реке
-        </div>
-        <div class="prev_logo_text_attachment prev_logo_text_attachment_4">
-          в дельте Волги
-        </div>
-      </div>
 
-      <div class="shapka_text_center">
-        <div>
-          Астраханская область, Камызякский район,
+        <div class="shapka_text_center">
+          <div class="shapka_text_center_1">
+            Астраханская область, Камызякский район,
+          </div>
+          <div class="shapka_text_center_2">
+            п. Ильинка Ильинка
+          </div>
+          <div class="shapka_text_center_3">
+            на реке Гандурино
+          </div>
         </div>
-        <div>
-          п. Ильинка Ильинка
-        </div>
-        <div>
-          на реке Гандурино
-        </div>
-      </div>
 
-      <div class="shapka_text_right">
-        <div>
-          Звони в любое время!
-        </div>
-        <div>
-          Телефон: 8 (911) 172-55-58
+        <div class="shapka_text_right">
+          <div class="shapka_text_right_1">
+            Звони в любое время!
+          </div>
+          <div class="shapka_text_right_2">
+            Телефон: 8 (911) 172-55-58
+          </div>
         </div>
       </div>
     </div>
     <nav class="nav">
-      <a href="#hero" class="nav_link">Главная</a>
-      <a href="#gallery" class="nav_link">Фото</a>
-      <a href="#reviews" class="nav_link">Отзывы</a>
-      <a href="#news" class="nav_link">Новости</a>
-      <a href="#contacts" class="nav_link">Контакты</a>
+      <a href="#hero" class="nav_link"><button>Главная</button></a>
+      <a href="#gallery" class="nav_link"><button>Фото</button></a>
+      <a href="#reviews" class="nav_link"><button>Отзывы</button></a>
+      <a href="#news" class="nav_link"><button>Новости</button></a>
+      <a href="#contacts" class="nav_link"><button>Контакты</button></a>
     </nav>
   </header>
   <main>
-
+    <section class="header_background" id="header_background"></section>
     <section class="hero" id="hero">
       <div class="hero_start">
         <div class="hero_text">
@@ -412,6 +531,18 @@
       © Клёвая Дача 2026. Все права защищены.
     </div>
   </footer>
+  <script>
+    // Ждём загрузки страницы
+    document.addEventListener('scroll', () => {
+      const shapka = document.querySelector('.shapka');
+
+      if (window.scrollY > 50) {
+        shapka.classList.add('shrink');
+      } else {
+        shapka.classList.remove('shrink');
+      }
+    });
+  </script>
 </body>
 
 </html>
