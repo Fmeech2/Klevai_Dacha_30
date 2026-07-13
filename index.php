@@ -232,6 +232,10 @@
       margin-right: 0;
     }
 
+    .nav.shrink {
+      margin-top: 0px;
+    }
+
 
 
     main {
@@ -239,8 +243,8 @@
       display: flex;
       margin-left: auto;
       margin-right: auto;
-      background-color: #2c2c2cb4;
-      color: white;
+      background-color: white;
+      color: #4d5b7c;
       font-size: 18px;
       flex-direction: column;
       margin-top: 0px;
@@ -250,7 +254,7 @@
       width: 100%;
       height: 108px;
       background-color: #0A0A0A;
-      margin-top: 10px;
+      margin-top: 0px;
     }
 
 
@@ -261,11 +265,12 @@
     .hero_start {
       display: flex;
       flex-direction: row;
-      width: 960px;
+      width: 1030px;
       margin-left: auto;
       margin-right: auto;
       align-items: center;
-      margin-top: 70px;
+      margin-top: 190px;
+      margin-bottom: 150px;
     }
 
     .hero_text {
@@ -273,70 +278,165 @@
       flex-direction: column;
       justify-content: center;
       margin-left: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      border: 4px solid #f8f8f8;
+      padding: 15px;
+      margin-left: 110px;
     }
 
     .hero_text_item_1 {
-      font-size: 24px;
+
+      font-size: 28px;
+      line-height: 0.5;
+      margin-left: 1px;
     }
 
     .hero_text_item_2 {
-      font-size: 32px;
+      font-size: 38px;
       font-weight: bold;
     }
 
     .hero_text_item_3 {
+      line-height: 0.1;
+      margin-left: 19px;
       font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .hero_center {
+      background-color: #212121;
+      width: 1070px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 35px;
+      padding: 20px;
+      color: white;
+    }
+
+    .hero_text_next_conteiner {
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #000;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .hero_text_left {
+      width: 500px;
+    }
+
+    .hero_text_right {
+    width: 500px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    margin-left: auto;
+    }
+
+    .hero_text_right img {
+      width: 206px;
+      height: 300px;
+      border-radius: 15px;
+      object-fit: cover;
+      margin-left: 20px;
     }
 
     .hero_text_next_1 {
       font-size: 24px;
       margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
       margin-left: auto;
       margin-right: auto;
-      width: 960px;
-      display: flex;
-      padding-left: 40px;
+      margin-bottom: 40px;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      font-size: 75px;
+      font-weight: 600;
+      line-height: 100%;
     }
 
+
+
     .hero_text_next_2 {
-      font-size: 24px;
-      margin-top: 20px;
+      font-size: 32px;
+      margin-top: 67px;
       margin-left: auto;
       margin-right: auto;
-      width: 960px;
+      width: 100%;
       display: flex;
-      padding-left: 40px;
     }
 
     .hero_text_next_3 {
       font-size: 24px;
-      margin-top: 20px;
+      margin-top: 0px;
+      line-height: 0.9;
       margin-left: auto;
       margin-right: auto;
-      width: 960px;
+      width: 100%;
       display: flex;
-      padding-left: 40px;
+      color: #838383;
     }
 
     .hero_text_next_4 {
-      font-size: 24px;
-      margin-top: 20px;
-      margin-left: auto;
+      font-size: 16px;
+      margin-top: 10px;
       margin-right: auto;
-      width: 960px;
       display: flex;
-      padding-left: 40px;
+      color: var(--white);
+      letter-spacing: -.05em;
+      background-color: #202020;
+      padding: 3px 4px;
+      font-size: .875rem;
+      line-height: 120%;
+      width: max-content;
+    }
+
+    .hero_text_next_5 {
+      font-size: 16px;
+      margin-top: 5px;
+      margin-right: auto;
+      display: flex;
+      color: var(--white);
+      letter-spacing: -.05em;
+      background-color: #202020;
+      padding: 3px 4px;
+      font-size: .875rem;
+      line-height: 120%;
+      width: max-content;
+    }
+
+    .hero_text_next_6 {
+      font-size: 16px;
+      margin-top: 5px;
+      margin-right: auto;
+      display: flex;
+      color: var(--white);
+      letter-spacing: -.05em;
+      background-color: #202020;
+      padding: 3px 4px;
+      font-size: .875rem;
+      line-height: 120%;
+      width: max-content;
     }
 
     .buy_button {
       margin: 20px;
-      background-color: #2e2e2e;
+      background-color: #0069ff;
+      color: white;
       padding: 7px 20px;
       border-radius: 10px;
       width: fit-content;
       cursor: pointer;
       font-size: 32px;
-      margin-left: 250px;
+      margin-left: auto;
+      margin-right: 220px;
+      font-weight: 600;
     }
 
     .buy_button:hover {
@@ -348,11 +448,13 @@
     }
 
     .map {
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       justify-content: flex-end;
       width: 1160px;
       flex-direction: row;
-      margin: 20px;
+      margin-bottom: 20px;
       margin-top: 40px;
     }
 
@@ -361,8 +463,26 @@
       flex-direction: column;
       justify-content: center;
       margin-right: 20px;
-      margin-left: 100px;
+      margin-left: 85px;
       font-size: 20px;
+      background-color: #f5f5f5;
+      margin-top: auto;
+      margin-bottom: auto;
+      border-radius: 20px;
+      padding: 15px;
+      color: #1f1f1f;
+      font-family: Inter, sans-serif;
+      font-size: 20px;
+      line-height: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .map_text_item_1 {}
+
+    .map_text_item_2 {
+      margin-top: 8px;
+      font-size: 14px;
     }
 
     .map_yandex {
@@ -375,12 +495,41 @@
     }
 
     .gallery {
+      margin-left: auto;
+      margin-right: auto;
+      width: 1160px;
       display: flex;
       flex-wrap: wrap;
+      display: flex;
+      margin-top: 40px;
+    }
+
+    .gallery_title {
+      width: auto;
+      font-size: 45px;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallery_imeges {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-wrap: wrap;
+
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: 20px;
+      height: auto;
+      border-radius: 10px;
     }
 
     .gallery_img {
-      width: 560px;
+      width: 555px;
       margin-left: 10px;
       margin-right: 10px;
       margin-top: 20px;
@@ -389,11 +538,22 @@
     }
 
     footer {
+      width: 100%;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #1f1f1f;
+      color: white;
+      margin-top: 60px;
+      font-family: Inter, sans-serif;
+    }
+
+    .footer_conteiner {
       width: 1200px;
       display: flex;
       margin-left: auto;
       margin-right: auto;
-      background-color: #2c2c2cb4;
+      background-color: #1f1f1f;
       color: white;
     }
 
@@ -477,24 +637,42 @@
           Забронировать
         </div>
       </div>
-      <div class="hero_text_next_1">
-        6000 руб./сутки (Дом на 4 человек, мангальная зона, морозильная варильница)
+      <div class="hero_center">
+        <div class="hero_text_next_1">
+          6000 руб./сутки
+        </div>
+        <div class="hero_text_next_conteiner">
+          <div class="hero_text_left">
+            <div class="hero_text_next_2">
+              Гостевой дом "КЛЁВАЯ ДАЧА"
+            </div>
+            <div class="hero_text_next_3">
+              Дом на 4 человек, мангальная зона, морозильная варильница
+            </div>
+            <div class="hero_text_next_4">
+              Уютный дом на 4 человек, Авангард...
+            </div>
+            <div class="hero_text_next_5">
+              Зона вывески обо хорошем плете
+            </div>
+            <div class="hero_text_next_6">
+              Казань, в ........
+            </div>
+          </div>
+
+          <div class="hero_text_right">
+            <img src="img/zag7.jpg" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="hero_img" />
+            <img src="img/zag9.jpg" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="hero_img" />
+          </div>
+        </div>
       </div>
-      <div class="hero_text_next_2">
-        Уютный дом на 4 человек, Авангард...
-      </div>
-      <div class="hero_text_next_3">
-        Зона вывески обо хорошем плете
-      </div>
-      <div class="hero_text_next_4">
-        Казань, в ........
       </div>
       <div class="map">
         <div class="map_text">
-          <div>
+          <div class="map_text_item_1">
             Астраханская область, Камызякский район, п. Ильинка Ильинка на реке Гандурино
           </div>
-          <div>
+          <div class="map_text_item_2">
             Телефон: 8 (911) 172-55-58
           </div>
         </div>
@@ -506,11 +684,15 @@
     </section>
 
     <section class="gallery" id="gallery">
-      <img src="img/Dacha.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-      <img src="img/Dacha.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-      <img src="img/Dacha.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-      <img src="img/Dacha.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-
+      <div class="gallery_title">
+        Фотогалерея
+      </div>
+      <div class="gallery_images">
+        <img src="img/zag1.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
+        <img src="img/zag2.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
+        <img src="img/zag3.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
+        <img src="img/zag4.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
+      </div>
     </section>
 
     <section class="reviews" id="reviews">
@@ -525,21 +707,26 @@
   </main>
 
   <footer>
-    <img src="img/Logo_zaglyshka_footer2.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo_footer" />
+    <div class="footer_conteiner">
+      <img src="img/Logo_zaglyshka_footer2.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo_footer" />
 
-    <div class="footer_text">
-      © Клёвая Дача 2026. Все права защищены.
+      <div class="footer_text">
+        © Клёвая Дача 2026. Все права защищены.
+      </div>
     </div>
   </footer>
   <script>
     // Ждём загрузки страницы
     document.addEventListener('scroll', () => {
       const shapka = document.querySelector('.shapka');
+      const nav = document.querySelector('.nav');
 
       if (window.scrollY > 50) {
         shapka.classList.add('shrink');
+        nav.classList.add('shrink');
       } else {
         shapka.classList.remove('shrink');
+        nav.classList.remove('shrink');
       }
     });
   </script>
