@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Крутая Дача 30</title>
+  <title>Клёвая Дача 30</title>
   <link rel="icon" href="img/Logo_zaglyshka_icon.png">
 </head>
-
-<body>
+ <body>
   <style>
     body {
       margin: 0;
@@ -41,7 +40,7 @@
     }
 
     .shapka {
-      background: linear-gradient(180deg, #0A0A0A, transparent 390%);
+      background: #2F80ED;
       width: 100%;
       height: 108px;
       display: flex;
@@ -154,13 +153,35 @@
       height: 21px;
       width: 320px;
     }
+.shapka_text_right_3 img {
+  width: 32px;
+  padding: 0;
+  margin: 6px 5px 12px 0;
+  transition: all 0.25s ease;          /* плавная анимация */
+  cursor: pointer;
+  transform-origin: center center;     /* точка вращения — центр иконки */
+    text-decoration: none;
+}
+
+/* При наведении */
+.shapka_text_right_3 img:hover {
+  transform: scale(1.25) rotate(5deg); /* увеличение + поворот на 5° */
+  filter: brightness(1.1);             /* чуть ярче (по желанию) */
+}
+
+/* При нажатии */
+.shapka_text_right_3 img:active {
+  transform: scale(1.05) rotate(2deg); /* лёгкое уменьшение + меньший поворот */
+  filter: brightness(0.95);
+  transition: all 0.1s ease;           /* быстрее реагирует на клик */
+}
 
     .shapka.shrink .logo {
       transition: all 0.4s ease;
       height: auto;
       width: 45px;
       margin-left: 100px;
-      filter: brightness(0) invert(1) opacity(1);
+      /*filter: brightness(0) invert(1) opacity(1); Сделать картинку ЧБ Белой*/
     }
 
     .shapka.shrink .prev_logo_text {
@@ -195,47 +216,12 @@
     }
 
 
-    .nav {
-      padding-bottom: 20px;
-      font-size: 20px;
-      margin-top: 0px;
-      display: flex;
-    }
 
-    a.nav_link button:active,
-    a.nav_link button,
-    a.nav_link button:hover {
-      text-decoration: none;
-      color: rgba(255, 255, 255, 0.8);
-      border: none;
-      height: 45px;
-      margin-top: 0px;
-      font-size: 18px;
-    }
 
-    a.nav_link button:hover {
-      background: linear-gradient(0deg, #0A0A0A, transparent 75%);
-      transition: 0.2s linear;
-    }
 
-    .nav_link button {
-      margin: 8px;
-      background: linear-gradient(0deg, #0a0a0ab5, #0a0a0ab5);
-      padding: 0px 20px;
-      border-radius: 0 0 8px 8px;
-      transition: 0.2s linear;
-    }
 
-    a.nav_link {
-      height: 40px;
-      text-decoration: none;
-      margin-left: 0;
-      margin-right: 0;
-    }
 
-    .nav.shrink {
-      margin-top: 0px;
-    }
+
 
 
 
@@ -306,6 +292,7 @@
     }
 
     .hero_center {
+      display: none;
       background-color: #212121;
       width: 1070px;
       margin-left: auto;
@@ -452,7 +439,7 @@
       margin-left: auto;
       margin-right: auto;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       width: 1160px;
       flex-direction: row;
       margin-bottom: 20px;
@@ -477,6 +464,7 @@
       line-height: 20px;
       font-weight: 500;
       line-height: 1.2;
+      display: none;
     }
 
     .map_text_item_1 {}
@@ -493,6 +481,8 @@
       border: 2px solid #ffffff;
       background-color: #ffffff52;
       border-radius: 8px;
+      margin-top: -613px;
+      margin-right: -589px;
     }
 
     .gallery {
@@ -502,14 +492,14 @@
       display: flex;
       flex-wrap: wrap;
       display: flex;
-      margin-top: 40px;
+      margin-top: 0px;
     }
 
     .gallery_title {
       width: auto;
       font-size: 45px;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: -60px;
       margin-bottom: 20px;
       margin-left: auto;
       margin-right: auto;
@@ -573,13 +563,195 @@
       align-content: center;
       flex-direction: column;
     }
+
+
+
+
+
+    
+    /* Обёртка логотипа */
+.logo-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+}
+
+/* Основной логотип */
+.logo-wrapper .logo {
+  position: relative;
+  z-index: 3;                 /* логотип поверх крюка */
+  width: 100px;
+  height: auto;
+  transition: all 0.4s ease;
+}
+
+/* Крюк (изначально спрятан под логотипом) */
+.logo-wrapper .hook {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;                /* подбери размер под свой крюк */
+  height: auto;
+  z-index: 1;                 /* под логотипом */
+  opacity: 1;
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* При наведении на логотип — крюк выезжает вниз */
+.logo-wrapper:hover .hook {
+  opacity: 1;
+  transform: translate(0px, 86px) scale(1);  /* ≈ 100px вниз */
+}
+.hook_background{
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  width: 100px;                /* подбери размер под свой крюк */
+  height: 116px;
+  z-index: 2;                 /* под логотипом */
+  opacity: 1;
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+}
+.logo-wrapper:hover .hook_background {
+  opacity: 1;
+  transform: translate(0px, 0px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook_background{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook_background{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+  top: -200px;
+}
+.shrink .hook{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+  top: -200px;
+}
+.logo_messenger{
+  
+    text-decoration: none;
+    height: 56px;
+  }
+  .shapka_text_right_3{
+    height: 56px;
+
+  }
+  .shapka_text_right_1{
+    margin-top: 16px;
+  }
+
+
+  .nav {
+  display: flex;
+  gap: 3px;                    /* расстояние между кнопками */
+  padding: 17px 0 0px;
+  margin: 0;
+  width: 1200px;
+  justify-content: right;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav_link {
+  text-decoration: none;
+}
+
+.nav_link button {
+  height: 36px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 9999px;        /* полностью круглые края */
+  background-color: #F3F4F6;    /* светло-серый как на картинке */
+  color: #1F2937;               /* тёмно-серый текст */
+  font-size: 16px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* При наведении */
+.nav_link button:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* При нажатии */
+.nav_link button:active {
+  transform: translateY(0);
+  background-color: #D1D5DB;
+  box-shadow: none;
+}
+
+
+
+.gallery {
+width: 1240px;          /* или убери, если нужно на всю ширину */
+  margin: 0px auto 0;
+  padding: 0 0px;            /* если хочешь без боковых отступов — поставь 0 */
+  box-sizing: border-box;
+}
+
+.gallery_title {
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Контейнер картинок */
+.gallery_images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;                  /* расстояние между картинками */
+  justify-content: flex-start;
+}
+
+/* Базовый стиль всех картинок */
+.gallery_img {
+  height: 400px;              /* ← одинаковая высота для всех */
+  object-fit: cover;          /* картинка подстраивается, не сжимается */
+  border-radius: 10px;
+  display: block;
+  transition: transform 0.3s ease;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Маленькая картинка (по умолчанию) */
+.gallery_img,
+.gallery_img.small {
+  width: 285px;
+}
+
+/* Большая картинка */
+.gallery_img.large {
+  width: 590px;
+}
+
+/* Небольшой hover-эффект (по желанию) */
+.gallery_img:hover {
+  transform: scale(1.02);
+}
   </style>
 
 
   <header>
     <div class="shapka">
       <div class="shapka_center">
-        <img src="img/Logo_zaglyshka.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo" />
+        <div class="logo-wrapper">
+          <img src="img/Logo_zaglyshka_footer2.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo" />
+          <img src="Синий фон.png" alt="Крюк" class="hook_background" />
+          <img src="Крюк PNG.png" alt="Крюк" class="hook" />
+        </div>
         <div class="prev_logo_text">
           <div class="prev_logo_text_attachment prev_logo_text_attachment_1">
             Гостевой комплекс
@@ -588,7 +760,7 @@
             КЛЁВАЯ ДАЧА
           </div>
           <div class="prev_logo_text_attachment prev_logo_text_attachment_3">
-            Аренда дома на Реке
+           Аренда дома на Реке
           </div>
           <div class="prev_logo_text_attachment prev_logo_text_attachment_4">
             в дельте Волги
@@ -597,13 +769,13 @@
 
         <div class="shapka_text_center">
           <div class="shapka_text_center_1">
-            Астраханская область, Камызякский район,
+            Астраханская область, Камызякский район, 
           </div>
           <div class="shapka_text_center_2">
-            п. Ильинка Ильинка
+            поселок Нижненикольский
           </div>
           <div class="shapka_text_center_3">
-            на реке Гандурино
+На реке Гандурино.
           </div>
         </div>
 
@@ -612,31 +784,40 @@
             Звони в любое время!
           </div>
           <div class="shapka_text_right_2">
-            Телефон: 8 (911) 172-55-58
+Телефон: +7 917 172-55-58
+          </div>         
+           <div class="shapka_text_right_3">
+            <a href="https://vk.ru/club11109186" target="_blank" class="logo_messenger">
+              <img src="VK PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class="logo " />
+            </a>
+              <a href="https://t.me/klevayadacha" target="_blank" class="logo_messenger">
+              <img src="Max PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class="logo " />
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" class="logo_messenger">
+              <img src="WhatsApp PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class="logo " />
+            </a>
+            <a href="https://t.me/+79171725558" target="_blank" class="logo_messenger">
+              <img src="Telegram PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class="logo " />
+            </a>
+
           </div>
         </div>
       </div>
     </div>
-    <nav class="nav">
+  </header>
+  <main>
+
+    <section class="header_background" id="header_background"></section>     
+     <nav class="nav">
       <a href="#hero" class="nav_link"><button>Главная</button></a>
       <a href="#gallery" class="nav_link"><button>Фото</button></a>
       <a href="#reviews" class="nav_link"><button>Отзывы</button></a>
       <a href="#news" class="nav_link"><button>Новости</button></a>
       <a href="#contacts" class="nav_link"><button>Контакты</button></a>
     </nav>
-  </header>
-  <main>
-    <section class="header_background" id="header_background"></section>
+    <img src="Сайт рыбалки заглушка.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo_footer" style="width: 1284px; margin: auto;" />
     <section class="hero" id="hero">
-      <div class="hero_start">
-        <div class="hero_text">
-          <div class="hero_text_item_1">Гостевой дом</div>
-          <div class="hero_text_item_2">"КЛЁВАЯ ДАЧА"</div>
-          <div class="hero_text_item_3"> в Астрахани</div>
-        </div>
-        <div class="buy_button">
-          Забронировать
-        </div>
+      
       </div>
       <div class="hero_center">
         <div class="hero_text_next_1">
@@ -678,8 +859,7 @@
           </div>
         </div>
         <div class="map_yandex">
-          <script type="text/javascript" charset="utf-8" async
-            src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3Ae68fb5c69dac82ecd8947b8a2656c4699d4770fe404154de16540404ec4d5026&amp;width=556&amp;height=433&amp;lang=ru_RU&amp;scroll=true"></script>
+          <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A673fbc03c9a505d1f076be50421331af568be73dd1821bf600b252d53241b5a3&amp;width=556&amp;height=433&amp;lang=ru_RU&amp;scroll=true"></script>
         </div>
       </div>
     </section>
@@ -688,12 +868,42 @@
       <div class="gallery_title">
         Фотогалерея
       </div>
-      <div class="gallery_images">
-        <img src="img/zag1.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-        <img src="img/zag2.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-        <img src="img/zag3.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-        <img src="img/zag4.png" alt="Гостевой дом КЛЁВАЯ ДАЧА" class="gallery_img" />
-      </div>
+           <nav class="nav" style="justify-content: left; padding-left: 0; margin-left: 0;">
+      <a href="#hero" class="nav_link"><button>Фото</button></a>
+      <a href="#gallery" class="nav_link"><button>Фото от посетителей</button></a>
+    </nav>
+    
+<div class="gallery">
+<div class="gallery_images">
+
+  <!-- Вариант 1: 4 маленьких -->
+  <img src="img/image 2.png" alt="..." class="gallery_img">
+  <img src="img/image 3.png" alt="..." class="gallery_img">
+  <img src="img/image 4.png" alt="..." class="gallery_img">
+  <img src="img/image 5.png" alt="..." class="gallery_img">
+
+  <!-- Вариант 2: 1 большая + 2 маленьких -->
+  <img src="img/image 6.png" alt="..." class="gallery_img small">
+  <img src="img/image 11.png" alt="..." class="gallery_img small">
+  <img src="img/image 8.png" alt="..." class="gallery_img large">
+
+  <!-- Вариант 3: 2 больших -->
+  <img src="img/image 9.png" alt="..." class="gallery_img large">
+  <img src="img/image 12.png" alt="..." class="gallery_img small">
+  <img src="img/image 13.png" alt="..." class="gallery_img small">
+
+  
+  <img src="img/image 14.png" alt="..." class="gallery_img large">
+  <img src="img/image 7.png" alt="..." class="gallery_img large">
+
+  
+  <img src="img/image 15.png" alt="..." class="gallery_img large">
+  <img src="img/image 10.png" alt="..." class="gallery_img small">
+  <img src="img/image 16.png" alt="..." class="gallery_img small">
+
+</div>
+ <img src="img/Отзывы.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo_footer" style="width: 1200px; margin: auto; margin-top: 98px;" />
+</div>
     </section>
 
     <section class="reviews" id="reviews">
