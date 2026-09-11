@@ -1,0 +1,1252 @@
+@font-face {
+  font-family: 'Arimo';
+  src: url('fonts/Arimo.ttf') format('truetype');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arimo';
+  src: url('fonts/Arimo-Italic.ttf') format('truetype');
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* ==================== INTER FONT FAMILY ==================== */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-ExtraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-ExtraLightItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-ExtraBoldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Переменная версия (если хочешь использовать) */
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-V.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+    
+    body {
+      margin: 0;
+      border: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    main {
+      width: 100%;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: white;
+      font-size: 18px;
+      flex-direction: column;
+      margin-top: 0px;
+    }
+    div {}
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      color: white;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      flex-direction: column;
+      align-content: flex-start;
+      flex-wrap: nowrap;
+      align-items: center;
+      /* Главное для закрепления */
+      position: fixed;
+      /* или fixed */
+      top: 0;
+      /* обязательно */
+      z-index: 1000;
+      /* чтобы шапка была поверх всего */
+    }
+
+    .shapka {
+      background: #2F80ED;
+      width: 100%;
+      height: 108px;
+      display: flex;
+      color: white;
+      margin: 0;
+      border: 0;
+      padding: 0;
+      
+    justify-content: center;
+    }
+
+    .shapka_center {
+      display: flex;
+      flex-direction: row;
+      width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .logo {
+      width: 100px;
+      height: auto;
+      margin: 4px 10px;
+      flex-shrink: 0;
+      /* чтобы не сжимался слишком сильно */
+      object-fit: contain;
+      /* сохраняет пропорции */
+      transition: all 0.4s ease;
+      filter: brightness(1) invert(0);
+    }
+
+    .prev_logo_text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 80px;
+      margin-right: 0px;
+      min-width: 200px;
+    }
+
+    .prev_logo_text_attachment {
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .prev_logo_text_attachment_1 {
+      font-size: 16px;
+    }
+
+    .prev_logo_text_attachment_2 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .prev_logo_text_attachment_3 {
+      font-size: 16px;
+    }
+
+    .prev_logo_text_attachment_4 {
+      font-size: 16px;
+    }
+
+    .shapka_text_center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 75px;
+      margin-right: 0;
+      min-width: 435px;
+    }
+
+    .shapka_text_right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: auto;
+      margin-right: 20px;
+      margin-left:43px;
+      min-width: 240px;
+      
+      font-family: Inter;
+      font-size: 18px;
+    }
+
+    /* Класс, который будет добавляться при прокрутке */
+    .shapka.shrink {
+      height: 50px;
+      transition: all 0.4s ease;
+    }
+
+    .shapka.shrink .shapka_center {
+      display: flex;
+      justify-content: flex-start;
+
+    }
+
+    /* Скрываем ненужные блоки */
+    .shapka.shrink .shapka_text_center{
+      margin-right: 400px;
+      margin-left: -300px;
+      opacity: 0;
+      transform: translateX(200px);
+      /* улетание вправо */
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+      
+    
+    .shapka.shrink .shapka_text_right_1,
+    .shapka.shrink .shapka_text_right_2 {
+      margin-right: 400px;
+      margin-left: -300px;
+      opacity: 0;
+      transform: translateX(300px);
+      /* улетание вправо */
+      visibility: hidden;
+      transition: all 0.4s ease;
+      
+    }
+    
+       .shapka.shrink .shapka_text_right_3 {
+      min-width: 250px;
+      min-height: 56px;
+      max-height: 56px;
+      display: flex;
+      visibility: visible;
+
+      margin-right: 0px;
+      margin-left: -600px;
+      margin-top: -48px;
+
+       }   
+       .shapka.shrink .logo_messenger   {
+        
+      margin-right: 5px;
+       }
+       .shapka_text_right_3 {
+      min-width: 250px;
+display: flex;
+       }
+    .shapka_text_center_1,
+    .shapka_text_center_2,
+    .shapka_text_center_3{
+      font-family: Inter;
+      font-size: 18px;
+    }
+
+    .shapka.shrink .shapka_text_center_1,
+    .shapka.shrink .shapka_text_center_2,
+    .shapka.shrink .shapka_text_center_3,
+    .shapka.shrink .shapka_text_right_1,
+    .shapka.shrink .shapka_text_right_2 {
+      height: 21px;
+      width: 320px;
+      font-family: Inter;
+      font-size: 18px;
+    }
+.shapka_text_right_3 img {
+  width: 32px;
+  padding: 0;
+  margin: 6px 5px 12px 0;
+  transition: all 0.25s ease;          /* плавная анимация */
+  cursor: pointer;
+  transform-origin: center center;     /* точка вращения — центр иконки */
+    text-decoration: none;
+}
+
+/* При наведении */
+.shapka_text_right_3 img:hover {
+  transform: scale(1.25) rotate(5deg); /* увеличение + поворот на 5° */
+  filter: brightness(1.1);             /* чуть ярче (по желанию) */
+}
+
+/* При нажатии */
+.shapka_text_right_3 img:active {
+  transform: scale(1.05) rotate(2deg); /* лёгкое уменьшение + меньший поворот */
+  filter: brightness(0.95);
+  transition: all 0.1s ease;           /* быстрее реагирует на клик */
+}
+
+    .shapka.shrink .logo {
+      transition: all 0.4s ease;
+      height: auto;
+      width: 45px;
+      margin-left: 100px;
+      /*filter: brightness(0) invert(1) opacity(1); Сделать картинку ЧБ Белой*/
+    }
+
+    .shapka.shrink .prev_logo_text {
+      display: flex;
+      flex-direction: row;
+      
+    min-width: 820px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment {
+      display: flex;
+      align-items: end;
+      width: max-content;
+      
+    align-items: center;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_1 {
+      margin-left: 40px;
+      font-size: 18px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_2 {
+      margin-left: 10px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_3 {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+
+    .shapka.shrink .prev_logo_text_attachment_4 {
+      margin-left: 10px;
+      font-size: 18px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    .header_background {
+      width: 100%;
+      height: 108px;
+      background-color: #0A0A0A;
+      margin-top: 0px;
+    }
+
+
+    section {
+      margin: 0px;
+    }
+
+    
+
+    .buy_button {
+      margin: 20px;
+      background-color: #0069ff;
+      color: white;
+      padding: 7px 20px;
+      border-radius: 10px;
+      width: fit-content;
+      cursor: pointer;
+      font-size: 32px;
+      margin-left: auto;
+      margin-right: 220px;
+      font-weight: 600;
+    }
+
+    .buy_button:hover {
+      background-color: #4b4b4b;
+    }
+
+    .buy_button:active {
+      background-color: #818181;
+    }
+
+    .map {
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: center;
+      width: 1160px;
+      flex-direction: row;
+      margin-bottom: 20px;
+      margin-top: 40px;
+    }
+
+    .map_text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 65px;
+      margin-left: 40px;
+      font-size: 20px;
+      background-color: #f5f5f5;
+      margin-top: 145px;
+      margin-bottom: auto;
+      border-radius: 14px;
+      padding: 15px 25px;
+      color: #1f1f1f;
+      font-family: Inter, sans-serif;
+      font-size: 20px;
+      line-height: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+
+      background-color: rgba(245, 245, 245, 0.64);  /* F5F5F5 + 64% прозрачности */
+      backdrop-filter: blur(7px);                   /* блюр 14px */
+      -webkit-backdrop-filter: blur(7px);           /* для Safari */
+    }
+
+    .map_text_item_1 {
+      font-size: 20px;
+      font-family: Inter, sans-serif;
+    color: #1F1F1F;
+      font-weight: 700;
+    }
+
+    .map_text_item_2 {
+      margin-top: 8px;
+      font-size: 14px;
+      font-family: Inter, sans-serif;
+      color: #1F1F1F;
+      font-weight: 500;
+    }
+
+    .map_yandex {
+      width: 556px;
+      height: 433px;
+      margin-right: 32px;
+      border: 2px solid #ffffff;
+      background-color: #ffffff52;
+      border-radius: 8px;
+      margin-top: -10px;
+      margin-right: 0px;
+    }
+
+    .gallery_Start {
+      margin-left: auto;
+      margin-right: auto;
+      width: 1160px;
+      display: flex;
+      flex-wrap: wrap;
+      display: flex;
+      margin-top: 100px;
+    }
+
+    .gallery_title {
+      width: auto;
+      font-size: 45px;
+      font-weight: bold;
+      margin-top: -60px;
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallery_imeges {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-wrap: wrap;
+
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: 20px;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .gallery_img {
+      width: 555px;
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: 0px;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    footer {
+      width: 100%;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #1f1f1f;
+      color: white;
+      margin-top: 60px;
+      font-family: Inter, sans-serif;
+
+  position: relative;       /* чтобы absolute работал внутри */
+  overflow: visible;
+
+    }
+
+    .footer_conteiner {
+      width: 1200px;
+      display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #1f1f1f;
+      color: white;
+    }
+
+    .logo_footer {
+      width: 100px;
+      height: auto;
+      margin: 20px;
+      margin-left: 80px;
+    }
+
+    .footer_text {
+      padding: 20px;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+
+
+
+
+    
+    /* Обёртка логотипа */
+.logo-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+}
+
+/* Основной логотип */
+.logo-wrapper .logo {
+  position: relative;
+  z-index: 3;                 /* логотип поверх крюка */
+  width: 100px;
+  height: auto;
+  transition: all 0.4s ease;
+}
+
+/* Крюк (изначально спрятан под логотипом) */
+.logo-wrapper .hook {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;                /* подбери размер под свой крюк */
+  height: auto;
+  z-index: 1;                 /* под логотипом */
+  opacity: 1;
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* При наведении на логотип — крюк выезжает вниз */
+.logo-wrapper:hover .hook {
+  opacity: 1;
+  transform: translate(0px, 86px) scale(1);  /* ≈ 100px вниз */
+}
+.hook_background{
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  width: 100px;                /* подбери размер под свой крюк */
+  height: 108px;
+  z-index: 2;                 /* под логотипом */
+  opacity: 1;
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+}
+.logo-wrapper:hover .hook_background {
+  opacity: 1;
+  transform: translate(0px, 0px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook_background{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+}
+.shrink .hook_background{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+  top: -200px;
+}
+.shrink .hook{
+  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+  top: -200px;
+}
+.logo_messenger{
+  
+    text-decoration: none;
+    height: 56px;
+  }
+  .shapka_text_right_3{
+    height: 56px;
+
+  }
+  .shapka_text_right_1{
+    margin-top: 16px;
+  }
+
+
+  .nav {
+  display: flex;
+  gap: 3px;                    /* расстояние между кнопками */
+  padding: 14px 0 0px;
+  margin: 0;
+  width: 1200px;
+  justify-content: right;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+
+.nav_link {
+  text-decoration: none;
+}
+
+.nav_link button {
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9999px;        /* полностью круглые края */
+  background-color: #F3F4F6;    /* светло-серый как на картинке */
+  color: #1F2937;               /* тёмно-серый текст */
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* При наведении */
+.nav_link button:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* При нажатии */
+.nav_link button:active {
+  transform: translateY(0);
+  background-color: #D1D5DB;
+  box-shadow: none;
+}
+
+.videleno button{
+  
+  font-weight: 500;
+}
+
+
+
+.gallery {
+min-width: 1240px;          /* или убери, если нужно на всю ширину */
+  margin: 0px auto 0;
+  padding: 0 0px;            /* если хочешь без боковых отступов — поставь 0 */
+  box-sizing: border-box;
+}
+
+.gallery_title {
+  text-align: center;
+  font-size: 45px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Контейнер картинок */
+.gallery_images {
+  width: 1240px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;                  /* расстояние между картинками */
+  justify-content: flex-start;
+}
+
+
+.gallery_images.is-hidden {
+  display: none !important;
+}
+
+/* Базовый стиль всех картинок */
+.gallery_img {
+  height: 400px;              /* ← одинаковая высота для всех */
+  object-fit: cover;          /* картинка подстраивается, не сжимается */
+  border-radius: 10px;
+  display: block;
+  transition: transform 0.3s ease;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Маленькая картинка (по умолчанию) */
+.gallery_img,
+.gallery_img.small {
+  width: 285px;
+}
+
+/* Большая картинка */
+.gallery_img.large {
+  width: 590px;
+}
+
+/* Небольшой hover-эффект (по желанию) */
+.gallery_img:hover {
+  transform: scale(1.02);
+}
+.img_zaglushka{
+width: 1920px; 
+margin: auto;
+margin-top: 0px;
+position: fixed;           /* или absolute */
+  top: -600px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 100%;
+  z-index: 9999;             /* поверх всего */
+  pointer-events: none;      /* не мешает кликам и выделению текста */
+  border: 0px dashed red;    /* опционально — чтобы было видно границы */
+  opacity: 0.0;             /* полупрозрачная, чтобы видеть настоящий код */
+}
+
+
+
+
+
+
+
+.hero {
+width: 1180px;
+margin-left: auto;
+margin-right: auto;
+display: flex;
+}
+.hero_left{
+  min-width: 550px;
+  display: flex;
+    flex-direction: column;
+}
+.hero_left_1 {
+  font-size: 53px;
+  font-weight: 600;
+  margin-top: 106px;
+  margin-left: 90px;
+  line-height: 50px;
+  width: 550px;
+  font-family: Arimo;
+}
+.hero_left_2 {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Inter;
+  margin-top: 55px;
+  margin-left: 90px;
+  line-height: 18px;
+  width: 550px;
+  color: #575757;
+}
+.hero_left_4 {
+  font-size: 35px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 190px;
+  margin-left: 93px;
+  line-height: 16px;
+}
+.hero_left_5 {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 20px;
+  margin-left: 93px;
+  line-height: 16px;
+  color: #79D5F3;
+}
+.hero_left_BUTTON {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 47px;
+  margin-left: 90px;
+  line-height: 16px;
+  color: #FFFFFF;
+  background-color: #56CCF2;
+  border-radius: 1000px;
+  border: 0px;
+  width: 192px;
+  height: 50px;
+}
+.hero_right{
+  margin-top: 25px;
+  margin-left: 0px;
+display: flex;
+    flex-direction: column;
+}
+.hero_right_PROMO {
+  width: 548px;
+  height: auto;
+  margin-left: 80px;
+}
+.hero_right_1 {
+  width: 630px;
+  min-height: 262px;
+  background-color: #5CBDDD;
+  border-radius: 30px;
+  margin-left: -20px;
+  margin-top: -30px;
+}
+.hero_right_2 {
+  font-size: 38px;
+  transform: scaleY(1);
+  font-weight: 700;
+  font-family: Inter;
+  line-height: 16px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;    
+  align-content: center;
+    flex-direction: column;
+  width: auto;
+  height: 67px;
+  
+    align-items: center;
+}
+.hero_right_3 {
+  width: 607px;
+  min-height: 181px;
+  background-color: #86CEE6;
+  border-radius: 25px;
+  margin: 0 11px;
+  display: flex;
+}
+.hero_right_3_text_verh {
+  display: flex;
+  flex-direction: column;
+  width: 283px;
+  color: #FFFFFF;
+  margin-left: 18px;
+  margin-top: 19px;
+}
+.hero_right_3_img {
+  display: flex;
+}
+.hero_right_3_text_verh_1 {
+  font-size: 30px;
+
+}
+.hero_right_3_text_verh_2 {
+  font-size: 18px;
+}
+.hero_right_3_text_niz {
+  font-size: 14px;
+  color: #030303;
+  width: auto;
+  display: flex;
+flex-wrap: wrap;
+}
+.hero_right_3_img_bg{
+  background-color: #F2F4F8;
+margin-right: 15px;
+margin-bottom: 4px;
+margin-top: 2px;
+}
+.hero_right_3_text_niz_Tage{
+  min-width: 60px;
+  padding: 0px 5px 0px 5px;
+}
+.hero_right_3_img_1 {
+  height: 160px;
+  margin-top: 11px;
+}
+.hero_right_3_img_2 {
+  margin-top: 11px;
+  margin-left: 7px;
+  height: 160px;
+  margin-right: 12px;
+}
+.hero_right_3_text_niz_Tage {
+}
+
+
+
+.map-section {
+  position: relative;
+  width: 100%;
+  overflow: visible;          /* разрешаем картинке выходить за пределы */
+}
+
+.map_bg {
+  position: absolute;
+  top: -755px;
+  left: 215px;
+  transform: translate(0%, 0%);
+  width: 1177px;              /* подбери нужный размер */
+  max-width: none;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;       /* не мешает кликам */
+  opacity: 0.9;               /* можно регулировать */
+}
+
+/* Чтобы контент был поверх картинки */
+.map {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.logo {
+  filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+  transition: filter 0.9s ease;
+  cursor: pointer;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 19px rgba(255, 255, 255, 0.4))
+          drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+}
+/* При нажатии — лёгкий "импакт" */
+.logo:active {
+  transform: scale(0.95);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9))
+          drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  transition: transform 0.05s ease, filter 0.05s ease;
+}
+
+
+.scroll-image {
+  position: fixed;
+  left: 20px;                  /* слева */
+  top: 100%;                 /* изначально полностью под экраном */
+  width: 50px;                /* размер картинки — подстрой */
+  height: auto;
+  z-index: 50;
+  pointer-events: none;
+  transition: none;            /* анимацию делаем через JS */
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Крепление на футере */
+.rope-anchor {
+  position: absolute;
+  left: 20px;               /* тот же отступ, что и у верёвки */
+  bottom: 120px;             /* подстрой под свой футер */
+  width: 50px;                /* размер картинки — подстрой */
+  height: auto;
+  z-index: 51;
+  pointer-events: none;
+}
+
+
+
+
+
+/* Затемнённый фон */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: zoom-out;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Сама картинка */
+.lightbox-img {
+  max-width: 92vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92);
+  transition: transform 0.3s ease;
+}
+
+.lightbox.active .lightbox-img {
+  transform: scale(1);
+}
+
+
+
+
+
+
+
+
+
+/* Общие стили для фото и видео в галерее */
+.gallery_img {
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
+}
+
+.gallery_img:hover {
+  transform: scale(1.03);
+}
+
+/* Видео в галерее — без контролов */
+.gallery_video {
+  object-fit: cover;
+}
+
+/* Лайтбокс */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: zoom-out;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-media {
+  max-width: 92vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  display: none; /* по умолчанию скрыты */
+}
+
+.lightbox.active .lightbox-media.active {
+  display: block;
+}
+
+
+
+
+
+
+.nav_button {
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 9999px;        /* полностью круглые края */
+  background-color: #F3F4F6;    /* светло-серый как на картинке */
+  color: #1F2937;               /* тёмно-серый текст */
+  font-size: 16px;
+  font-weight: 400;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* При наведении */
+.nav_button:hover {
+  background-color: #E5E7EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* При нажатии */
+.nav_button:active {
+  transform: translateY(0);
+  background-color: #D1D5DB;
+  box-shadow: none;
+}
+
+
+
+#gallery_visitors{
+  
+}
+
+
+
+
+.video-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.video-wrapper .gallery_video {
+  display: block;
+  width: 100%;
+  height: 320px;          /* такая же высота, как у фото */
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Значок Play */
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  padding-left: 4px;        /* чтобы треугольник выглядел ровно */
+  pointer-events: none;     /* клик проходит на видео */
+  transition: all 0.25s ease;
+  backdrop-filter: blur(4px);
+}
+
+/* При наведении */
+.video-wrapper:hover .play-icon {
+  background: rgba(0, 0, 0, 0.75);
+  transform: translate(-50%, -50%) scale(1.1);
+}
