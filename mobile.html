@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Клёвая Дача 30 — мобильная</title>
+  <link rel="icon" href="img/Logo_zaglyshka_icon.png">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body id="start">
+
+  <!-- Header -->
+  <header class="m-header" id="mHeader">
+    <div class="m-header-inner">
+      <a href="#start">
+        <img src="img/Logo_zaglyshka_footer2.png" alt="Клёвая Дача" class="m-logo">
+      </a>
+      <div class="m-header-title">
+        <div class="m-header-title-main">КЛЁВАЯ ДАЧА</div>
+        <div class="m-header-title-sub">Аренда дома на реке</div>
+      </div>
+      <button class="m-burger" id="mBurger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Side nav -->
+  <div class="m-nav-overlay" id="mNavOverlay"></div>
+  <nav class="m-nav" id="mNav" aria-hidden="true">
+    <button class="m-nav-close" id="mNavClose" aria-label="Закрыть">×</button>
+    <div class="m-nav-links">
+      <a href="#start">Главная</a>
+      <a href="#gallery">Фото</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+    <div class="m-nav-contacts">
+      <a href="tel:+79171725558" class="m-nav-phone">+7 917 172-55-58</a>
+      <div class="m-nav-socials">
+        <a href="https://vk.ru/club11109186" target="_blank" rel="noopener">
+          <img src="img/VK PNG.png" alt="VK">
+        </a>
+        <a href="https://max.ru/u/f9LHodD0cOLFu70KB7BkQSMHHAYgfCx8tbYvh3qt9_pkbZJNzbhYcXr5BbI" target="_blank" rel="noopener">
+          <img src="img/Max PNG.png" alt="Max">
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" rel="noopener">
+          <img src="img/WhatsApp PNG.png" alt="WhatsApp">
+        </a>
+        <a href="https://t.me/@ALEXYI91" target="_blank" rel="noopener">
+          <img src="img/Telegram PNG.png" alt="Telegram">
+        </a>
+      </div>
+      <a href="index.html" class="m-nav-desktop">Полная версия сайта</a>
+    </div>
+  </nav>
+
+  <main class="m-main">
+
+    <!-- Hero -->
+    <section class="m-hero" id="hero">
+      <h1 class="m-hero-title">Хотите идеальный отдых у воды?</h1>
+      <p class="m-hero-text">
+        В гостевом доме «Клёвая дача» вас ждут комфорт, все удобства, просторная беседка и мангал, коптильня — и, конечно, отличная рыбалка. Собирайте компанию, берите снасти — и приезжайте за впечатлениями!
+      </p>
+      <div class="m-hero-phone">+7 (917) 172-55-58</div>
+      <a class="m-hero-wa" href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" rel="noopener">Написать в Вацап</a>
+      <br>
+      <a href="https://api.whatsapp.com/send?phone=79171725558" class="m-btn m-btn-block" target="_blank" rel="noopener">Забронировать</a>
+
+      <!-- Рыба — крупный декоративный фон за карточкой -->
+      <div class="m-promo-wrap">
+        <img src="img/Рыба на превью.png" alt="" class="m-promo-fish" aria-hidden="true">
+        <div class="m-promo">
+          <h2 class="m-promo-title">Гостевой дом «КЛЁВАЯ ДАЧА»</h2>
+          <div class="m-promo-body">
+            <div class="m-promo-info">
+              <h3>Мангальная зона</h3>
+              <p>Красивый вид на реку с вкусными шашлыками</p>
+              <div class="m-tags">
+                <span class="m-tag">Дом на 4 человек</span>
+                <span class="m-tag">от 6000 руб./сутки</span>
+              </div>
+            </div>
+            <div class="m-promo-imgs">
+              <img src="img/Шашлык превью.png" alt="Шашлык">
+              <img src="img/Прихожая превью.png" alt="Прихожая">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <section class="m-map-section" id="contacts">
+      <div class="m-map-wrap" id="mMap">
+        <script type="text/javascript" charset="utf-8" async
+          src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A673fbc03c9a505d1f076be50421331af568be73dd1821bf600b252d53241b5a3&amp;width=100%25&amp;height=280&amp;lang=ru_RU&amp;scroll=true"></script>
+      </div>
+            <div class="m-map-card">
+        <p class="m-map-addr">
+          Астраханская область, Камызякский район,<br>
+          посёлок Нижненикольский.<br>
+          На реке Гандурино.
+        </p>
+        <p class="m-map-phone">Телефон: +7 (917) 172-55-58</p>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="m-gallery" id="gallery">
+      <h2 class="m-section-title">Фотогалерея</h2>
+
+      <div class="m-tabs" role="tablist">
+        <button class="m-tab is-active" data-gallery="main" role="tab">Фото</button>
+        <button class="m-tab" data-gallery="visitors" role="tab">От посетителей</button>
+      </div>
+
+      <div class="m-gallery-grid" id="gallery_main">
+        <img src="img_saita/1.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/2.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/3.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/4.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/5.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_saita/6.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_saita/7.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/8.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/9.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_saita/10.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_saita/11.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_saita/12.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/13.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/14.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_saita/15.jpg" alt="" class="m-gallery-item gallery_img">
+      </div>
+
+      <div class="m-gallery-grid is-hidden" id="gallery_visitors" hidden>
+        <img src="img_gostei/1.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/2.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/3.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_gostei/4.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_gostei/5.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/6.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/7.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_gostei/9.jpg" alt="" class="m-gallery-item gallery_img wide">
+        <img src="img_gostei/8.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/10.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/11.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/12.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/13.jpg" alt="" class="m-gallery-item gallery_img">
+        <img src="img_gostei/14.jpg" alt="" class="m-gallery-item gallery_img">
+      </div>
+
+      <div class="m-videos">
+        <h3 class="m-videos-title">Видео</h3>
+        <div class="m-video-list">
+          <div class="m-video-wrap">
+            <video class="gallery_img gallery_video" muted preload="metadata" playsinline>
+              <source src="video/video_2026-09-11_22-33-57.mp4" type="video/mp4">
+            </video>
+            <div class="m-play">▶</div>
+          </div>
+          <div class="m-video-wrap">
+            <video class="gallery_img gallery_video" muted preload="metadata" playsinline>
+              <source src="video/video_2026-09-11_22-34-23.mp4" type="video/mp4">
+            </video>
+            <div class="m-play">▶</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section class="m-reviews" id="reviews">
+      <h2 class="m-section-title">Отзывы</h2>
+
+      <div class="m-review-card">
+        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
+        <div class="m-review-body">
+          <div class="m-review-head">
+            <span class="m-review-name">Андрей</span>
+            <span class="m-review-date">14.03.2026</span>
+          </div>
+          <p class="m-review-text">Приезжали в августе, очень понравилось! Ловили рыбу прям с берега возле участка. Наловили хороших сазанов. С мангальной зоны шикарный вид на берег. Цены адекватные, ни за что не доплачивали. Отдельное спасибо хозяевам.</p>
+        </div>
+      </div>
+
+      <div class="m-review-card">
+        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
+        <div class="m-review-body">
+          <div class="m-review-head">
+            <span class="m-review-name">Елена</span>
+            <span class="m-review-date">03.05.2026</span>
+          </div>
+          <p class="m-review-text">Отдыхали на «Клёвой даче» с семьёй — и это был именно тот самый отдых, когда забываешь про телефон и городскую суету. Дом уютный, чистый. Главное — атмосфера у реки: тишина, ветерок, плеск воды. А рыбалка — отдельная история. Однозначно рекомендую!</p>
+        </div>
+      </div>
+
+      <div class="m-review-card">
+        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
+        <div class="m-review-body">
+          <div class="m-review-head">
+            <span class="m-review-name">Сергей</span>
+            <span class="m-review-date">22.06.2026</span>
+          </div>
+          <p class="m-review-text">Отличный отдых у реки! Уютный домик, чистая территория, есть беседка, мангал и коптильня. Рыбалка порадовала. Всё на высшем уровне, хочется приехать ещё.</p>
+        </div>
+      </div>
+
+      <div class="m-review-card">
+        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
+        <div class="m-review-body">
+          <div class="m-review-head">
+            <span class="m-review-name">Дмитрий</span>
+            <span class="m-review-date">17.07.2026</span>
+          </div>
+          <p class="m-review-text">Сняли дом на выходные с друзьями — идеальный мини-отпуск. Утром рыбалка на рассвете, днём прогулка вдоль реки, вечером шашлыки в беседке. 10/10!</p>
+        </div>
+      </div>
+
+      <div class="m-review-card">
+        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
+        <div class="m-review-body">
+          <div class="m-review-head">
+            <span class="m-review-name">Игорь</span>
+            <span class="m-review-date">29.08.2026</span>
+          </div>
+          <p class="m-review-text">Приезжали на неделю со своей лодкой. Во дворе места много. Лодку спускали возле участка. Наловили много рыбы, спасибо за большой ларь — всё заморозили и забрали. В следующем году приедем ещё.</p>
+        </div>
+      </div>
+
+      <div class="m-form-wrap">
+        <h3 class="m-form-title">Оставить отзыв</h3>
+        <form class="m-form" action="#" method="post">
+          <input type="text" name="name" class="m-input" placeholder="Имя*" required>
+          <input type="text" name="surname" class="m-input" placeholder="Фамилия">
+          <input type="tel" name="phone" class="m-input" placeholder="Номер телефона">
+          <textarea name="review" class="m-textarea" placeholder="Ваш отзыв" rows="4"></textarea>
+          <button type="submit" class="m-btn">Отправить</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="m-footer">
+    <div class="m-footer-inner">
+      <img src="img/Logo_zaglyshka_footer2.png" alt="Клёвая Дача" class="m-footer-logo">
+      <div class="m-footer-copy">© Клёвая Дача 2026. Все права защищены.</div>
+      <div class="m-footer-phones">
+        <div class="m-footer-phone-row">
+          <span>Телефон:</span>
+          <strong><a href="tel:+79171725558">+7 (917) 172-55-58</a></strong>
+          <span>Алексей</span>
+        </div>
+        <div class="m-footer-phone-row">
+          <span>Телефон:</span>
+          <strong><a href="tel:+79673379957">+7 (967) 337-99-57</a></strong>
+          <span>Анна</span>
+        </div>
+      </div>
+      <div class="m-footer-email">Astrakhan@klevaydacha30.ru</div>
+      <div class="m-footer-socials">
+        <a href="https://vk.ru/club11109186" target="_blank" rel="noopener">
+          <img src="img/VK PNG.png" alt="VK">
+        </a>
+        <a href="https://max.ru/u/f9LHodD0cOLFu70KB7BkQSMHHAYgfCx8tbYvh3qt9_pkbZJNzbhYcXr5BbI" target="_blank" rel="noopener">
+          <img src="img/Max PNG.png" alt="Max">
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" rel="noopener">
+          <img src="img/WhatsApp PNG.png" alt="WhatsApp">
+        </a>
+        <a href="https://t.me/@ALEXYI91" target="_blank" rel="noopener">
+          <img src="img/Telegram PNG.png" alt="Telegram">
+        </a>
+      </div>
+      <a href="index.html" class="m-footer-desktop">Полная версия сайта</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-btn lightbox-prev" id="lightboxPrev" aria-label="Назад">‹</button>
+    <img src="" alt="" class="lightbox-media" id="lightboxImg">
+    <video class="lightbox-media" id="lightboxVideo" controls playsinline></video>
+    <button class="lightbox-btn lightbox-next" id="lightboxNext" aria-label="Вперёд">›</button>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">×</button>
+  </div>
+
+  <script>
+    /* ===== Burger menu ===== */
+    const burger = document.getElementById('mBurger');
+    const nav = document.getElementById('mNav');
+    const overlay = document.getElementById('mNavOverlay');
+    const navClose = document.getElementById('mNavClose');
+
+    function openNav() {
+      nav.classList.add('is-open');
+      overlay.classList.add('is-open');
+      burger.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      nav.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeNav() {
+      nav.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      burger.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      nav.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    burger.addEventListener('click', () => {
+      if (nav.classList.contains('is-open')) closeNav();
+      else openNav();
+    });
+    overlay.addEventListener('click', closeNav);
+    navClose.addEventListener('click', closeNav);
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+    /* ===== Header shrink ===== */
+    const header = document.getElementById('mHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) header.classList.add('shrink');
+      else header.classList.remove('shrink');
+    }, { passive: true });
+
+    /* ===== Gallery tabs ===== */
+    const tabs = document.querySelectorAll('.m-tab[data-gallery]');
+    const galleryMain = document.getElementById('gallery_main');
+    const galleryVisitors = document.getElementById('gallery_visitors');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        const target = tab.dataset.gallery;
+        if (target === 'main') {
+          galleryMain.classList.remove('is-hidden');
+          galleryMain.hidden = false;
+          galleryVisitors.classList.add('is-hidden');
+          galleryVisitors.hidden = true;
+        } else {
+          galleryMain.classList.add('is-hidden');
+          galleryMain.hidden = true;
+          galleryVisitors.classList.remove('is-hidden');
+          galleryVisitors.hidden = false;
+        }
+        setTimeout(bindGalleryClicks, 40);
+      });
+    });
+
+    /* ===== Lightbox ===== */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxVideo = document.getElementById('lightboxVideo');
+    const btnPrev = document.getElementById('lightboxPrev');
+    const btnNext = document.getElementById('lightboxNext');
+    const btnClose = document.getElementById('lightboxClose');
+
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    function getVisibleGalleryItems() {
+      return Array.from(document.querySelectorAll('.gallery_img')).filter(item => {
+        const parent = item.closest('.m-gallery-grid, .m-video-list');
+        if (!parent) return true;
+        if (parent.classList.contains('is-hidden') || parent.hidden) return false;
+        return true;
+      });
+    }
+
+    function showMedia(index) {
+      if (!currentGallery.length) return;
+      const item = currentGallery[index];
+      lightboxImg.classList.remove('active');
+      lightboxVideo.classList.remove('active');
+      lightboxVideo.pause();
+      lightboxVideo.removeAttribute('src');
+      lightboxVideo.load();
+
+      if (item.tagName === 'VIDEO') {
+        const source = item.querySelector('source');
+        lightboxVideo.src = source ? source.src : item.currentSrc || item.src;
+        lightboxVideo.classList.add('active');
+        lightboxVideo.play().catch(() => {});
+      } else {
+        lightboxImg.src = item.src;
+        lightboxImg.alt = item.alt || '';
+        lightboxImg.classList.add('active');
+      }
+    }
+
+    function openLightbox(index) {
+      currentGallery = getVisibleGalleryItems();
+      if (!currentGallery.length) return;
+      currentIndex = index;
+      showMedia(currentIndex);
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightboxVideo.pause();
+      lightboxVideo.currentTime = 0;
+      lightboxVideo.removeAttribute('src');
+      document.body.style.overflow = '';
+    }
+
+    function bindGalleryClicks() {
+      document.querySelectorAll('.gallery_img').forEach(item => {
+        item.onclick = null;
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const items = getVisibleGalleryItems();
+          const realIndex = items.indexOf(item);
+          if (realIndex !== -1) openLightbox(realIndex);
+        });
+      });
+    }
+
+    bindGalleryClicks();
+
+    btnPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!currentGallery.length) return;
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      showMedia(currentIndex);
+    });
+
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!currentGallery.length) return;
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      showMedia(currentIndex);
+    });
+
+    btnClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'ArrowLeft') btnPrev.click();
+      else if (e.key === 'ArrowRight') btnNext.click();
+      else if (e.key === 'Escape') closeLightbox();
+    });
+
+    /* Swipe support for lightbox */
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      const dx = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(dx) > 50) {
+        if (dx < 0) btnNext.click();
+        else btnPrev.click();
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>

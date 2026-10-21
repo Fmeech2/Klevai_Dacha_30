@@ -7,11 +7,24 @@
   <title>Клёвая Дача 30</title>
   <link rel="icon" href="img/Logo_zaglyshka_icon.png">
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Переадресация на мобильную версию для телефонов / узких экранов
+    (function () {
+      try {
+        var isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(navigator.userAgent);
+        var isNarrow = window.innerWidth <= 768;
+        // Не редиректим, если уже явно выбрана полная версия (?desktop=1)
+        var forceDesktop = /[?&]desktop=1/.test(location.search);
+        if (!forceDesktop && isMobileUA && isNarrow) {
+          location.replace('mobile.html' + location.hash);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body id="start">
   <img src="img/Крюк ползёт.png" alt="" class="scroll-image" id="scrollImage">
-  <img src="Zaglushka.png" alt="Логотип КЛЁВАЯ ДАЧА" class="img_zaglushka" />
 
   <header>
     <div class="shapka">
@@ -21,8 +34,8 @@
           <a href="#start" class="logo-wrapper">
             <img src="img/Logo_zaglyshka_footer2.png" alt="Логотип КЛЁВАЯ ДАЧА" class="logo logo-default">
           </a>
-          <img src="Синий фон.png" alt="Крюк" class="hook_background" />
-          <img src="Крюк PNG.png" alt="Крюк" class="hook" />
+          <img src="img/Синий фон.png" alt="Крюк" class="hook_background" />
+          <img src="img/Крюк PNG.png" alt="Крюк" class="hook" />
         </div>
         <div class="prev_logo_text">
           <div class="prev_logo_text_attachment prev_logo_text_attachment_1">
@@ -60,16 +73,16 @@
           </div>
           <div class="shapka_text_right_3">
             <a href="https://vk.ru/club11109186" target="_blank" class="logo_messenger">
-              <img src="VK PNG.png" alt="VK КЛЁВАЯ ДАЧА" class=" " />
+              <img src="img/VK PNG.png" alt="VK КЛЁВАЯ ДАЧА" class=" " />
             </a>
             <a href="https://max.ru/u/f9LHodD0cOLFu70KB7BkQSMHHAYgfCx8tbYvh3qt9_pkbZJNzbhYcXr5BbI" target="_blank" class="logo_messenger">
-              <img src="Max PNG.png" alt="Max КЛЁВАЯ ДАЧА" class=" " />
+              <img src="img/Max PNG.png" alt="Max КЛЁВАЯ ДАЧА" class=" " />
             </a>
             <a href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" class="logo_messenger">
-              <img src="WhatsApp PNG.png" alt="WhatsApp КЛЁВАЯ ДАЧА" class=" " />
+              <img src="img/WhatsApp PNG.png" alt="WhatsApp КЛЁВАЯ ДАЧА" class=" " />
             </a>
             <a href="https://t.me/@ALEXYI91" target="_blank" class="logo_messenger">
-              <img src="Telegram PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class=" " />
+              <img src="img/Telegram PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА" class=" " />
             </a>
 
           </div>
@@ -402,16 +415,16 @@
 
       <div class="footer_socials shapka_text_right_3">
         <a href="https://vk.ru/club11109186" target="_blank" class="logo_messenger">
-          <img src="VK PNG.png" alt="VK КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
+          <img src="img/VK PNG.png" alt="VK КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
         </a>
         <a href="https://max.ru/u/f9LHodD0cOLFu70KB7BkQSMHHAYgfCx8tbYvh3qt9_pkbZJNzbhYcXr5BbI" target="_blank" class="logo_messenger">
-          <img src="Max PNG.png" alt="Max КЛЁВАЯ ДАЧА" class="img_icons_footers" />
+          <img src="img/Max PNG.png" alt="Max КЛЁВАЯ ДАЧА" class="img_icons_footers" />
         </a>
         <a href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" class="logo_messenger">
-          <img src="WhatsApp PNG.png" alt="WhatsApp КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
+          <img src="img/WhatsApp PNG.png" alt="WhatsApp КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
         </a>
         <a href="https://t.me/@ALEXYI91" target="_blank" class="logo_messenger">
-          <img src="Telegram PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
+          <img src="img/Telegram PNG.png" alt="Телеграм КЛЁВАЯ ДАЧА"  class="img_icons_footers"/>
         </a>
       </div>
     </div>

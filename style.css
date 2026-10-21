@@ -644,48 +644,52 @@ display: flex;
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 100px;                /* подбери размер под свой крюк */
+  width: 100px;
   height: auto;
-  z-index: 1;                 /* под логотипом */
+  z-index: 1;
   opacity: 1;
   pointer-events: none;
-  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translate(0, 0) scale(1);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease,
+              top 0.3s ease;
 }
 
-/* При наведении на логотип — крюк выезжает вниз */
-.logo-wrapper:hover .hook {
-  opacity: 1;
-  transform: translate(0px, 86px) scale(1);  /* ≈ 100px вниз */
-}
-.hook_background{
+.hook_background {
   position: absolute;
-  top: 0px;
+  top: 0;
   left: 10px;
-  width: 100px;                /* подбери размер под свой крюк */
+  width: 100px;
   height: 108px;
-  z-index: 2;                 /* под логотипом */
+  z-index: 2;
   opacity: 1;
   pointer-events: none;
-  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translate(0, 0) scale(1);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.3s ease,
+              top 0.3s ease;
+}
 
-}
-.logo-wrapper:hover .hook_background {
+/* Hover — только когда шапка НЕ сжата */
+.shapka:not(.shrink) .logo-wrapper:hover .hook {
   opacity: 1;
-  transform: translate(0px, 0px) scale(1);  /* ≈ 100px вниз */
+  transform: translate(0, 86px) scale(1);
 }
-.shrink .hook_background{
-  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
+
+.shapka:not(.shrink) .logo-wrapper:hover .hook_background {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
 }
-.shrink .hook{
-  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
-}
-.shrink .hook_background{
-  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
-  top: -200px;
-}
-.shrink .hook{
-  transform: translate(0px, -200px) scale(1);  /* ≈ 100px вниз */
-  top: -200px;
+
+/* В сжатом состоянии крюки полностью убираем (без конфликта transform/top) */
+.shapka.shrink .logo-wrapper .hook,
+.shapka.shrink .logo-wrapper .hook_background {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(0, -30px) scale(0.6);
+  top: 0; /* не прыгаем через top: -200px */
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.25s ease, visibility 0.25s ease;
 }
 .logo_messenger{
   
@@ -806,20 +810,6 @@ min-width: 1240px;          /* или убери, если нужно на вс�
 /* Небольшой hover-эффект (по желанию) */
 .gallery_img:hover {
   transform: scale(1.02);
-}
-.img_zaglushka{
-width: 1920px; 
-margin: auto;
-margin-top: 0px;
-position: fixed;           /* или absolute */
-  top: -600px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 100%;
-  z-index: 9999;             /* поверх всего */
-  pointer-events: none;      /* не мешает кликам и выделению текста */
-  border: 0px dashed red;    /* опционально — чтобы было видно границы */
-  opacity: 0.0;             /* полупрозрачная, чтобы видеть настоящий код */
 }
 
 
@@ -991,14 +981,17 @@ margin-top: 2px;
 .map_bg {
   position: absolute;
   top: -755px;
-  left: 215px;
-  transform: translate(0%, 0%);
-  width: 1177px;              /* подбери нужный размер */
+  /* Привязка к центру страницы (а не к левому краю viewport),
+     чтобы лодка не «уезжала» при разной ширине окна.
+     На 1920px: left:50% + translateX(-745px) ≡ left:215px — визуально как раньше. */
+  left: 50%;
+  transform: translateX(-745px);
+  width: 1177px;
   max-width: none;
   height: auto;
   z-index: 0;
-  pointer-events: none;       /* не мешает кликам */
-  opacity: 0.9;               /* можно регулировать */
+  pointer-events: none;
+  opacity: 0.9;
 }
 
 /* Чтобы контент был поверх картинки */
