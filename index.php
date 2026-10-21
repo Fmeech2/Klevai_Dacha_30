@@ -7,24 +7,16 @@
   <title>Клёвая Дача 30</title>
   <link rel="icon" href="img/Logo_zaglyshka_icon.png">
   <link rel="stylesheet" href="style.css">
-  <script>
-    // Переадресация на мобильную версию для телефонов / узких экранов
-    (function () {
-      try {
-        var isMobileUA = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(navigator.userAgent);
-        var isNarrow = window.innerWidth <= 768;
-        // Не редиректим, если уже явно выбрана полная версия (?desktop=1)
-        var forceDesktop = /[?&]desktop=1/.test(location.search);
-        if (!forceDesktop && isMobileUA && isNarrow) {
-          location.replace('mobile.html' + location.hash);
-        }
-      } catch (e) {}
-    })();
-  </script>
 </head>
 
 <body id="start">
-  <img src="img/Крюк ползёт.png" alt="" class="scroll-image" id="scrollImage">
+  <div class="scroll-rope" id="scrollRope">
+    <img src="img/Крюк ползёт.png" alt="" class="scroll-rope_cap">
+    <div class="scroll-rope_body"></div>
+  </div>
+
+  <!-- Обёртка страницы: сюда применяется масштаб на узких окнах (см. .page в CSS) -->
+  <div class="page" id="page">
 
   <header>
     <div class="shapka">
@@ -431,6 +423,8 @@
   </div>
 </footer>
 
+  </div><!-- /.page -->
+
 
   <!-- Лайтбокс -->
   <div class="lightbox" id="lightbox">
@@ -446,58 +440,90 @@
 
 
   <script>
-    // Ждём загрузки страницы
-    document.addEventListener('scroll', () => {
-      const shapka = document.querySelector('.shapka');
-      const nav = document.querySelector('.nav');
+    // ================= Масштаб страницы на узких окнах =================
+    // Вёрстка рассчитана на ширину до 1320px (колонка 1200px + выступающая галерея).
+    // Если окно уже — пропорционально уменьшаем страницу (CSS zoom на .page), чтобы шапка
+    // и контент не обрезались и не появлялась горизонтальная прокрутка. От 1320px и шире — масштаб 1.
+    const DESIGN_WIDTH = 1320;
+    const rootEl = document.documentElement;
+    let pageK = 1;
 
-      if (window.scrollY > 50) {
-        shapka.classList.add('shrink');
-        nav.classList.add('shrink');
-      } else {
-        shapka.classList.remove('shrink');
-        nav.classList.remove('shrink');
-      }
-    });
+    function fitPage() {
+      pageK = Math.min(1, rootEl.clientWidth / DESIGN_WIDTH);
+      rootEl.style.setProperty('--page-k', pageK.toFixed(4));
+    }
 
+    // ================= Шапка: большая <-> маленькая =================
+    // Только переключаем класс. Все анимации (шапка, логотип, тексты, крючки)
+    // делает CSS с общими --shapka-dur / --shapka-ease, поэтому они синхронны,
+    // а при быстрой прокрутке туда-обратно плавно перенацеливаются с текущей точки.
+    const shapka = document.querySelector('.shapka');
+    const navTop = document.querySelector('.nav');
+    const SHRINK_AT = 50;
+    let isShrunk = false;
 
+    function updateHeader() {
+      const next = window.scrollY > SHRINK_AT;
+      if (next === isShrunk) return;
+      isShrunk = next;
+      shapka.classList.toggle('shrink', next);
+      navTop.classList.toggle('shrink', next);
+    }
 
+    // ================= Ползущая верёвка слева =================
+    // Высота верёвки считается так, чтобы она всегда доходила от крюка до низа окна,
+    // а в конце страницы — ровно до узла в футере (см. .scroll-rope и .rope-anchor в CSS).
+    const rope = document.getElementById('scrollRope');
+    const ROPE_START = 108;        // с какой прокрутки появляется (высота большой шапки)
+    const ROPE_TOP_GAP = 50;       // на какой высоте от верха окна останавливается крюк
+    // Крепление в футере, в пикселях при масштабе 1 (должно совпадать с .rope-anchor в CSS):
+    const ANCHOR_BOTTOM = 120;     // bottom у .rope-anchor
+    const KNOT_END = 11.9;         // от низа картинки до места, где обрывается верёвка внутри узла
 
+    function updateRope() {
+      // clientHeight — высота окна без горизонтальной полосы прокрутки (innerHeight её включал)
+      const vh = rootEl.clientHeight;
+      const y = window.scrollY;
+      const start = ROPE_START * pageK;
 
-    const img = document.getElementById('scrollImage');
-    const startOffset = 108;
-
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
-      if (scrollY < startOffset) {
-        img.style.opacity = '0';
-        img.style.transform = 'translateY(0)';
+      if (y < start) {
+        rope.style.opacity = '0';
+        rope.style.height = '0px';
+        rope.style.transform = 'translateY(0)';
         return;
       }
 
-      // Прогресс от 0 до 1
-      const progress = (scrollY - startOffset) / (maxScroll - startOffset);
+      const maxScroll = rootEl.scrollHeight - vh;
+      const progress = (y - start) / Math.max(1, maxScroll - start);   // 0..1
       const clamped = Math.min(Math.max(progress, 0), 1);
+      const move = clamped * (vh - ROPE_TOP_GAP * pageK);              // на сколько поднялся крюк
+      const ropeTop = vh - move;                                       // y крюка в окне
 
-      // Картинка поднимается так, чтобы в конце она почти полностью была видна
-      // 0% — только появляется снизу
-      // 100% — верх картинки почти у верхнего края экрана
-      const move = clamped * (window.innerHeight - 50); // 80px — отступ сверху
+      // Где сейчас (в координатах окна) место, куда верёвка уходит в узел. Футер — последний блок
+      // страницы, поэтому считаем от низа страницы, не читая размеры отмасштабированных элементов.
+      const remaining = Math.max(0, maxScroll - y);                    // сколько ещё осталось прокрутить
+      const knotY = vh + remaining - (ANCHOR_BOTTOM + KNOT_END) * pageK;
 
-      img.style.opacity = '1';
-      img.style.transform = `translateY(-${move}px)`;
+      const length = Math.max(0, Math.min(vh, knotY) - ropeTop);
+
+      rope.style.opacity = '1';
+      rope.style.height = length + 'px';
+      rope.style.transform = `translateY(-${move}px)`;
+    }
+
+    function onScroll() {
+      updateHeader();
+      updateRope();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    // Раньше при изменении размера окна положение крючка не пересчитывалось
+    window.addEventListener('resize', () => {
+      fitPage();
+      onScroll();
     });
-
-
-
-
-
-
-
-
-
+    fitPage();
+    onScroll();
 
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');

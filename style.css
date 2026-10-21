@@ -169,6 +169,25 @@
 }
 
     
+    /* ===== Общие переменные =====
+       --shapka-dur / --shapka-ease — время и кривая перехода шапки (большая <-> маленькая).
+         Всё, что участвует в переходе (шапка, логотип, тексты, крючки), берёт значения отсюда,
+         поэтому всё идёт синхронно в обе стороны.
+       --page-k — масштаб страницы. Ставится из JS: 1 при ширине окна от 1320px,
+         меньше 1 — на более узких окнах (чтобы вёрстка не обрезалась). */
+    :root {
+      --shapka-dur: 0.4s;
+      --shapka-ease: ease;
+      --shapka-fade: 0.16s;        /* быстрое затухание текстов при сжатии шапки */
+      --page-k: 1;
+    }
+
+    /* Обёртка всей страницы (кроме лайтбокса и ползущего крючка).
+       zoom пропорционально уменьшает вёрстку на окнах уже 1320px. */
+    .page {
+      zoom: var(--page-k);
+    }
+
     body {
       margin: 0;
       border: 0;
@@ -211,6 +230,7 @@
 
     .shapka {
       background: #2F80ED;
+      transition: all var(--shapka-dur) var(--shapka-ease);
       width: 100%;
       height: 108px;
       display: flex;
@@ -238,7 +258,7 @@
       /* чтобы не сжимался слишком сильно */
       object-fit: contain;
       /* сохраняет пропорции */
-      transition: all 0.4s ease;
+      transition: all var(--shapka-dur) var(--shapka-ease);
       filter: brightness(1) invert(0);
     }
 
@@ -298,7 +318,7 @@
     /* Класс, который будет добавляться при прокрутке */
     .shapka.shrink {
       height: 50px;
-      transition: all 0.4s ease;
+      transition: all var(--shapka-dur) var(--shapka-ease);
     }
 
     .shapka.shrink .shapka_center {
@@ -307,50 +327,76 @@
 
     }
 
-    /* Скрываем ненужные блоки */
-    .shapka.shrink .shapka_text_center{
-      margin-right: 400px;
-      margin-left: -300px;
-      opacity: 0;
-      transform: translateX(200px);
-      /* улетание вправо */
-      visibility: hidden;
-      transition: all 0.4s ease;
+    /* ===== Блоки, которые исчезают в маленькой шапке =====
+       Адрес («Астраханская область…») и «Звони в любое время / Телефон» теперь стоят
+       на одном и том же месте в потоке в ОБОИХ режимах шапки; между режимами меняются
+       только opacity / transform / visibility (никакой перестройки вёрстки).
+       Раньше в маленькой шапке им менялись margin (-300 / 400px) и width, а соседний
+       .prev_logo_text растягивался до 820px: блоки мгновенно «телепортировались» вправо,
+       а когда margin анимировались, текст перестраивался (2 строки <-> 3 строки) и мельтешил.
+       В маленькой шапке прозрачность падает быстрее (--shapka-fade), чтобы улетающий текст
+       не успевал наложиться на строку «Гостевой комплекс…» и на иконки. */
+    .shapka_text_center,
+    .shapka_text_right_1,
+    .shapka_text_right_2 {
+      transition:
+        opacity var(--shapka-dur) var(--shapka-ease),
+        transform var(--shapka-dur) var(--shapka-ease),
+        visibility var(--shapka-dur) var(--shapka-ease);
     }
-      
-    
+
+    .shapka.shrink .shapka_text_center,
     .shapka.shrink .shapka_text_right_1,
     .shapka.shrink .shapka_text_right_2 {
-      margin-right: 400px;
-      margin-left: -300px;
       opacity: 0;
-      transform: translateX(300px);
-      /* улетание вправо */
       visibility: hidden;
-      transition: all 0.4s ease;
-      
+      transition:
+        opacity var(--shapka-fade) ease-out,
+        transform var(--shapka-dur) var(--shapka-ease),
+        visibility var(--shapka-dur) var(--shapka-ease);
     }
-    
-       .shapka.shrink .shapka_text_right_3 {
+
+    .shapka.shrink .shapka_text_center {
+      transform: translateX(200px);       /* улетание вправо */
+    }
+
+    .shapka.shrink .shapka_text_right_1,
+    .shapka.shrink .shapka_text_right_2 {
+      transform: translateX(300px);       /* улетание вправо */
+      height: 21px;
+    }
+
+    /* ===== Иконки мессенджеров =====
+       Раньше в маленькой шапке им ставили margin-left:-600px и margin-top:-48px — мгновенно
+       и с зависимостью от соседних блоков. Теперь это transform: плавно и синхронно с шапкой.
+       translate(45px, -24px) даёт ТО ЖЕ итоговое положение, что было раньше:
+         x: раньше иконки оказывались в 1033px от левого края колонки шапки, а блок теперь стоит
+            в 988px -> сдвиг +45px;
+         y: margin-top:-48px сдвигал иконки только на половину (колонка центрирована по высоте),
+            то есть на -24px.
+       Если поменяете ширины/отступы блоков в шапке — подправьте эти два числа. */
+    .shapka_text_right_3 {
+      min-width: 250px;
+      display: flex;
+      transition: transform var(--shapka-dur) var(--shapka-ease);
+    }
+
+    .shapka.shrink .shapka_text_right_3 {
       min-width: 250px;
       min-height: 56px;
       max-height: 56px;
       display: flex;
       visibility: visible;
+      transform: translate(45px, -24px);
+    }
 
-      margin-right: 0px;
-      margin-left: -600px;
-      margin-top: -48px;
+    .logo_messenger {
+      transition: margin-right var(--shapka-dur) var(--shapka-ease);
+    }
 
-       }   
-       .shapka.shrink .logo_messenger   {
-        
+    .shapka.shrink .logo_messenger {
       margin-right: 5px;
-       }
-       .shapka_text_right_3 {
-      min-width: 250px;
-display: flex;
-       }
+    }
     .shapka_text_center_1,
     .shapka_text_center_2,
     .shapka_text_center_3{
@@ -358,16 +404,7 @@ display: flex;
       font-size: 18px;
     }
 
-    .shapka.shrink .shapka_text_center_1,
-    .shapka.shrink .shapka_text_center_2,
-    .shapka.shrink .shapka_text_center_3,
-    .shapka.shrink .shapka_text_right_1,
-    .shapka.shrink .shapka_text_right_2 {
-      height: 21px;
-      width: 320px;
-      font-family: Inter;
-      font-size: 18px;
-    }
+
 .shapka_text_right_3 img {
   width: 32px;
   padding: 0;
@@ -392,7 +429,7 @@ display: flex;
 }
 
     .shapka.shrink .logo {
-      transition: all 0.4s ease;
+      transition: all var(--shapka-dur) var(--shapka-ease);
       height: auto;
       width: 45px;
       margin-left: 100px;
@@ -402,11 +439,15 @@ display: flex;
     .shapka.shrink .prev_logo_text {
       display: flex;
       flex-direction: row;
-      
-    min-width: 820px;
+      min-width: 820px;
+      /* Строка из 4 надписей широкая (820px), но «занимает» в шапке ровно столько же места,
+         сколько в большой шапке (820 - 620 = 200px). Поэтому соседние блоки справа не сдвигаются
+         при смене режима — раньше именно этот скачок «телепортировал» их. */
+      margin-right: -620px;
     }
 
     .shapka.shrink .prev_logo_text_attachment {
+      flex-shrink: 0;
       display: flex;
       align-items: end;
       width: max-content;
@@ -447,7 +488,10 @@ display: flex;
     .header_background {
       width: 100%;
       height: 108px;
-      background-color: #0A0A0A;
+      /* Раньше #0A0A0A (почти чёрный). Это пустой «распорка»-блок под фиксированной шапкой:
+         в покое он закрыт шапкой, но пока шапка плавно раскрывается 50px -> 108px,
+         из-под неё выглядывала чёрная полоса. Прозрачный — полоса не видна. */
+      background-color: transparent;
       margin-top: 0px;
     }
 
@@ -636,60 +680,61 @@ display: flex;
   z-index: 3;                 /* логотип поверх крюка */
   width: 100px;
   height: auto;
-  transition: all 0.4s ease;
+  transition: all var(--shapka-dur) var(--shapka-ease);
 }
 
-/* Крюк (изначально спрятан под логотипом) */
+/* ===== Крюк и синяя подложка под логотипом =====
+   Режим шапки и hover-выезд крюка анимируются РАЗНЫМИ свойствами:
+     translate — режим шапки: 0 (большая) -> -200px (маленькая, спрятано над экраном).
+                 Время и кривая те же, что у самой шапки (--shapka-dur / --shapka-ease).
+     transform — hover-выезд крюка из-под шапки (только в большой шапке), упругая кривая.
+   Раньше: один `transition: all` с упругой кривой 0.45s на всё + и top, и transform
+   одновременно (-200px + -200px). Из-за этого крюк и подложка при возврате шапки
+   "отскакивали" ниже шапки (hover-анимация), а hover-правило перебивало режим шапки. */
 .logo-wrapper .hook {
   position: absolute;
   top: 10px;
   left: 10px;
   width: 100px;
   height: auto;
-  z-index: 1;
+  z-index: 1;                 /* под логотипом */
   opacity: 1;
   pointer-events: none;
-  transform: translate(0, 0) scale(1);
-  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.3s ease,
-              top 0.3s ease;
+  translate: 0 0;
+  transform: translateY(0);
+  transition:
+    translate var(--shapka-dur) var(--shapka-ease),
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .hook_background {
   position: absolute;
-  top: 0;
+  top: 0px;
   left: 10px;
   width: 100px;
   height: 108px;
-  z-index: 2;
+  z-index: 2;                 /* над крюком, под логотипом */
   opacity: 1;
   pointer-events: none;
-  transform: translate(0, 0) scale(1);
-  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-              opacity 0.3s ease,
-              top 0.3s ease;
+  translate: 0 0;
+  transition: translate var(--shapka-dur) var(--shapka-ease);
 }
 
-/* Hover — только когда шапка НЕ сжата */
+/* Hover: крюк выезжает вниз из-под шапки — только в большой шапке */
 .shapka:not(.shrink) .logo-wrapper:hover .hook {
-  opacity: 1;
-  transform: translate(0, 86px) scale(1);
+  transform: translateY(86px);
 }
 
-.shapka:not(.shrink) .logo-wrapper:hover .hook_background {
-  opacity: 1;
-  transform: translate(0, 0) scale(1);
-}
-
-/* В сжатом состоянии крюки полностью убираем (без конфликта transform/top) */
+/* Маленькая шапка: крюк и подложка уезжают вверх за экран синхронно с шапкой */
 .shapka.shrink .logo-wrapper .hook,
-.shapka.shrink .logo-wrapper .hook_background {
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(0, -30px) scale(0.6);
-  top: 0; /* не прыгаем через top: -200px */
-  pointer-events: none;
-  transition: transform 0.3s ease, opacity 0.25s ease, visibility 0.25s ease;
+.shapka.shrink .hook_background {
+  translate: 0 -200px;
+}
+.shapka.shrink .logo-wrapper .hook {
+  /* если в момент сжатия крюк был выдвинут hover'ом — он убирается тем же темпом, что и шапка */
+  transition:
+    translate var(--shapka-dur) var(--shapka-ease),
+    transform var(--shapka-dur) var(--shapka-ease);
 }
 .logo_messenger{
   
@@ -981,17 +1026,18 @@ margin-top: 2px;
 .map_bg {
   position: absolute;
   top: -755px;
-  /* Привязка к центру страницы (а не к левому краю viewport),
-     чтобы лодка не «уезжала» при разной ширине окна.
-     На 1920px: left:50% + translateX(-745px) ≡ left:215px — визуально как раньше. */
+  /* Раньше: left: 215px — от левого края ОКНА, а весь контент центрируется,
+     поэтому на любой ширине, кроме исходной, лодка уезжала относительно карты.
+     Теперь отсчёт от ЦЕНТРА страницы. 716.5px = 931.5 (центр при ширине вёрстки 1863px,
+     т.е. окно 1878 с полосой прокрутки) - 215 (прежний left). На 1878x923 всё как было. */
   left: 50%;
-  transform: translateX(-745px);
-  width: 1177px;
+  margin-left: -745px;
+  width: 1177px;              /* подбери нужный размер */
   max-width: none;
   height: auto;
   z-index: 0;
-  pointer-events: none;
-  opacity: 0.9;
+  pointer-events: none;       /* не мешает кликам */
+  opacity: 0.9;               /* можно регулировать */
 }
 
 /* Чтобы контент был поверх картинки */
@@ -1032,26 +1078,56 @@ margin-top: 2px;
 }
 
 
-.scroll-image {
+/* ===== Ползущая верёвка слева =====
+   Собирается из частей, чтобы её длина подстраивалась под ЛЮБУЮ высоту окна:
+     .scroll-rope_cap  — крюк с узлом (верхние 420 строк картинки «Крюк ползёт.png»)
+     .scroll-rope_body — тело верёвки: повторяющийся кусок (img/Крюк ползёт тело.png)
+   Высоту всего блока ставит JS: от крюка до низа окна, а в конце страницы —
+   ровно до узла в футере. Раньше верёвка была одной картинкой фиксированной длины
+   (подогнанной под окно ~923px): в низком окне две верёвки накладывались,
+   в высоком или уменьшенном (--page-k) — между ними появлялся разрыв.
+   Это блок вне .page, поэтому масштаб --page-k применяем вручную. */
+.scroll-rope {
   position: fixed;
-  left: 20px;                  /* слева */
-  top: 100%;                 /* изначально полностью под экраном */
-  width: 50px;                /* размер картинки — подстрой */
-  height: auto;
+  left: calc(20px * var(--page-k));          /* слева */
+  top: 100%;                                 /* изначально полностью под экраном */
+  width: calc(50px * var(--page-k));
+  height: 0;                                 /* высоту ставит JS */
+  overflow: hidden;
   z-index: 50;
   pointer-events: none;
-  transition: none;            /* анимацию делаем через JS */
   opacity: 0;
   will-change: transform, opacity;
 }
 
-/* Крепление на футере */
+.scroll-rope_cap {
+  display: block;
+  width: 100%;
+  height: calc(200px * var(--page-k));       /* 420 строк × 50/105 */
+  object-fit: cover;
+  object-position: top;                      /* показываем только верх картинки */
+}
+
+.scroll-rope_body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(200px * var(--page-k) - 0.5px);  /* -0.5px: перекрытие, чтобы не было волосяного шва */
+  bottom: 0;
+  background: url("img/Крюк ползёт тело.png") top left / 100% auto repeat-y;
+}
+
+/* Крепление на футере: только узел (нижние 105 строк картинки «Крюк ползёт низ.png»).
+   Тело верёвки до узла тянет .scroll-rope, поэтому верхняя часть этой картинки больше не нужна
+   (раньше она выступала вверх и на низких окнах накладывалась на крюк). */
 .rope-anchor {
   position: absolute;
   left: 20px;               /* тот же отступ, что и у верёвки */
-  bottom: 120px;             /* подстрой под свой футер */
-  width: 50px;                /* размер картинки — подстрой */
-  height: auto;
+  bottom: 120px;            /* подстрой под свой футер (если меняешь — поправь ANCHOR_BOTTOM в JS) */
+  width: 50px;
+  height: 50px;             /* 105 строк × 50/105 */
+  object-fit: cover;
+  object-position: bottom;  /* показываем только низ картинки — узел */
   z-index: 51;
   pointer-events: none;
 }
