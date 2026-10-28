@@ -1,15 +1,24 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Клёвая Дача 30 — мобильная</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2F80ED" />
+  <title>Клёвая Дача 30</title>
   <link rel="icon" href="img/Logo_zaglyshka_icon.png">
   <link rel="stylesheet" href="mobile.css">
 </head>
+
 <body id="start">
 
-  <!-- Header -->
+  <!-- Верёвка слева: крюк ползёт вверх при прокрутке (подробности — в mobile.css, раздел 3) -->
+  <div class="scroll-rope" id="scrollRope" aria-hidden="true">
+    <img src="img/Крюк ползёт.png" alt="" class="scroll-rope_cap">
+    <div class="scroll-rope_body"></div>
+  </div>
+
+  <!-- ===================== ШАПКА + БОКОВОЕ МЕНЮ (как в версии Grok) ===================== -->
   <header class="m-header" id="mHeader">
     <div class="m-header-inner">
       <a href="#start">
@@ -25,7 +34,6 @@
     </div>
   </header>
 
-  <!-- Side nav -->
   <div class="m-nav-overlay" id="mNavOverlay"></div>
   <nav class="m-nav" id="mNav" aria-hidden="true">
     <button class="m-nav-close" id="mNavClose" aria-label="Закрыть">×</button>
@@ -51,200 +59,259 @@
           <img src="img/Telegram PNG.png" alt="Telegram">
         </a>
       </div>
-      <a href="index.html" class="m-nav-desktop">Полная версия сайта</a>
+      <!-- ?desktop=1 — просим index.html НЕ переадресовывать обратно на мобильную версию -->
+      <a href="index.html?desktop=1" class="m-nav-desktop">Полная версия сайта</a>
     </div>
   </nav>
 
-  <main class="m-main">
 
-    <!-- Hero -->
-    <section class="m-hero" id="hero">
-      <h1 class="m-hero-title">Хотите идеальный отдых у воды?</h1>
-      <p class="m-hero-text">
-        В гостевом доме «Клёвая дача» вас ждут комфорт, все удобства, просторная беседка и мангал, коптильня — и, конечно, отличная рыбалка. Собирайте компанию, берите снасти — и приезжайте за впечатлениями!
-      </p>
-      <div class="m-hero-phone">+7 (917) 172-55-58</div>
-      <a class="m-hero-wa" href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" rel="noopener">Написать в Вацап</a>
-      <br>
-      <a href="https://api.whatsapp.com/send?phone=79171725558" class="m-btn m-btn-block" target="_blank" rel="noopener">Забронировать</a>
+  <main>
 
-      <!-- Рыба — крупный декоративный фон за карточкой -->
-      <div class="m-promo-wrap">
-        <img src="img/Рыба на превью.png" alt="" class="m-promo-fish" aria-hidden="true">
-        <div class="m-promo">
-          <h2 class="m-promo-title">Гостевой дом «КЛЁВАЯ ДАЧА»</h2>
-          <div class="m-promo-body">
-            <div class="m-promo-info">
-              <h3>Мангальная зона</h3>
-              <p>Красивый вид на реку с вкусными шашлыками</p>
-              <div class="m-tags">
-                <span class="m-tag">Дом на 4 человек</span>
-                <span class="m-tag">от 6000 руб./сутки</span>
-              </div>
+    <!-- ===================== ГЛАВНЫЙ ЭКРАН ===================== -->
+    <section class="hero wrap" id="hero">
+      <!-- Рыба — иллюстрация сверху (на десктопе она была фоном карточки) -->
+      <div class="hero_art" aria-hidden="true">
+        <img src="img/Рыба на превью.png" alt="" class="hero_fish">
+      </div>
+
+      <div class="hero_text">
+        <h1 class="hero_title">Хотите идеальный отдых у воды?</h1>
+        <p class="hero_desc">В гостевом доме „Клёвая дача“ вас ждут комфорт, все удобства, просторная беседка и
+          мангал, коптильня — и, конечно, отличная рыбалка. Собирайте компанию, берите снасти — и приезжайте за
+          впечатлениями!»</p>
+
+        <a class="hero_phone" href="tel:+79171725558">+7 (917) 172-55-58</a><br>
+        <a class="hero_wa" href="https://api.whatsapp.com/send?phone=79171725558" target="_blank" rel="noopener">Написать в Вацап</a>
+        <a class="btn" href="tel:+79171725558">Забронировать</a>
+      </div>
+
+      <!-- Карточка дома: цена и вместимость + фото -->
+      <div class="home_card">
+        <h2 class="home_card_title">Гостевой дом<br> "КЛЁВАЯ ДАЧА"</h2>
+        <div class="home_card_inner">
+          <div class="home_card_imgs">
+            <img src="img/Шашлык превью.png" alt="Мангальная зона">
+            <img src="img/Прихожая превью.png" alt="Прихожая">
+          </div>
+          <div class="home_card_info">
+            <div class="home_card_h">Мангальная зона</div>
+            <div class="home_card_p">Красивый вид на реку с вкусными шашлыками</div>
+            <div class="home_card_tags">
+              <span class="home_card_tag">Дом на 4 человек</span>
+              <span class="home_card_tag">от 6000 руб./сутки</span>
             </div>
-            <div class="m-promo-imgs">
-              <img src="img/Шашлык превью.png" alt="Шашлык">
-              <img src="img/Прихожая превью.png" alt="Прихожая">
-            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Map -->
-    <section class="m-map-section" id="contacts">
-      <div class="m-map-wrap" id="mMap">
-        <script type="text/javascript" charset="utf-8" async
-          src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A673fbc03c9a505d1f076be50421331af568be73dd1821bf600b252d53241b5a3&amp;width=100%25&amp;height=280&amp;lang=ru_RU&amp;scroll=true"></script>
-      </div>
-            <div class="m-map-card">
-        <p class="m-map-addr">
-          Астраханская область, Камызякский район,<br>
-          посёлок Нижненикольский.<br>
-          На реке Гандурино.
-        </p>
-        <p class="m-map-phone">Телефон: +7 (917) 172-55-58</p>
-      </div>
-    </section>
 
-    <!-- Gallery -->
-    <section class="m-gallery" id="gallery">
-      <h2 class="m-section-title">Фотогалерея</h2>
-
-      <div class="m-tabs" role="tablist">
-        <button class="m-tab is-active" data-gallery="main" role="tab">Фото</button>
-        <button class="m-tab" data-gallery="visitors" role="tab">От посетителей</button>
+    <!-- ===================== КАРТА, ЛОДКА И АДРЕС ===================== -->
+    <section class="where" id="contacts">
+      <div class="wrap">
+        <div class="where_map" id="mapBox">
+          <!-- Скрипт карты подгружается из JS, когда блок приближается к экрану -->
+          <div class="where_map_slot" id="mapSlot"></div>
+          <button class="map_shield" id="mapShield" type="button" aria-label="Включить управление картой">
+            <span>Нажмите, чтобы двигать карту</span>
+          </button>
+        </div>
       </div>
 
-      <div class="m-gallery-grid" id="gallery_main">
-        <img src="img_saita/1.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/2.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/3.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/4.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/5.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_saita/6.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_saita/7.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/8.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/9.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_saita/10.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_saita/11.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_saita/12.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/13.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/14.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_saita/15.jpg" alt="" class="m-gallery-item gallery_img">
-      </div>
+      <!--<div class="where_boat" aria-hidden="true">
+        <img src="img/Лодка мобильная.png" alt="" loading="lazy">
+      </div>-->
 
-      <div class="m-gallery-grid is-hidden" id="gallery_visitors" hidden>
-        <img src="img_gostei/1.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/2.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/3.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_gostei/4.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_gostei/5.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/6.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/7.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_gostei/9.jpg" alt="" class="m-gallery-item gallery_img wide">
-        <img src="img_gostei/8.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/10.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/11.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/12.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/13.jpg" alt="" class="m-gallery-item gallery_img">
-        <img src="img_gostei/14.jpg" alt="" class="m-gallery-item gallery_img">
-      </div>
-
-      <div class="m-videos">
-        <h3 class="m-videos-title">Видео</h3>
-        <div class="m-video-list">
-          <div class="m-video-wrap">
-            <video class="gallery_img gallery_video" muted preload="metadata" playsinline>
-              <source src="video/video_2026-09-11_22-33-57.mp4" type="video/mp4">
-            </video>
-            <div class="m-play">▶</div>
+      <div class="wrap">
+        <div class="where_card">
+          <div class="where_addr">
+            Астраханская область, Камызякский район, поселок Нижненикольский <br>
+            На реке Гандурино.
           </div>
-          <div class="m-video-wrap">
-            <video class="gallery_img gallery_video" muted preload="metadata" playsinline>
-              <source src="video/video_2026-09-11_22-34-23.mp4" type="video/mp4">
-            </video>
-            <div class="m-play">▶</div>
-          </div>
+          <a class="where_tel" href="tel:+79171725558">Телефон: +7 (917) 172-55-58</a>
         </div>
       </div>
     </section>
 
-    <!-- Reviews -->
-    <section class="m-reviews" id="reviews">
-      <h2 class="m-section-title">Отзывы</h2>
 
-      <div class="m-review-card">
-        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
-        <div class="m-review-body">
-          <div class="m-review-head">
-            <span class="m-review-name">Андрей</span>
-            <span class="m-review-date">14.03.2026</span>
+    <!-- ===================== ФОТОГАЛЕРЕЯ И ВИДЕО ===================== -->
+    <section class="gal wrap" id="gallery">
+      <h2 class="sec_title">Фотогалерея</h2>
+
+      <div class="tabs" role="tablist" aria-label="Галерея">
+        <button class="tab" type="button" role="tab" aria-selected="true" data-gallery="main">Фото</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-gallery="visitors">Фото от посетителей</button>
+      </div>
+
+      <div class="gal_grid" id="gallery_main">
+        <img src="img_saita/1.jpg" alt="Фото 1" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/2.jpg" alt="Фото 2" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/3.jpg" alt="Фото 3" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/4.jpg" alt="Фото 4" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/5.jpg" alt="Фото 5" class="gimg large" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/6.jpg" alt="Фото 6" class="gimg large" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/7.jpg" alt="Фото 7" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/8.jpg" alt="Фото 8" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/9.jpg" alt="Фото 9" class="gimg large" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/10.jpg" alt="Фото 10" class="gimg large" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/11.jpg" alt="Фото 11" class="gimg large" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/12.jpg" alt="Фото 12" class="gimg pos_right" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/13.jpg" alt="Фото 13" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/14.jpg" alt="Фото 14" class="gimg" data-group="main" loading="lazy" decoding="async">
+        <img src="img_saita/15.jpg" alt="Фото 15" class="gimg" data-group="main" loading="lazy" decoding="async">
+      </div>
+
+      <div class="gal_grid" id="gallery_visitors" hidden>
+        <img src="img_gostei/1.jpg" alt="Фото гостя 1" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/2.jpg" alt="Фото гостя 2" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/3.jpg" alt="Фото гостя 3" class="gimg large" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/4.jpg" alt="Фото гостя 4" class="gimg large" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/5.jpg" alt="Фото гостя 5" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/6.jpg" alt="Фото гостя 6" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/7.jpg" alt="Фото гостя 7" class="gimg large" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/9.jpg" alt="Фото гостя 9" class="gimg large" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/8.jpg" alt="Фото гостя 8" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/10.jpg" alt="Фото гостя 10" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/11.jpg" alt="Фото гостя 11" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/12.jpg" alt="Фото гостя 12" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/13.jpg" alt="Фото гостя 13" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+        <img src="img_gostei/14.jpg" alt="Фото гостя 14" class="gimg" data-group="visitors" loading="lazy" decoding="async">
+      </div>
+
+      <h3 class="sub_title">Видео</h3>
+      <div class="vid_grid">
+        <!-- #t=0.1 — чтобы iPhone показал кадр-превью вместо чёрного прямоугольника -->
+        <div class="vwrap" data-group="video" role="button" tabindex="0" aria-label="Смотреть видео 1">
+          <video muted playsinline preload="metadata">
+            <source src="video/video_2026-09-11_22-33-57.mp4#t=0.1" type="video/mp4">
+          </video>
+          <div class="play-icon">▶</div>
+        </div>
+
+        <div class="vwrap" data-group="video" role="button" tabindex="0" aria-label="Смотреть видео 2">
+          <video muted playsinline preload="metadata">
+            <source src="video/video_2026-09-11_22-34-23.mp4#t=0.1" type="video/mp4">
+          </video>
+          <div class="play-icon">▶</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== ОТЗЫВЫ ===================== -->
+    <section class="rev wrap" id="reviews">
+      <h2 class="sec_title">Отзывы</h2>
+
+      <div class="review_card">
+        <div class="review_avatar"><img src="img/Avatar.png" alt="Аватар" loading="lazy"></div>
+        <div class="review_content">
+          <div class="review_header">
+            <span class="review_name">Андрей</span>
+            <span class="review_date">14.03.2026 в 15:40</span>
           </div>
-          <p class="m-review-text">Приезжали в августе, очень понравилось! Ловили рыбу прям с берега возле участка. Наловили хороших сазанов. С мангальной зоны шикарный вид на берег. Цены адекватные, ни за что не доплачивали. Отдельное спасибо хозяевам.</p>
+          <p class="review_text">
+            Приезжали в августе, очень понравилось! Ловили рыбу прям с берега возле участка. Наловили хороших сазанов. С
+            мангальной зоны шикарный вид на берег. Цены адекватные, ни за что не доплачивали, оплатили только
+            проживание, и пользовались всем что есть на участке. Отдельное спасибо хозяевам, приятные люди.
+          </p>
         </div>
       </div>
 
-      <div class="m-review-card">
-        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
-        <div class="m-review-body">
-          <div class="m-review-head">
-            <span class="m-review-name">Елена</span>
-            <span class="m-review-date">03.05.2026</span>
+      <div class="review_card">
+        <div class="review_avatar"><img src="img/Avatar.png" alt="Аватар" loading="lazy"></div>
+        <div class="review_content">
+          <div class="review_header">
+            <span class="review_name">Елена</span>
+            <span class="review_date">03.05.2026 в 11:15</span>
           </div>
-          <p class="m-review-text">Отдыхали на «Клёвой даче» с семьёй — и это был именно тот самый отдых, когда забываешь про телефон и городскую суету. Дом уютный, чистый. Главное — атмосфера у реки: тишина, ветерок, плеск воды. А рыбалка — отдельная история. Однозначно рекомендую!</p>
+          <p class="review_text">
+            Отдыхали на «Клёвой даче» с семьёй — и это был именно тот самый отдых, когда забываешь про телефон, дедлайны
+            и городскую суету.
+            Дом уютный, чистый, всё продумано до мелочей: от посуды до освещения на веранде (как в сказке).
+            Но главное — атмосфера у реки: тишина, лёгкий ветерок, плеск воды…
+            Вечером сидели в беседке, жарили мясо на мангале, дышали свежим воздухом — просто кайф.
+            <br>
+            А рыбалка — отдельная история. Взяли удочки, устроились прям напротив домика — и тут же первый улов!
+            Для нас, городских жителей, это вообще отдельный вид удовольствия. Спасибо хозяевам за гостеприимство и за
+            то, что создали такое место,
+            куда хочется возвращаться снова и снова. Однозначно рекомендую
+          </p>
         </div>
       </div>
 
-      <div class="m-review-card">
-        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
-        <div class="m-review-body">
-          <div class="m-review-head">
-            <span class="m-review-name">Сергей</span>
-            <span class="m-review-date">22.06.2026</span>
+      <div class="review_card">
+        <div class="review_avatar"><img src="img/Avatar.png" alt="Аватар" loading="lazy"></div>
+        <div class="review_content">
+          <div class="review_header">
+            <span class="review_name">Сергей</span>
+            <span class="review_date">22.06.2026 в 18:27</span>
           </div>
-          <p class="m-review-text">Отличный отдых у реки! Уютный домик, чистая территория, есть беседка, мангал и коптильня. Рыбалка порадовала. Всё на высшем уровне, хочется приехать ещё.</p>
+          <p class="review_text">
+            Отличный отдых у реки! Уютный домик, чистая территория, есть беседка, мангал и коптильня. Рыбалка
+            порадовала: река полноводная, много рыбы, хозяин посоветовал, где и как лучше рыбачить. Всё на высшем
+            уровне, хочется приехать ещё. Рекомендую!»
+          </p>
         </div>
       </div>
 
-      <div class="m-review-card">
-        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
-        <div class="m-review-body">
-          <div class="m-review-head">
-            <span class="m-review-name">Дмитрий</span>
-            <span class="m-review-date">17.07.2026</span>
+      <div class="review_card">
+        <div class="review_avatar"><img src="img/Avatar.png" alt="Аватар" loading="lazy"></div>
+        <div class="review_content">
+          <div class="review_header">
+            <span class="review_name">Дмитрий</span>
+            <span class="review_date">17.07.2026 в 09:50</span>
           </div>
-          <p class="m-review-text">Сняли дом на выходные с друзьями — идеальный мини-отпуск. Утром рыбалка на рассвете, днём прогулка вдоль реки, вечером шашлыки в беседке. 10/10!</p>
+          <p class="review_text">
+            Сняли дом на «Клёвой даче» на выходные с друзьями — получился идеальный мини‑отпуск. Утром — рыбалка на
+            рассвете: тишина, туман над водой, первые поклёвки… Потом завтрак на веранде, днём — прогулка вдоль реки,
+            вечером — шашлыки в беседке и разговоры у мангала до поздней ночи. В доме комфортно, всё необходимое есть.
+            Отличное место, чтобы перезагрузиться и просто побыть на природе. 10/10!
+          </p>
         </div>
       </div>
 
-      <div class="m-review-card">
-        <div class="m-review-avatar"><img src="img/Avatar.png" alt=""></div>
-        <div class="m-review-body">
-          <div class="m-review-head">
-            <span class="m-review-name">Игорь</span>
-            <span class="m-review-date">29.08.2026</span>
+      <div class="review_card">
+        <div class="review_avatar"><img src="img/Avatar.png" alt="Аватар" loading="lazy"></div>
+        <div class="review_content">
+          <div class="review_header">
+            <span class="review_name">Игорь</span>
+            <span class="review_date">29.08.2026 в 16:05</span>
           </div>
-          <p class="m-review-text">Приезжали на неделю со своей лодкой. Во дворе места много. Лодку спускали возле участка. Наловили много рыбы, спасибо за большой ларь — всё заморозили и забрали. В следующем году приедем ещё.</p>
+          <p class="review_text">
+            Приезжали на неделю, на своей машине со своей лодкой, во дворе места много, уместилась и лодка и прицеп и
+            машина. Лодку спускали на воду возле участка, берег удобный для спуска. Наловили много рыбы, спасибо что на
+            участке есть большой ларь, его хватило чтобы всё заморозить и забрать с собой. В следующем году приедем ещё.
+          </p>
         </div>
       </div>
 
-      <div class="m-form-wrap">
-        <h3 class="m-form-title">Оставить отзыв</h3>
-        <form class="m-form" action="#" method="post">
-          <input type="text" name="name" class="m-input" placeholder="Имя*" required>
-          <input type="text" name="surname" class="m-input" placeholder="Фамилия">
-          <input type="tel" name="phone" class="m-input" placeholder="Номер телефона">
-          <textarea name="review" class="m-textarea" placeholder="Ваш отзыв" rows="4"></textarea>
-          <button type="submit" class="m-btn">Отправить</button>
+      <!-- Форма -->
+      <div class="review_form_wrapper">
+        <h3 class="review_form_title">Оставить отзыв</h3>
+
+        <form class="review_form" action="#" method="post">
+          <div class="review_form_row">
+            <input type="text" name="name" class="review_input" placeholder="Имя*" autocomplete="given-name" enterkeyhint="next" required>
+            <input type="text" name="surname" class="review_input" placeholder="Фамилия" autocomplete="family-name" enterkeyhint="next">
+          </div>
+
+          <input type="tel" name="phone" class="review_input" placeholder="Номер телефона" autocomplete="tel" inputmode="tel" enterkeyhint="next">
+
+          <textarea name="review" class="review_textarea" placeholder="Ваш отзыв" rows="4"></textarea>
+
+          <button type="submit" class="review_submit">Отправить</button>
         </form>
       </div>
     </section>
 
   </main>
 
-  <!-- Footer -->
+
+  <!-- ===================== ФУТЕР (как в версии Grok) ===================== -->
   <footer class="m-footer">
+    <!-- Крепление верёвки (только узел) -->
+    <img src="img/Крюк ползёт низ.png" alt="" class="rope-anchor" id="ropeAnchor" aria-hidden="true">
+
     <div class="m-footer-inner">
       <img src="img/Logo_zaglyshka_footer2.png" alt="Клёвая Дача" class="m-footer-logo">
       <div class="m-footer-copy">© Клёвая Дача 2026. Все права защищены.</div>
@@ -260,7 +327,7 @@
           <span>Анна</span>
         </div>
       </div>
-      <div class="m-footer-email">Astrakhan@klevaydacha30.ru</div>
+      <a class="m-footer-email" href="mailto:Astrakhan@klevaydacha30.ru">Astrakhan@klevaydacha30.ru</a>
       <div class="m-footer-socials">
         <a href="https://vk.ru/club11109186" target="_blank" rel="noopener">
           <img src="img/VK PNG.png" alt="VK">
@@ -275,200 +342,294 @@
           <img src="img/Telegram PNG.png" alt="Telegram">
         </a>
       </div>
-      <a href="index.html" class="m-footer-desktop">Полная версия сайта</a>
+      <a href="index.html?desktop=1" class="m-footer-desktop">Полная версия сайта</a>
     </div>
   </footer>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-btn lightbox-prev" id="lightboxPrev" aria-label="Назад">‹</button>
-    <img src="" alt="" class="lightbox-media" id="lightboxImg">
-    <video class="lightbox-media" id="lightboxVideo" controls playsinline></video>
-    <button class="lightbox-btn lightbox-next" id="lightboxNext" aria-label="Вперёд">›</button>
-    <button class="lightbox-close" id="lightboxClose" aria-label="Закрыть">×</button>
+
+  <!-- ===================== ЛАЙТБОКС ===================== -->
+  <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото и видео">
+    <img src="" alt="" class="lb_media" id="lbImg">
+    <video class="lb_media" id="lbVideo" controls playsinline></video>
+
+    <button class="lb_btn lb_prev" id="lbPrev" type="button" aria-label="Назад">‹</button>
+    <button class="lb_btn lb_next" id="lbNext" type="button" aria-label="Вперёд">›</button>
+    <button class="lb_close" id="lbClose" type="button" aria-label="Закрыть">×</button>
+    <div class="lb_count" id="lbCount"></div>
   </div>
 
+
   <script>
-    /* ===== Burger menu ===== */
-    const burger = document.getElementById('mBurger');
-    const nav = document.getElementById('mNav');
-    const overlay = document.getElementById('mNavOverlay');
-    const navClose = document.getElementById('mNavClose');
+    (function () {
+      'use strict';
 
-    function openNav() {
-      nav.classList.add('is-open');
-      overlay.classList.add('is-open');
-      burger.classList.add('is-open');
-      burger.setAttribute('aria-expanded', 'true');
-      nav.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
+      const $ = (s, r) => (r || document).querySelector(s);
+      const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+      const root = document.documentElement;
 
-    function closeNav() {
-      nav.classList.remove('is-open');
-      overlay.classList.remove('is-open');
-      burger.classList.remove('is-open');
-      burger.setAttribute('aria-expanded', 'false');
-      nav.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    burger.addEventListener('click', () => {
-      if (nav.classList.contains('is-open')) closeNav();
-      else openNav();
-    });
-    overlay.addEventListener('click', closeNav);
-    navClose.addEventListener('click', closeNav);
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-
-    /* ===== Header shrink ===== */
-    const header = document.getElementById('mHeader');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) header.classList.add('shrink');
-      else header.classList.remove('shrink');
-    }, { passive: true });
-
-    /* ===== Gallery tabs ===== */
-    const tabs = document.querySelectorAll('.m-tab[data-gallery]');
-    const galleryMain = document.getElementById('gallery_main');
-    const galleryVisitors = document.getElementById('gallery_visitors');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('is-active'));
-        tab.classList.add('is-active');
-        const target = tab.dataset.gallery;
-        if (target === 'main') {
-          galleryMain.classList.remove('is-hidden');
-          galleryMain.hidden = false;
-          galleryVisitors.classList.add('is-hidden');
-          galleryVisitors.hidden = true;
-        } else {
-          galleryMain.classList.add('is-hidden');
-          galleryMain.hidden = true;
-          galleryVisitors.classList.remove('is-hidden');
-          galleryVisitors.hidden = false;
-        }
-        setTimeout(bindGalleryClicks, 40);
-      });
-    });
-
-    /* ===== Lightbox ===== */
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxVideo = document.getElementById('lightboxVideo');
-    const btnPrev = document.getElementById('lightboxPrev');
-    const btnNext = document.getElementById('lightboxNext');
-    const btnClose = document.getElementById('lightboxClose');
-
-    let currentGallery = [];
-    let currentIndex = 0;
-
-    function getVisibleGalleryItems() {
-      return Array.from(document.querySelectorAll('.gallery_img')).filter(item => {
-        const parent = item.closest('.m-gallery-grid, .m-video-list');
-        if (!parent) return true;
-        if (parent.classList.contains('is-hidden') || parent.hidden) return false;
-        return true;
-      });
-    }
-
-    function showMedia(index) {
-      if (!currentGallery.length) return;
-      const item = currentGallery[index];
-      lightboxImg.classList.remove('active');
-      lightboxVideo.classList.remove('active');
-      lightboxVideo.pause();
-      lightboxVideo.removeAttribute('src');
-      lightboxVideo.load();
-
-      if (item.tagName === 'VIDEO') {
-        const source = item.querySelector('source');
-        lightboxVideo.src = source ? source.src : item.currentSrc || item.src;
-        lightboxVideo.classList.add('active');
-        lightboxVideo.play().catch(() => {});
-      } else {
-        lightboxImg.src = item.src;
-        lightboxImg.alt = item.alt || '';
-        lightboxImg.classList.add('active');
+      // ================= Блокировка прокрутки страницы (меню / лайтбокс) =================
+      let menuOpen = false;
+      let lbOpen = false;
+      function updateScrollLock() {
+        root.classList.toggle('no-scroll', menuOpen || lbOpen);
       }
-    }
 
-    function openLightbox(index) {
-      currentGallery = getVisibleGalleryItems();
-      if (!currentGallery.length) return;
-      currentIndex = index;
-      showMedia(currentIndex);
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+      // ================= Шапка: большая -> маленькая =================
+      const header = $('#mHeader');
+      const SHRINK_AT = 40;
+      let isShrunk = false;
 
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      lightboxVideo.pause();
-      lightboxVideo.currentTime = 0;
-      lightboxVideo.removeAttribute('src');
-      document.body.style.overflow = '';
-    }
+      function updateHeader() {
+        const next = window.scrollY > SHRINK_AT;
+        if (next === isShrunk) return;
+        isShrunk = next;
+        header.classList.toggle('shrink', next);
+      }
 
-    function bindGalleryClicks() {
-      document.querySelectorAll('.gallery_img').forEach(item => {
-        item.onclick = null;
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const items = getVisibleGalleryItems();
-          const realIndex = items.indexOf(item);
-          if (realIndex !== -1) openLightbox(realIndex);
+      // ================= Боковое меню (бургер) =================
+      const burger = $('#mBurger');
+      const nav = $('#mNav');
+      const navOverlay = $('#mNavOverlay');
+      const navClose = $('#mNavClose');
+
+      function setNav(open) {
+        menuOpen = open;
+        nav.classList.toggle('is-open', open);
+        navOverlay.classList.toggle('is-open', open);
+        burger.classList.toggle('is-open', open);
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        nav.setAttribute('aria-hidden', open ? 'false' : 'true');
+        updateScrollLock();
+      }
+      burger.addEventListener('click', () => setNav(!menuOpen));
+      navOverlay.addEventListener('click', () => setNav(false));
+      navClose.addEventListener('click', () => setNav(false));
+      $$('#mNav a[href^="#"]').forEach(a => a.addEventListener('click', () => setNav(false)));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) setNav(false); });
+
+      // ================= Верёвка слева =================
+      // Высота верёвки считается так, чтобы она всегда шла от крюка до низа окна,
+      // а в конце страницы — ровно до узла в футере (см. раздел 3 в mobile.css).
+      const rope = $('#scrollRope');
+      const anchor = $('#ropeAnchor');
+      let ropeW = 26, headerBig = 60, headerSmall = 52, anchorBottom = 60, knotEnd = 6.2;
+
+      function measureRope() {
+        const cs = getComputedStyle(root);
+        ropeW = parseFloat(cs.getPropertyValue('--rope-w')) || 26;
+        headerBig = parseFloat(cs.getPropertyValue('--header-h')) || 60;
+        headerSmall = parseFloat(cs.getPropertyValue('--header-h-small')) || 52;
+        anchorBottom = parseFloat(getComputedStyle(anchor).bottom) || 60;
+        knotEnd = 25 * ropeW / 105;   // от низа картинки до места, где верёвка уходит в узел (25 строк из 105)
+      }
+
+      function updateRope() {
+        const vh = root.clientHeight;
+        const y = window.scrollY;
+
+        if (y < headerBig) {
+          rope.style.opacity = '0';
+          rope.style.height = '0px';
+          rope.style.transform = 'translateY(0)';
+          return;
+        }
+
+        const maxScroll = root.scrollHeight - vh;
+        const progress = (y - headerBig) / Math.max(1, maxScroll - headerBig);   // 0..1
+        const clamped = Math.min(Math.max(progress, 0), 1);
+        const move = clamped * (vh - headerSmall);           // на сколько поднялся крюк
+        const ropeTop = vh - move;                           // y крюка в окне
+
+        // Футер — последний блок страницы: считаем положение узла от низа страницы
+        const remaining = Math.max(0, maxScroll - y);
+        const knotY = vh + remaining - (anchorBottom + knotEnd);
+
+        const length = Math.max(0, Math.min(vh, knotY) - ropeTop);
+
+        rope.style.opacity = '1';
+        rope.style.height = length + 'px';
+        rope.style.transform = 'translateY(-' + move + 'px)';
+      }
+
+      // ================= Один обработчик прокрутки =================
+      let ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          updateHeader();
+          updateRope();
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => { measureRope(); onScroll(); });
+      window.addEventListener('orientationchange', () => setTimeout(() => { measureRope(); onScroll(); }, 250));
+      window.addEventListener('load', () => { measureRope(); onScroll(); });   // после загрузки картинок высота страницы меняется
+      measureRope();
+      updateHeader();
+      updateRope();
+
+      // ================= Вкладки галереи =================
+      const tabs = $$('.tab[data-gallery]');
+      const galleries = { main: $('#gallery_main'), visitors: $('#gallery_visitors') };
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const target = tab.dataset.gallery;
+          tabs.forEach(t => t.setAttribute('aria-selected', t === tab ? 'true' : 'false'));
+          Object.keys(galleries).forEach(k => { galleries[k].hidden = (k !== target); });
         });
       });
-    }
 
-    bindGalleryClicks();
+      // ================= Лайтбокс (фото и видео, свайпы, кнопки, клавиатура) =================
+      const lb = $('#lightbox');
+      const lbImg = $('#lbImg');
+      const lbVideo = $('#lbVideo');
+      const lbPrev = $('#lbPrev');
+      const lbNext = $('#lbNext');
+      const lbClose = $('#lbClose');
+      const lbCount = $('#lbCount');
 
-    btnPrev.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!currentGallery.length) return;
-      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-      showMedia(currentIndex);
-    });
+      let items = [];
+      let index = 0;
+      let lbHistory = false;
 
-    btnNext.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!currentGallery.length) return;
-      currentIndex = (currentIndex + 1) % currentGallery.length;
-      showMedia(currentIndex);
-    });
+      function showMedia(i) {
+        if (!items.length) return;
+        index = (i + items.length) % items.length;
+        const el = items[index];
 
-    btnClose.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeLightbox();
-    });
+        // Сброс
+        lbImg.classList.remove('active');
+        lbVideo.classList.remove('active');
+        lbVideo.pause();
+        lbVideo.removeAttribute('src');
+        lbVideo.load();
 
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
+        const video = el.tagName === 'VIDEO' ? el : el.querySelector('video');
+        if (video) {
+          const source = video.querySelector('source');
+          const src = (source ? source.getAttribute('src') : video.getAttribute('src') || '').split('#')[0];
+          lbVideo.src = src;
+          lbVideo.classList.add('active');
+          const p = lbVideo.play();
+          if (p && p.catch) p.catch(() => { });
+        } else {
+          lbImg.src = el.currentSrc || el.src;
+          lbImg.alt = el.alt || '';
+          lbImg.classList.add('active');
+        }
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'ArrowLeft') btnPrev.click();
-      else if (e.key === 'ArrowRight') btnNext.click();
-      else if (e.key === 'Escape') closeLightbox();
-    });
-
-    /* Swipe support for lightbox */
-    let touchStartX = 0;
-    lightbox.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    lightbox.addEventListener('touchend', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      const dx = e.changedTouches[0].screenX - touchStartX;
-      if (Math.abs(dx) > 50) {
-        if (dx < 0) btnNext.click();
-        else btnPrev.click();
+        lbCount.textContent = (index + 1) + ' / ' + items.length;
+        const single = items.length < 2;
+        lbPrev.style.display = lbNext.style.display = single ? 'none' : '';
       }
-    }, { passive: true });
+
+      function openLightbox(el) {
+        const group = el.dataset.group;
+        items = $$('[data-group="' + group + '"]');
+        const i = items.indexOf(el);
+        if (i === -1) return;
+
+        lb.classList.add('active');
+        lbOpen = true;
+        updateScrollLock();
+        showMedia(i);
+
+        // Кнопка «Назад» на телефоне закрывает лайтбокс, а не уходит со страницы
+        try { history.pushState({ lb: 1 }, ''); lbHistory = true; } catch (e) { lbHistory = false; }
+      }
+
+      function closeLightbox(fromPop) {
+        if (!lb.classList.contains('active')) return;
+        lb.classList.remove('active');
+        lbOpen = false;
+        lbVideo.pause();
+        lbVideo.removeAttribute('src');
+        lbVideo.load();
+        updateScrollLock();
+        if (lbHistory && !fromPop) { lbHistory = false; history.back(); }
+        lbHistory = false;
+      }
+      window.addEventListener('popstate', () => closeLightbox(true));
+
+      // Клики по фото и видео (делегирование)
+      document.addEventListener('click', e => {
+        const el = e.target.closest('[data-group]');
+        if (el) openLightbox(el);
+      });
+      $$('.vwrap').forEach(w => w.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(w); }
+      }));
+
+      lbPrev.addEventListener('click', e => { e.stopPropagation(); showMedia(index - 1); });
+      lbNext.addEventListener('click', e => { e.stopPropagation(); showMedia(index + 1); });
+      lbClose.addEventListener('click', e => { e.stopPropagation(); closeLightbox(); });
+      lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+      // Свайп: влево — следующее, вправо — предыдущее
+      let tx = 0, ty = 0, tracking = false;
+      lb.addEventListener('touchstart', e => {
+        if (e.touches.length !== 1 || e.target === lbVideo) { tracking = false; return; }
+        tracking = true;
+        tx = e.touches[0].clientX;
+        ty = e.touches[0].clientY;
+      }, { passive: true });
+      lb.addEventListener('touchend', e => {
+        if (!tracking) return;
+        tracking = false;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - tx;
+        const dy = t.clientY - ty;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+          showMedia(index + (dx < 0 ? 1 : -1));
+        }
+      }, { passive: true });
+
+      // Клавиатура (если подключена, например на планшете)
+      document.addEventListener('keydown', e => {
+        if (!lb.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') lbPrev.click();
+        else if (e.key === 'ArrowRight') lbNext.click();
+        else if (e.key === 'Escape') closeLightbox();
+      });
+
+      // ================= Карта Яндекса =================
+      // Подгружаем, когда блок приближается к экрану: экономит трафик и ускоряет первую загрузку.
+      // width=100% — карта сама растягивается по ширине экрана.
+      const MAP_SRC = 'https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A673fbc03c9a505d1f076be50421331af568be73dd1821bf600b252d53241b5a3&width=100%&height=380&lang=ru_RU&scroll=true';
+      const mapBox = $('#mapBox');
+      const mapSlot = $('#mapSlot');
+      const mapShield = $('#mapShield');
+      let mapLoaded = false;
+
+      function loadMap() {
+        if (mapLoaded) return;
+        mapLoaded = true;
+        const s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.charset = 'utf-8';
+        s.async = true;
+        s.src = MAP_SRC;
+        mapSlot.appendChild(s);
+      }
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) { loadMap(); io.disconnect(); }
+        }, { rootMargin: '400px 0px' });
+        io.observe(mapBox);
+      } else {
+        loadMap();
+      }
+
+      // «Щит» над картой: тап включает управление картой, тап вне карты — возвращает прокрутку страницы
+      mapShield.addEventListener('click', () => mapShield.classList.add('off'));
+      document.addEventListener('pointerdown', e => {
+        if (!mapBox.contains(e.target)) mapShield.classList.remove('off');
+      }, { passive: true });
+    })();
   </script>
 </body>
+
 </html>

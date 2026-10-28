@@ -4,6 +4,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Переадресация на мобильную версию (mobile.html).
+    // Когда уходим: телефон/небольшой планшет (по User-Agent или сенсорный экран с короткой стороной <= 900px)
+    //               или узкое окно браузера (<= 768px).
+    // Не уходим, если посетитель сам выбрал «Полную версию» (?desktop=1 — запоминаем на время вкладки).
+    (function () {
+      try {
+        var KEY = 'kd_full_version';
+        var coarse = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+
+        // Выбрана полная версия?
+        var wantFull = /[?&]desktop=1(&|$)/.test(location.search);
+        if (wantFull) { try { sessionStorage.setItem(KEY, '1'); } catch (e) { } }
+        else { try { wantFull = sessionStorage.getItem(KEY) === '1'; } catch (e) { } }
+
+        if (wantFull) {
+          // На телефоне показываем полную версию как «сайт для компьютера»: ширина 1280, масштаб подберёт браузер
+          if (coarse) {
+            var vp = document.querySelector('meta[name="viewport"]');
+            if (vp) vp.setAttribute('content', 'width=1280');
+          }
+          return;
+        }
+
+        var ua = /Android.+Mobile|iPhone|iPod|IEMobile|Windows Phone|Opera Mini|Mobi/i.test(navigator.userAgent);
+        var smallTouch = coarse && Math.min(screen.width, screen.height) <= 900;
+        var narrow = window.innerWidth <= 768;
+
+        if (ua || smallTouch || narrow) {
+          location.replace('mobile.html' + location.hash);
+        }
+      } catch (e) { /* при любой ошибке просто остаёмся на этой странице */ }
+    })();
+  </script>
   <title>Клёвая Дача 30</title>
   <link rel="icon" href="img/Logo_zaglyshka_icon.png">
   <link rel="stylesheet" href="style.css">
