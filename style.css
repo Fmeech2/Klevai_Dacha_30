@@ -1680,3 +1680,136 @@ footer .shapka_text_right_3 {
 .gallery_img.pos_left_20 {
   object-position: 20% center;
 }
+
+
+/* =====================================================================
+   СОСТОЯНИЯ КНОПОК (добавлено при аудите)
+   Единые правила для всего сайта:
+     нажатие   — кнопка «вдавливается» (scale 0.96–0.98), отклик быстрый (~0.1с)
+     отпускание — плавный возврат (0.15–0.25с, берётся из transition базового состояния)
+     наведение — лёгкий «подъём» или смена цвета (только устройства с мышью)
+     фокус с клавиатуры (Tab) — заметная обводка; мышью/пальцем не показывается
+     отключено / загрузка — приглушённый вид (пригодится, когда подключите форму отзывов)
+   Блок стоит в конце файла, поэтому дополняет, а не ломает правила выше.
+   ===================================================================== */
+
+/* ---------- Фокус с клавиатуры (Tab) ---------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #2F80ED;
+  outline-offset: 3px;
+}
+
+/* на синей шапке, синем футере и тёмном лайтбоксе обводка белая */
+.shapka a:focus-visible,
+.shapka button:focus-visible,
+footer a:focus-visible,
+footer button:focus-visible,
+.lightbox button:focus-visible {
+  outline-color: #fff;
+}
+
+/* кнопки-«таблетки» лежат внутри ссылок: обводку рисуем один раз, вокруг кнопки */
+.nav_link:focus-visible { outline: none; }
+.nav_link:focus-visible button { outline: 3px solid #2F80ED; outline-offset: 3px; }
+.nav_button:focus-visible,
+.nav_link button:focus-visible { background-color: #E5E7EB; }
+
+/* иконки мессенджеров: с клавиатуры — тот же «прыжок», что и при наведении мышью */
+.logo_messenger:focus-visible img {
+  transform: scale(1.25) rotate(5deg);
+  filter: brightness(1.1);
+}
+
+/* логотип: с клавиатуры крюк выезжает так же, как при наведении
+   (:has — чтобы не срабатывало после обычного клика мышью) */
+.shapka:not(.shrink) .logo-wrapper:has(:focus-visible) .hook {
+  transform: translateY(86px);
+}
+
+/* ---------- «Забронировать» (раньше у кнопки не было НИ ОДНОГО состояния) ---------- */
+.hero_left_BUTTON {
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .hero_left_BUTTON:hover {
+    background-color: #3bb8e0;               /* тот же цвет, что у «Отправить» */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(86, 204, 242, 0.45);
+  }
+}
+.hero_left_BUTTON:active {
+  background-color: #2fa9d3;
+  transform: scale(0.97);
+  box-shadow: none;
+  transition-duration: 0.08s;
+}
+
+/* ---------- «Написать в Вацап» (раньше без реакции) ---------- */
+.hero_left_5 {
+  cursor: pointer;
+  transform-origin: left center;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+@media (hover: hover) {
+  .hero_left_5:hover { color: #4DC4EC; transform: translateX(3px); }
+}
+.hero_left_5:active {
+  color: #2BB3DE;
+  transform: scale(0.97);
+  transition-duration: 0.08s;
+}
+
+/* ---------- Поля формы: наведение и заметный фокус ---------- */
+.review_input,
+.review_textarea {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .review_input:hover,
+  .review_textarea:hover { background: #e2e5e9; }
+}
+.review_input:focus,
+.review_textarea:focus {
+  background: #dde0e4;
+  box-shadow: 0 0 0 2px #56CCF2;             /* раньше фокус отличался только оттенком серого */
+}
+
+/* ---------- Лайтбокс: нажатие у стрелок и крестика ---------- */
+.lightbox-btn:active {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateY(-50%) scale(0.92);
+  transition-duration: 0.1s;
+}
+.lightbox-close:hover { transform: scale(1.1); }
+.lightbox-close:active {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0.92);
+  transition-duration: 0.1s;
+}
+
+/* ---------- Галерея: нажатие на фото и на видео ---------- */
+.gallery_img:active {
+  transform: scale(0.99);
+  transition-duration: 0.1s;
+}
+.video-wrapper:active .play-icon {
+  background: rgba(0, 0, 0, 0.85);
+  transform: translate(-50%, -50%) scale(0.92);
+  transition-duration: 0.1s;
+}
+
+/* ---------- Отключено / идёт отправка ---------- */
+.review_submit:disabled,
+.hero_left_BUTTON:disabled,
+.nav_button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.review_submit[aria-busy="true"] {
+  opacity: 0.75;
+  cursor: progress;
+}

@@ -244,6 +244,8 @@ main { padding-top: var(--header-h); }
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;          /* без этого iPhone иногда не считает затемнение «нажимаемым» */
+  touch-action: none;       /* жесты на затемнении обрабатывает JS (свайп вправо закрывает меню) */
 }
 
 .m-nav-overlay.is-open {
@@ -266,6 +268,8 @@ main { padding-top: var(--header-h); }
   padding: 20px 0 24px;
   box-shadow: -4px 0 24px rgba(0,0,0,0.15);
   overflow-y: auto;
+  touch-action: pan-y;      /* вертикально меню прокручивается, горизонтальный свайп — закрытие */
+  overscroll-behavior: contain;
 }
 
 .m-nav.is-open {
@@ -307,9 +311,14 @@ main { padding-top: var(--header-h); }
   transition: background 0.2s ease;
 }
 
-.m-nav-links a:active,
-.m-nav-links a:hover {
+.m-nav-links a:active {
   background: #f0f4f8;
+}
+
+@media (hover: hover) {
+  .m-nav-links a:hover {
+    background: #f0f4f8;
+  }
 }
 
 .m-nav-contacts {
@@ -413,6 +422,12 @@ main { padding-top: var(--header-h); }
   font-size: clamp(31px, 9.4vw, 48px);
   line-height: 1.06;
   color: var(--ink);
+      filter: 
+      drop-shadow(0 0 4px #fff) 
+      drop-shadow(0 0 6px #fff) 
+      drop-shadow(0 0 10px #fff) 
+      drop-shadow(0 0 14px #fff) 
+      drop-shadow(0 0 20px #fff);
 }
 .hero_desc {
   margin-top: 14px;
@@ -959,6 +974,107 @@ video.lb_media { width: 100%; height: auto; max-height: 100dvh; background: #000
   :root { --pad-l: 24px; --pad-r: 14px; }
 }
 
+/* ==================== 11. СОСТОЯНИЯ КНОПОК (добавлено при аудите) ====================
+   На телефоне нет «наведения», а системная подсветка тапа отключена
+   (-webkit-tap-highlight-color: transparent), поэтому единственная обратная связь —
+   состояние :active. Правила:
+     нажатие   — кнопка вдавливается (scale 0.88–0.98) и/или темнеет, отклик ~0.15с
+     отпускание — плавный возврат
+     hover     — только для устройств с мышью (@media (hover: hover)), чтобы не «залипал» на телефоне
+     фокус с клавиатуры — заметная обводка (:focus-visible) */
+
+/* Убирает задержку и случайное увеличение при двойном тапе по кнопкам и ссылкам */
+a, button, .vwrap, .gimg { touch-action: manipulation; }
+
+/* ---------- Фокус с клавиатуры ---------- */
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.m-header :focus-visible,
+.m-footer :focus-visible,
+.lb :focus-visible { outline-color: #fff; }
+.review_input:focus-visible,
+.review_textarea:focus-visible { outline: none; }        /* у полей своя обводка (box-shadow) */
+.map_shield:focus-visible { outline-offset: -4px; }       /* карта обрезает всё, что выходит за её рамку */
+
+/* ---------- Подготовка плавных переходов ---------- */
+.m-burger,
+.m-nav-close {
+  border-radius: 50%;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.m-logo { transition: width 0.3s ease, height 0.3s ease, transform 0.15s ease; }
+.m-nav-links a { transition: background 0.2s ease, transform 0.15s ease; }
+
+.m-nav-phone, .m-nav-desktop, .hero_phone, .hero_wa, .where_tel {
+  transform-origin: left center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.m-footer-email, .m-footer-desktop {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.m-footer-phone-row a { transition: opacity 0.15s ease; }
+
+.m-nav-socials a,
+.m-footer-socials a {
+  border-radius: 12px;
+  transition: transform 0.15s ease, background-color 0.2s ease;
+}
+.map_shield span { transition: transform 0.15s ease, background-color 0.2s ease; }
+.tab { transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease; }
+.gimg, .vwrap { transition: transform 0.15s ease; }
+.play-icon { transition: background-color 0.2s ease, transform 0.15s ease; }
+.lb_btn, .lb_close { transition: background 0.2s ease, transform 0.15s ease; }
+
+/* ---------- Наведение мышью (на телефоне не применяется) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover,
+  .review_submit:hover { background: #3bb8e0; }
+  .m-burger:hover { background-color: rgba(255, 255, 255, 0.14); }
+  .m-nav-close:hover { background-color: #f0f4f8; }
+  .tab:hover:not([aria-selected="true"]) { background: var(--pill-active); }
+  .gimg:hover { transform: scale(1.02); }
+  .vwrap:hover .play-icon { background: rgba(0, 0, 0, 0.75); transform: translate(-50%, -50%) scale(1.1); }
+  .m-nav-socials a:hover,
+  .m-footer-socials a:hover { transform: scale(1.1); }
+  .lb_btn:hover,
+  .lb_close:hover { background: rgba(255, 255, 255, 0.3); }
+}
+
+/* ---------- Нажатие (стоит ПОСЛЕ hover, чтобы при нажатии побеждало оно) ---------- */
+.m-burger:active { background-color: rgba(255, 255, 255, 0.22); transform: scale(0.9); }
+.m-nav-close:active { background-color: #f0f4f8; transform: scale(0.9); }
+.m-header-inner > a:active .m-logo { transform: scale(0.92); }
+.m-nav-links a:active { transform: scale(0.98); }
+
+.m-nav-phone:active,
+.m-nav-desktop:active,
+.hero_phone:active,
+.hero_wa:active,
+.where_tel:active { opacity: 0.65; transform: scale(0.97); }
+.m-footer-email:active,
+.m-footer-desktop:active { opacity: 0.6; transform: scale(0.97); }
+.m-footer-phone-row a:active { opacity: 0.6; }
+
+.m-nav-socials a:active { transform: scale(0.88); background-color: rgba(47, 128, 237, 0.12); }
+.m-footer-socials a:active { transform: scale(0.88); background-color: rgba(255, 255, 255, 0.2); }
+
+.map_shield:active span { transform: scale(0.94); background-color: rgba(0, 0, 0, 0.75); }
+.tab:active { transform: scale(0.96); }
+.gimg:active,
+.vwrap:active { transform: scale(0.98); }
+.vwrap:active .play-icon { background-color: rgba(0, 0, 0, 0.75); transform: translate(-50%, -50%) scale(0.92); }
+.lb_btn:active,
+.lb_close:active { transform: scale(0.9); }
+
+/* ---------- Отключено / идёт отправка ---------- */
+.review_submit:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+.review_submit[aria-busy="true"] { opacity: 0.75; cursor: progress; }
+
+
 /* Уважаем настройку «уменьшить анимацию» */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -981,18 +1097,18 @@ video.lb_media { width: 100%; height: auto; max-height: 100dvh; background: #000
   margin: 0 auto;
 
   /* Градиент снизу: полностью видима сверху → полностью прозрачна внизу */
-  -webkit-mask-image: linear-gradient(
+  /*-webkit-mask-image: linear-gradient(
     to bottom,
     #000 0%,
-    #000 55%,          /* до этой высоты рыба полностью непрозрачна */
-    transparent 100%   /* в самом низу полностью прозрачна */
+    #000 55%,           до этой высоты рыба полностью непрозрачна 
+    transparent 100%    в самом низу полностью прозрачна 
   );
   mask-image: linear-gradient(
     to bottom,
     #000 0%,
     #000 55%,
     transparent 100%
-  );
+  );*/
 }
 
 /* Карточка дома — на мобиле на всю ширину */
@@ -1014,6 +1130,7 @@ video.lb_media { width: 100%; height: auto; max-height: 100dvh; background: #000
   border-radius: 0;
   background: var(--card-2);
   color: #fff;
+  border-radius: 20px;
 }
 
 /* На широких экранах (≥620px) возвращаем обычный вид */
@@ -1028,8 +1145,3 @@ video.lb_media { width: 100%; height: auto; max-height: 100dvh; background: #000
     padding: 12px 12px 16px;
   }
 }
-
-
-
-
-

@@ -407,6 +407,75 @@
       $$('#mNav a[href^="#"]').forEach(a => a.addEventListener('click', () => setNav(false)));
       document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) setNav(false); });
 
+      // ----- Закрытие меню без крестика -----
+      // 1) Тап по пустому месту слева от меню. Затемнение уже закрывало меню, но верхняя полоса
+      //    экрана принадлежит шапке (она лежит выше затемнения) — тап по ней ничего не делал.
+      //    Тап по самому бургеру не трогаем: он открывает и закрывает меню сам.
+      header.addEventListener('click', e => {
+        if (menuOpen && !e.target.closest('#mBurger')) setNav(false);
+      });
+
+      // 2) Свайп вправо: меню едет за пальцем. Отпустили после 30% ширины или быстрым
+      //    движением — закрывается, иначе плавно возвращается на место.
+      let swipeX = 0, swipeY = 0, swipeT = 0, swipeW = 0;
+      let swipeTracking = false, swipeDecided = false, swipeDragging = false;
+
+      function swipeReset() {
+        nav.style.transition = '';
+        nav.style.transform = '';
+        navOverlay.style.transition = '';
+        navOverlay.style.opacity = '';
+      }
+      function swipeStart(e) {
+        if (!menuOpen || e.touches.length !== 1) return;
+        swipeX = e.touches[0].clientX;
+        swipeY = e.touches[0].clientY;
+        swipeT = Date.now();
+        swipeW = nav.offsetWidth || 300;
+        swipeTracking = true;
+        swipeDecided = false;
+        swipeDragging = false;
+      }
+      function swipeMove(e) {
+        if (!swipeTracking) return;
+        const dx = e.touches[0].clientX - swipeX;
+        const dy = e.touches[0].clientY - swipeY;
+        if (!swipeDecided) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;     // ещё не понятно, куда ведёт палец
+          swipeDecided = true;
+          swipeDragging = dx > 0 && Math.abs(dx) > Math.abs(dy) * 1.2;   // тянут вправо, а не прокручивают вниз
+          if (swipeDragging) {
+            nav.style.transition = 'none';
+            navOverlay.style.transition = 'none';
+          }
+        }
+        if (!swipeDragging) return;
+        const x = Math.max(0, dx);
+        nav.style.transform = 'translateX(' + x + 'px)';
+        navOverlay.style.opacity = String(Math.max(0, 1 - x / swipeW));
+      }
+      function swipeEnd(e) {
+        if (!swipeTracking) return;
+        swipeTracking = false;
+        if (!swipeDragging) return;
+        swipeDragging = false;
+        const dx = Math.max(0, e.changedTouches[0].clientX - swipeX);
+        const speed = dx / Math.max(1, Date.now() - swipeT);            // px за мс
+        const shouldClose = dx > swipeW * 0.3 || (speed > 0.5 && dx > 30);
+        swipeReset();                       // дальше CSS-переход доезжает сам: до закрытия или назад
+        if (shouldClose) setNav(false);
+      }
+      function swipeCancel() {
+        swipeTracking = false;
+        if (swipeDragging) { swipeDragging = false; swipeReset(); }
+      }
+      [nav, navOverlay, header].forEach(el => {
+        el.addEventListener('touchstart', swipeStart, { passive: true });
+        el.addEventListener('touchmove', swipeMove, { passive: true });
+        el.addEventListener('touchend', swipeEnd, { passive: true });
+        el.addEventListener('touchcancel', swipeCancel, { passive: true });
+      });
+
       // ================= Верёвка слева =================
       // Высота верёвки считается так, чтобы она всегда шла от крюка до низа окна,
       // а в конце страницы — ровно до узла в футере (см. раздел 3 в mobile.css).
