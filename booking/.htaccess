@@ -1,0 +1,30 @@
+# КЛЁВАЯ ДАЧА — защита служебных файлов бронирования (Apache).
+# Если сайт работает на nginx, этот файл не действует: см. УСТАНОВКА.md, раздел «nginx».
+
+Options -Indexes
+
+# lib.php и config.php подключаются только из PHP и не должны открываться напрямую
+<FilesMatch "^(lib|config)\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Данные, блокировки, журналы
+<FilesMatch "\.(json|lock|log|1)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+</IfModule>

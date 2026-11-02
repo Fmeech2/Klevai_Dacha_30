@@ -1,0 +1,189 @@
+{
+    "version": 1,
+    "meta": {
+        "nextRequestNumber": 5
+    },
+    "requests": [
+        {
+            "id": "req_dbc7e31d09774177",
+            "number": 1,
+            "firstName": "Nikolay",
+            "lastName": "Shavin",
+            "patronymic": "",
+            "phone": "+79171804238",
+            "comment": "",
+            "checkIn": "2026-11-04",
+            "checkOut": "2026-11-14",
+            "status": "new",
+            "createdAt": "2026-10-29T16:19:06+04:00",
+            "updatedAt": "2026-10-29T16:19:06+04:00",
+            "consentAt": "2026-10-29T16:19:06+04:00",
+            "device": {
+                "type": "pc",
+                "page": "desktop",
+                "label": "Windows 10/11, Opera 138, экран 1920×1080, полная версия сайта",
+                "screen": "1920x1080",
+                "lang": "ru",
+                "timezone": "Europe/Astrakhan",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 OPR/138.0.0.0 (Edition Yx GX)"
+            },
+            "notificationStatus": "not_configured",
+            "notificationError": "not_configured",
+            "notificationAttempts": 1,
+            "notifiedAt": null,
+            "bookingId": null,
+            "adminNote": "",
+            "statusHistory": [
+                {
+                    "at": "2026-10-29T16:19:06+04:00",
+                    "status": "new",
+                    "by": "visitor"
+                }
+            ],
+            "lastNotificationAt": "2026-10-29T16:19:06+04:00"
+        },
+        {
+            "id": "req_c680e7d69a34a702",
+            "number": 2,
+            "firstName": "Елена",
+            "lastName": "",
+            "patronymic": "",
+            "phone": "+78888888888",
+            "comment": "",
+            "checkIn": "2026-10-29",
+            "checkOut": "2026-10-31",
+            "status": "new",
+            "createdAt": "2026-10-29T16:41:37+04:00",
+            "updatedAt": "2026-10-29T16:41:37+04:00",
+            "consentAt": "2026-10-29T16:41:37+04:00",
+            "device": {
+                "type": "pc",
+                "page": "desktop",
+                "label": "Windows 10/11, Opera 138, экран 1920×1080, полная версия сайта",
+                "screen": "1920x1080",
+                "lang": "ru",
+                "timezone": "Europe/Astrakhan",
+                "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36 OPR/138.0.0.0 (Edition Yx GX)"
+            },
+            "notificationStatus": "sent",
+            "notificationError": "",
+            "notificationAttempts": 2,
+            "notifiedAt": "2026-10-29T17:42:11+04:00",
+            "bookingId": null,
+            "adminNote": "",
+            "statusHistory": [
+                {
+                    "at": "2026-10-29T16:41:37+04:00",
+                    "status": "new",
+                    "by": "visitor"
+                }
+            ],
+            "lastNotificationAt": "2026-10-29T17:42:11+04:00"
+        },
+        {
+            "id": "req_2e5661b07f1c5241",
+            "number": 3,
+            "firstName": "Телефонный клиент",
+            "lastName": "",
+            "patronymic": "",
+            "phone": "+79171804238",
+            "comment": "",
+            "checkIn": "2026-10-30",
+            "checkOut": "2026-10-31",
+            "status": "new",
+            "createdAt": "2026-10-29T17:48:12+04:00",
+            "updatedAt": "2026-10-29T17:48:12+04:00",
+            "consentAt": "2026-10-29T17:48:12+04:00",
+            "device": {
+                "type": "phone",
+                "page": "mobile",
+                "label": "Android 10, MGA-LX9N, Яндекс Браузер 26, экран 360×800, мобильная версия сайта",
+                "screen": "360x800",
+                "lang": "ru-RU",
+                "timezone": "Europe/Samara",
+                "userAgent": "Mozilla/5.0 (Linux; arm_64; Android 10; MGA-LX9N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.119 YaBrowser/26.8.3.119.00 Mobile Safari/537.36"
+            },
+            "notificationStatus": "sent",
+            "notificationError": "",
+            "notificationAttempts": 1,
+            "notifiedAt": "2026-10-29T17:48:13+04:00",
+            "bookingId": null,
+            "adminNote": "",
+            "statusHistory": [
+                {
+                    "at": "2026-10-29T17:48:12+04:00",
+                    "status": "new",
+                    "by": "visitor"
+                }
+            ],
+            "lastNotificationAt": "2026-10-29T17:48:13+04:00"
+        },
+        {
+            "id": "req_3858e32376a766bd",
+            "number": 4,
+            "firstName": "Борис",
+            "lastName": "",
+            "patronymic": "",
+            "phone": "+79171890830",
+            "comment": "",
+            "checkIn": "2026-10-30",
+            "checkOut": "2026-10-31",
+            "status": "confirmed",
+            "createdAt": "2026-10-29T17:58:14+04:00",
+            "updatedAt": "2026-10-29T18:01:29+04:00",
+            "consentAt": "2026-10-29T17:58:14+04:00",
+            "device": {
+                "type": "phone",
+                "page": "mobile",
+                "label": "Android 10, Chrome 138, экран 343×686, мобильная версия сайта",
+                "screen": "343x686",
+                "lang": "ru-RU",
+                "timezone": "Europe/Samara",
+                "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+            },
+            "notificationStatus": "sent",
+            "notificationError": "",
+            "notificationAttempts": 2,
+            "notifiedAt": "2026-10-29T17:59:30+04:00",
+            "bookingId": "bk_628a64c4962ae922",
+            "adminNote": "",
+            "statusHistory": [
+                {
+                    "at": "2026-10-29T17:58:14+04:00",
+                    "status": "new",
+                    "by": "visitor"
+                },
+                {
+                    "at": "2026-10-29T18:01:29+04:00",
+                    "status": "confirmed",
+                    "by": "admin"
+                }
+            ],
+            "lastNotificationAt": "2026-10-29T17:59:30+04:00"
+        }
+    ],
+    "bookings": [
+        {
+            "id": "bk_c15a31f8b8280ae4",
+            "checkIn": "2026-10-29",
+            "checkOut": "2026-10-30",
+            "source": "manual",
+            "requestId": null,
+            "note": "Тестовая оплата будет тестово наличными при встрече",
+            "status": "active",
+            "createdAt": "2026-10-29T16:59:23+04:00",
+            "updatedAt": "2026-10-29T16:59:23+04:00"
+        },
+        {
+            "id": "bk_628a64c4962ae922",
+            "checkIn": "2026-10-30",
+            "checkOut": "2026-10-31",
+            "source": "request",
+            "requestId": "req_3858e32376a766bd",
+            "note": "",
+            "status": "active",
+            "createdAt": "2026-10-29T18:01:29+04:00",
+            "updatedAt": "2026-10-29T18:01:29+04:00"
+        }
+    ]
+}

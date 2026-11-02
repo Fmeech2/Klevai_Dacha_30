@@ -1813,3 +1813,307 @@ footer button:focus-visible,
   opacity: 0.75;
   cursor: progress;
 }
+
+
+
+/* =====================================================================
+   БРОНИРОВАНИЕ — модальное окно, календарь и форма (версия для компьютеров)
+   Разметка: блок #bkModal в index.html. Скрипт: блок «БРОНИРОВАНИЕ» в конце index.html.
+   Цвета и скругления — те же, что у кнопок и форм отзывов на сайте.
+   Мобильные стили этих же классов — в mobile.css.
+   ===================================================================== */
+
+/* Пока окно открыто, страница под ним не прокручивается. scrollbar-gutter не даёт
+   странице «прыгать» вправо, когда пропадает полоса прокрутки. */
+html.kd-lock,
+html.kd-lock body { overflow: hidden; }
+html.kd-lock { scrollbar-gutter: stable; }
+
+/* Кнопка «Забронировать» на главном экране (раньше у неё не было курсора-руки и реакции на наведение) */
+.hero_left_BUTTON {
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.hero_left_BUTTON:hover { background-color: #3bb8e0; }
+.hero_left_BUTTON:active { transform: scale(0.97); }
+.hero_left_BUTTON:focus-visible { outline: 3px solid #2F80ED; outline-offset: 3px; }
+
+.bk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;                      /* выше шапки (1000), ниже лайтбокса (9999) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 24, 39, 0.58);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: #1F1F1F;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.bk-overlay,
+.bk-overlay *,
+.bk-overlay *::before,
+.bk-overlay *::after { box-sizing: border-box; }   /* в style.css общего border-box нет */
+.bk-overlay[hidden] { display: none; }
+.bk-overlay.is-open { opacity: 1; }
+
+.bk-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1060px;
+  max-height: 100%;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  transform: translateY(14px) scale(0.985);
+  transition: transform 0.22s ease;
+  outline: none;
+}
+.bk-overlay.is-open .bk-dialog { transform: none; }
+
+.bk-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 38px 42px 34px;
+}
+
+.bk-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 3px;
+  border: 0;
+  border-radius: 50%;
+  background: #F3F4F6;
+  color: #374151;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.bk-close:hover { background: #E5E7EB; }
+
+.bk-title {
+  margin: 0 56px 8px 0;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.15;
+  color: #111;
+}
+.bk-lead { margin: 0 0 24px; max-width: 640px; color: #575757; }
+
+.bk-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: 34px;
+  align-items: start;
+}
+
+/* ----- Календарь ----- */
+
+.bk-cal { padding: 20px 22px 22px; border-radius: 22px; background: #f8f9fb; }
+.bk-cal-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.bk-month { font-weight: 600; font-size: 19px; text-align: center; }
+
+.bk-nav {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 3px;
+  border: 0;
+  border-radius: 50%;
+  background: #F3F4F6;
+  color: #1F1F1F;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.bk-nav:hover:not(:disabled) { background: #E5E7EB; }
+.bk-nav:disabled { opacity: 0.35; cursor: default; }
+
+.bk-week,
+.bk-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.bk-week span { padding: 4px 0 6px; text-align: center; font-size: 13px; font-weight: 500; color: #9ca3af; }
+.bk-grid.is-hidden { display: none; }
+
+.bk-day {
+  aspect-ratio: 1.25 / 1;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  color: #1F1F1F;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.bk-pad { aspect-ratio: 1.25 / 1; }
+.bk-day:hover:not(.is-busy):not(.is-past):not(.is-far):not(.is-start):not(.is-end) { background: #DDF3FB; }
+.bk-day:focus-visible,
+.bk-nav:focus-visible,
+.bk-close:focus-visible,
+.bk-link:focus-visible,
+.bk-submit:focus-visible { outline: 3px solid #2F80ED; outline-offset: 2px; }
+
+.bk-day.is-today { box-shadow: inset 0 0 0 2px #2F80ED; font-weight: 700; }
+.bk-day.is-past,
+.bk-day.is-far { background: transparent; color: #C5CAD3; cursor: default; }
+
+/* Занятая ночь: штриховка, а не только цвет, чтобы различалось и без цвета */
+.bk-day.is-busy {
+  background: repeating-linear-gradient(135deg, #F2C4C0 0 5px, #F9E4E1 5px 10px);
+  color: #9C3F38;
+  cursor: not-allowed;
+}
+/* День заезда следующих гостей: утро свободно, дальше занято */
+.bk-day.is-busy-start { background: linear-gradient(135deg, #fff 50%, #F2C4C0 50%); color: #1F1F1F; cursor: pointer; }
+/* День выезда прежних гостей: утро занято, дальше свободно */
+.bk-day.is-free-end { background: linear-gradient(135deg, #F2C4C0 50%, #fff 50%); }
+
+.bk-day.is-range { background: #D7F0F9; border-radius: 4px; color: #1F1F1F; }
+.bk-day.is-start,
+.bk-day.is-end { background: #56CCF2; color: #fff; font-weight: 700; box-shadow: none; cursor: pointer; }
+
+.bk-calstate { min-height: 0; font-size: 14px; color: #575757; }
+.bk-calstate.is-loading,
+.bk-calstate.is-error { margin: 10px 0 0; padding: 12px 14px; border-radius: 12px; background: #E8F4FB; }
+.bk-calstate.is-error { background: #FDECEA; color: #A3342D; }
+
+.bk-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 13.5px; color: #575757; }
+.bk-legend li { display: flex; align-items: center; gap: 7px; }
+.bk-sw { display: inline-block; width: 18px; height: 18px; border-radius: 6px; background: #fff; box-shadow: inset 0 0 0 1px #d9dde3; }
+.bk-sw-busy { background: repeating-linear-gradient(135deg, #F2C4C0 0 4px, #F9E4E1 4px 8px); box-shadow: none; }
+.bk-sw-sel { background: #56CCF2; box-shadow: none; }
+.bk-sw-past { background: #f1f2f4; box-shadow: none; }
+.bk-hint { margin: 8px 0 0; font-size: 13px; color: #8b93a1; }
+
+.bk-summary { margin: 0 0 12px; padding: 12px 14px; border-radius: 12px; background: #fff; font-weight: 500; }
+.bk-msg { margin: 0 0 12px; padding: 12px 14px; border-radius: 12px; font-size: 14.5px; }
+.bk-msg[hidden] { display: none; }
+.bk-msg.is-error { background: #FDECEA; color: #A3342D; }
+.bk-msg.is-info { background: #E8F4FB; color: #17607E; }
+
+.bk-link {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 6px 2px;
+  border: 0;
+  background: none;
+  color: #2F80ED;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bk-link[hidden] { display: none; }
+.bk-calstate .bk-link { margin: 0 0 0 4px; padding: 0; color: inherit; }
+
+/* ----- Форма ----- */
+
+.bk-form { display: flex; flex-direction: column; gap: 14px; }
+.bk-form-title { margin: 0; font-size: 21px; font-weight: 600; color: #111; }
+.bk-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.bk-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.bk-label { font-size: 14px; font-weight: 500; color: #575757; }
+.bk-req { margin-left: 2px; color: #D8453D; }
+
+.bk-input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  background: #e8eaed;
+  color: #111;
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.bk-input::placeholder { color: #9ca3af; }
+.bk-input:focus { background: #dde0e4; box-shadow: 0 0 0 2px #56CCF2; }
+.bk-input[aria-invalid="true"] { background: #FBEAE9; box-shadow: 0 0 0 2px #E5534B; }
+.bk-textarea { min-height: 96px; padding: 13px 16px; resize: vertical; }
+
+.bk-err { font-size: 13.5px; color: #C0392B; }
+.bk-err:empty { display: none; }
+
+.bk-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #575757; cursor: pointer; }
+.bk-check input { flex: 0 0 auto; width: 22px; height: 22px; margin: 1px 0 0; accent-color: #2F80ED; cursor: pointer; }
+.bk-check a { color: #2F80ED; }
+
+/* Ловушка для ботов: вынесена за экран, а не скрыта display:none */
+.bk-hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+.bk-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: 9999px;
+  background: #56CCF2;
+  color: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.bk-submit:hover:not(:disabled) { background: #3bb8e0; }
+.bk-submit:active:not(:disabled) { transform: scale(0.98); }
+.bk-submit:disabled { cursor: progress; background: #8fdcf3; }
+.bk-spin { display: none; width: 18px; height: 18px; border: 3px solid rgba(255, 255, 255, 0.45); border-top-color: #fff; border-radius: 50%; }
+.bk-submit.is-sending .bk-spin { display: inline-block; animation: bk-rotate 0.8s linear infinite; }
+@keyframes bk-rotate { to { transform: rotate(360deg); } }
+
+.bk-note { margin: 0; font-size: 13.5px; color: #8b93a1; }
+.bk-note a { color: #575757; }
+
+/* ----- После отправки ----- */
+
+.bk-done { max-width: 520px; margin: 0 auto; padding: 24px 0 8px; text-align: center; }
+.bk-done[hidden],
+.bk-main[hidden] { display: none; }
+.bk-done .bk-title { margin: 0 0 14px; outline: none; }
+.bk-done-icon { position: relative; width: 76px; height: 76px; margin: 0 auto 20px; border-radius: 50%; background: #56CCF2; }
+.bk-done-icon::after {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 17px;
+  width: 20px;
+  height: 36px;
+  border: solid #fff;
+  border-width: 0 6px 6px 0;
+  transform: rotate(40deg);
+}
+.bk-done-text { margin: 0 0 12px; font-size: 17px; color: #374151; }
+.bk-done-num { margin: 0 0 22px; font-size: 14px; color: #8b93a1; }
+.bk-done-btn { max-width: 280px; margin: 0 auto; }
+
+@media (max-width: 920px) {
+  .bk-layout { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .bk-scroll { padding: 30px 26px 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bk-overlay, .bk-dialog { transition: none; }
+  .bk-submit.is-sending .bk-spin { animation-duration: 2.4s; }
+}

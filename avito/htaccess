@@ -1,0 +1,5 @@
+# Закрываем всё в папке, кроме reviews.php (там лежат tokens.json и секрет в lib.php)
+Require all denied
+<Files "reviews.php">
+    Require all granted
+</Files>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Проверка прямого соединения (WebRTC)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 0 auto; padding: 16px; line-height: 1.4; }
+  button { padding: 10px 14px; margin: 4px 4px 4px 0; font-size: 16px; }
+  textarea { width: 100%; height: 110px; box-sizing: border-box; font-family: monospace; font-size: 12px; }
+  pre { background: #eee; color: #111; padding: 10px; white-space: pre-wrap; word-break: break-word; min-height: 80px; }
+  .счётчики { font-size: 20px; margin: 10px 0; }
+  [hidden] { display: none; }
+</style>
+</head>
+<body>
+
+<h1>Проверка прямого соединения</h1>
+<p>
+  Страница открывается на двух устройствах в <b>разных сетях</b> (например, ПК и телефон с мобильным интернетом,
+  Wi-Fi на телефоне выключен, VPN выключен). Одно устройство создаёт соединение, другое присоединяется,
+  коды переносятся вручную через чат.
+</p>
+
+<button id="создать">Я создаю соединение</button>
+<button id="присоединиться">Я присоединяюсь</button>
+
+<div id="блокСоздания" hidden>
+  <h3>Шаг 2. Отправь этот код второй стороне</h3>
+  <textarea id="кодПредложения" readonly></textarea>
+  <button id="копироватьПредложение">Копировать</button>
+  <h3>Шаг 3. Вставь сюда ответ второй стороны</h3>
+  <textarea id="кодОтвета"></textarea>
+  <button id="применитьОтвет">Соединить</button>
+</div>
+
+<div id="блокПрисоединения" hidden>
+  <h3>Шаг 2. Вставь код создателя</h3>
+  <textarea id="кодПредложенияВвод"></textarea>
+  <button id="создатьОтвет">Создать ответ</button>
+  <h3>Шаг 3. Отправь этот ответ создателю</h3>
+  <textarea id="кодОтветаВывод" readonly></textarea>
+  <button id="копироватьОтвет">Копировать</button>
+</div>
+
+<div class="счётчики">
+  Отправлено: <b id="счётОтправлено">0</b> &nbsp; Получено: <b id="счётПолучено">0</b>
+</div>
+
+<pre id="журнал"></pre>
+
+<script>
+  const настройкиСоединения = {
+    iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }]
+  };
+
+  const получить = (id) => document.getElementById(id);
+
+  let соединение = null;
+  let канал = null;
+  let отправлено = 0;
+  let получено = 0;
+  let таймерОтправки = null;
+
+  function записать(текст) {
+    получить('журнал').textContent += new Date().toLocaleTimeString() + '  ' + текст + '\n';
+  }
+
+  function обновитьСчётчики() {
+    получить('счётОтправлено').textContent = отправлено;
+    получить('счётПолучено').textContent = получено;
+  }
+
+  function закодировать(описание) {
+    return btoa(JSON.stringify(описание));
+  }
+
+  function раскодировать(текст) {
+    return JSON.parse(atob(текст.trim()));
+  }
+
+  function создатьСоединение() {
+    соединение = new RTCPeerConnection(настройкиСоединения);
+
+    соединение.onconnectionstatechange = () => {
+      записать('Состояние соединения: ' + соединение.connectionState);
+      if (соединение.connectionState === 'failed') {
+        записать('Прямое соединение не удалось: вероятно, у одной из сторон symmetric NAT или CGNAT.');
+      }
+    };
+    соединение.oniceconnectionstatechange = () => записать('ICE: ' + соединение.iceConnectionState);
+    соединение.ondatachannel = (событие) => настроитьКанал(событие.channel);
+  }
+
+  function настроитьКанал(новыйКанал) {
+    канал = новыйКанал;
+
+    канал.onopen = () => {
+      записать('Канал открыт: данные идут по интернету напрямую.');
+      показатьТипПути();
+      таймерОтправки = setInterval(() => {
+        if (канал.readyState === 'open') {
+          отправлено++;
+          канал.send('пинг ' + отправлено);
+          обновитьСчётчики();
+        }
+      }, 500);
+    };
+
+    канал.onmessage = () => {
+      получено++;
+      обновитьСчётчики();
+    };
+
+    канал.onclose = () => {
+      записать('Канал закрыт.');
+      clearInterval(таймерОтправки);
+    };
+  }
+
+  // Ждём, пока браузер соберёт свои адреса (через STUN), и только потом берём код.
+  function дождатьсяСбораАдресов() {
+    return new Promise((готово) => {
+      if (соединение.iceGatheringState === 'complete') {
+        готово();
+        return;
+      }
+      соединение.addEventListener('icegatheringstatechange', () => {
+        if (соединение.iceGatheringState === 'complete') {
+          готово();
+        }
+      });
+      setTimeout(готово, 5000);
+    });
+  }
+
+  // Показывает, каким путём идёт связь: srflx/prflx = прямое соединение через NAT, relay = через сервер.
+  async function показатьТипПути() {
+    try {
+      const статистика = await соединение.getStats();
+      let пара = null;
+
+      статистика.forEach((запись) => {
+        if (запись.type === 'transport' && запись.selectedCandidatePairId) {
+          пара = статистика.get(запись.selectedCandidatePairId);
+        }
+      });
+
+      if (!пара) {
+        статистика.forEach((запись) => {
+          if (запись.type === 'candidate-pair' && запись.state === 'succeeded' && запись.nominated) {
+            пара = запись;
+          }
+        });
+      }
+
+      if (!пара) {
+        return;
+      }
+
+      const локальный = статистика.get(пара.localCandidateId);
+      const удалённый = статистика.get(пара.remoteCandidateId);
+      записать('Путь: ' + (локальный ? локальный.candidateType : '?') + ' -> ' + (удалённый ? удалённый.candidateType : '?'));
+    } catch (ошибка) {
+      записать('Не удалось определить тип пути: ' + ошибка);
+    }
+  }
+
+  async function копировать(идентификатор) {
+    const поле = получить(идентификатор);
+    try {
+      await navigator.clipboard.writeText(поле.value);
+    } catch {
+      поле.select();
+      document.execCommand('copy');
+    }
+  }
+
+  function выполнить(действие) {
+    return async () => {
+      try {
+        await действие();
+      } catch (ошибка) {
+        записать('Ошибка: ' + ошибка);
+      }
+    };
+  }
+
+  получить('создать').onclick = выполнить(async () => {
+    получить('блокСоздания').hidden = false;
+    получить('блокПрисоединения').hidden = true;
+
+    создатьСоединение();
+    // Ненадёжный и неупорядоченный канал: так же, как UDP.
+    настроитьКанал(соединение.createDataChannel('тест', { ordered: false, maxRetransmits: 0 }));
+
+    await соединение.setLocalDescription(await соединение.createOffer());
+    записать('Собираю адреса через STUN...');
+    await дождатьсяСбораАдресов();
+    получить('кодПредложения').value = закодировать(соединение.localDescription);
+    записать('Код готов. Отправь его второй стороне.');
+  });
+
+  получить('применитьОтвет').onclick = выполнить(async () => {
+    await соединение.setRemoteDescription(раскодировать(получить('кодОтвета').value));
+    записать('Ответ принят, устанавливаю соединение...');
+  });
+
+  получить('присоединиться').onclick = () => {
+    получить('блокПрисоединения').hidden = false;
+    получить('блокСоздания').hidden = true;
+  };
+
+  получить('создатьОтвет').onclick = выполнить(async () => {
+    создатьСоединение();
+    await соединение.setRemoteDescription(раскодировать(получить('кодПредложенияВвод').value));
+    await соединение.setLocalDescription(await соединение.createAnswer());
+    записать('Собираю адреса через STUN...');
+    await дождатьсяСбораАдресов();
+    получить('кодОтветаВывод').value = закодировать(соединение.localDescription);
+    записать('Ответ готов. Отправь его создателю.');
+  });
+
+  получить('копироватьПредложение').onclick = () => копировать('кодПредложения');
+  получить('копироватьОтвет').onclick = () => копировать('кодОтветаВывод');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+2026-10-29 12:12:22 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:25 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:26 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:26 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:26 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:27 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:52 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:55 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:12:56 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:13:00 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:13:00 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:13:09 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 12:13:52 [error] Error: Call to undefined function mb_internal_encoding() @ lib.php:91
+2026-10-29 16:19:06 [info] Новая заявка №1
+2026-10-29 16:19:06 [warning] Telegram, заявка №1: not_configured
+2026-10-29 16:41:37 [info] Новая заявка №2
+2026-10-29 16:41:42 [warning] Telegram, заявка №2: curl: Failed to connect to api.telegram.org port 443 after 5002 ms: Timeout was reached
+2026-10-29 17:00:38 [warning] Тест Telegram: curl: Failed to connect to api.telegram.org port 443 after 5003 ms: Timeout was reached
+2026-10-29 17:00:59 [warning] Тест Telegram: curl: Failed to connect to api.telegram.org port 443 after 5002 ms: Timeout was reached
+2026-10-29 17:39:10 [warning] Тест Telegram: curl: URL using bad/illegal format or missing URL
+2026-10-29 17:39:14 [warning] Тест Telegram: curl: URL using bad/illegal format or missing URL
+2026-10-29 17:39:16 [warning] Тест Telegram: curl: URL using bad/illegal format or missing URL
+2026-10-29 17:40:12 [warning] Тест Telegram: telegram 418: Посредник: неверный секрет (PROXY_SECRET)
+2026-10-29 17:42:02 [info] Тест Telegram: отправлено
+2026-10-29 17:42:11 [info] Telegram, заявка №2: отправлено
+2026-10-29 17:48:12 [info] Новая заявка №3
+2026-10-29 17:48:13 [info] Telegram, заявка №3: отправлено
+2026-10-29 17:58:14 [info] Новая заявка №4
+2026-10-29 17:58:29 [warning] Telegram, заявка №4: curl: Resolving timed out after 10002 milliseconds
+2026-10-29 17:59:30 [info] Telegram, заявка №4: отправлено
+2026-10-29 18:05:09 [info] Новая заявка №5
+2026-10-29 18:05:09 [info] Telegram, заявка №5: отправлено
+2026-10-29 18:13:44 [info] Telegram, заявка №1: отправлено
+2026-10-29 18:30:40 [info] Новая заявка №6
+2026-10-29 18:30:41 [info] Telegram, заявка №6: отправлено
+2026-10-29 21:53:23 [info] Новая заявка №7
+2026-10-29 21:53:24 [info] Telegram, заявка №7: отправлено
+2026-10-29 22:50:46 [info] Новая заявка №8
+2026-10-29 22:50:51 [info] Telegram, заявка №8: отправлено
+2026-10-30 14:04:33 [info] Новая заявка №9
+2026-10-30 14:04:34 [info] Telegram, заявка №9: отправлено
+2026-10-30 14:11:26 [info] Новая заявка №10
+2026-10-30 14:11:27 [info] Telegram, заявка №10: отправлено
+2026-10-30 14:16:46 [info] Telegram, заявка №10: отправлено
+2026-10-31 09:19:24 [info] Новая заявка №11
+2026-10-31 09:19:24 [info] Telegram, заявка №11: отправлено
+2026-11-02 13:37:31 [info] Новая заявка №12
+2026-11-02 13:37:36 [warning] Telegram, заявка №12: curl: Connection time-out
+2026-11-02 13:42:00 [info] Новая заявка №13
+2026-11-02 13:42:01 [info] Telegram, заявка №13: отправлено
