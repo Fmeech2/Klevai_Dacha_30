@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Положить в КОРЕНЬ сайта: https://klevaydacha30.ru/sitemap.xml
+     Здесь перечислены только страницы, которые должны быть в поиске. Мобильная версия (mobile.php)
+     и служебные страницы не указываются: у обеих версий главной один основной адрес https://klevaydacha30.ru/ -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://klevaydacha30.ru/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

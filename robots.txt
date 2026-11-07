@@ -1,0 +1,23 @@
+# robots.txt для https://klevaydacha30.ru/
+# Положить в КОРЕНЬ сайта: адрес файла должен быть https://klevaydacha30.ru/robots.txt
+
+# --- Правила для всех роботов (Google, Bing и остальных) ---
+User-agent: *
+# Админ-панель, служебные запросы сайта (календарь, статистика) и их данные: поиску не нужны
+Disallow: /booking/
+# Выгрузка отзывов с Авито и служебный колбэк авторизации
+Disallow: /avito/
+Disallow: /avito_callback.php
+# Всё остальное открыто. Стили, скрипты и картинки специально НЕ закрыты:
+# роботу нужно видеть страницу так же, как её видит посетитель.
+
+# --- Яндекс читает ТОЛЬКО свой блок и общий (*) уже не учитывает, поэтому правила повторены ---
+User-agent: Yandex
+Disallow: /booking/
+Disallow: /avito/
+Disallow: /avito_callback.php
+# Параметры в ссылках (метки рекламы, переключение версии сайта) не создают новых страниц
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&fbclid&_openstat&desktop /
+
+# Карта сайта
+Sitemap: https://klevaydacha30.ru/sitemap.xml

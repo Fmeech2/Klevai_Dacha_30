@@ -1,0 +1,352 @@
+{
+    "version": 1,
+    "categories": [
+        {
+            "id": "main",
+            "name": "Фото"
+        },
+        {
+            "id": "visitors",
+            "name": "Фото от посетителей"
+        }
+    ],
+    "photos": [
+        {
+            "id": "ph_seed01",
+            "file": "img_saita/1.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed02",
+            "file": "img_saita/2.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed03",
+            "file": "img_saita/3.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed04",
+            "file": "img_saita/4.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed05",
+            "file": "img_saita/5.jpg",
+            "category": "main",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed06",
+            "file": "img_saita/6.jpg",
+            "category": "main",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed07",
+            "file": "img_saita/7.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed08",
+            "file": "img_saita/8.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed09",
+            "file": "img_saita/9.jpg",
+            "category": "main",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed10",
+            "file": "img_saita/10.jpg",
+            "category": "main",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed11",
+            "file": "img_saita/11.jpg",
+            "category": "main",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed12",
+            "file": "img_saita/12.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "right",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed13",
+            "file": "img_saita/13.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed14",
+            "file": "img_saita/14.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed15",
+            "file": "img_saita/15.jpg",
+            "category": "main",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed16",
+            "file": "img_gostei/1.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed17",
+            "file": "img_gostei/2.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed18",
+            "file": "img_gostei/3.jpg",
+            "category": "visitors",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed19",
+            "file": "img_gostei/4.jpg",
+            "category": "visitors",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed20",
+            "file": "img_gostei/5.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed21",
+            "file": "img_gostei/6.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed22",
+            "file": "img_gostei/7.jpg",
+            "category": "visitors",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed23",
+            "file": "img_gostei/9.jpg",
+            "category": "visitors",
+            "size": "half",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed24",
+            "file": "img_gostei/8.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed25",
+            "file": "img_gostei/10.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed26",
+            "file": "img_gostei/11.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed27",
+            "file": "img_gostei/12.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed28",
+            "file": "img_gostei/13.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "ph_seed29",
+            "file": "img_gostei/14.jpg",
+            "category": "visitors",
+            "size": "quarter",
+            "pos": "",
+            "alt": "",
+            "w": 0,
+            "h": 0,
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        }
+    ],
+    "videos": [
+        {
+            "id": "vd_seed01",
+            "file": "video/video_2026-09-11_22-33-57.mp4",
+            "poster": "",
+            "size": 0,
+            "name": "video_2026-09-11_22-33-57.mp4",
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        },
+        {
+            "id": "vd_seed02",
+            "file": "video/video_2026-09-11_22-34-23.mp4",
+            "poster": "",
+            "size": 0,
+            "name": "video_2026-09-11_22-34-23.mp4",
+            "createdAt": "2026-10-30T00:00:00+04:00"
+        }
+    ]
+}
