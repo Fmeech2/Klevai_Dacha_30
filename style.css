@@ -2117,3 +2117,103 @@ html.kd-lock { scrollbar-gutter: stable; }
   .bk-overlay, .bk-dialog { transition: none; }
   .bk-submit.is-sending .bk-spin { animation-duration: 2.4s; }
 }
+/* =====================================================================
+   ОТЗЫВЫ (плашка источника, форма с согласием) · НИЖНЯЯ КНОПКА «ЗАБРОНИРОВАТЬ»
+   ===================================================================== */
+
+/* Справа в шапке отзыва: дата и (для отзывов с Авито) серая плашка с источником */
+.review_meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.review_source {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #6b7280;
+  background: #eceef1;
+  padding: 5px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Форма отзыва: ловушка для ботов, согласие, подсказка и сообщения */
+.review_hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.review_check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: #575757; cursor: pointer; }
+.review_check input { flex: 0 0 auto; width: 20px; height: 20px; margin: 1px 0 0; accent-color: #2F80ED; cursor: pointer; }
+.review_check a { color: #2F80ED; }
+.review_note { margin: 0; font-size: 13.5px; color: #8b93a1; }
+.review_msg { padding: 12px 14px; border-radius: 12px; font-size: 14.5px; }
+.review_msg[hidden] { display: none; }
+.review_msg.is-error { background: #FDECEA; color: #A3342D; }
+.review_msg.is-ok { background: #E4F5EA; color: #1B6B3A; }
+.review_input[aria-invalid="true"],
+.review_textarea[aria-invalid="true"] { background: #FBEAE9; box-shadow: 0 0 0 2px #E5534B; }
+.review_submit:disabled { cursor: progress; background: #8fdcf3; }
+
+/* Нижний блок с кнопкой «Забронировать» (тот же вид, что у кнопки на первом экране) */
+.cta_end { text-align: center; padding: 70px 20px 90px; }
+.cta_end_title {
+  margin: 0 0 14px;
+  font-family: Inter, sans-serif;
+  font-size: 45px;
+  font-weight: bold;
+  color: #111;
+}
+.cta_end_text { margin: 0 auto 30px; max-width: 560px; font-size: 18px; line-height: 1.5; color: #575757; }
+.cta_end_BUTTON {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 16px;
+  color: #FFFFFF;
+  background-color: #56CCF2;
+  border-radius: 1000px;
+  border: 0px;
+  width: 192px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.cta_end_BUTTON:hover { background-color: #3bb8e0; }
+.cta_end_BUTTON:active { transform: scale(0.97); }
+.cta_end_BUTTON:focus-visible { outline: 3px solid #2F80ED; outline-offset: 3px; }
+
+/* Ссылка на политику в подвале (юридические страницы: privacy.html, consent.html) */
+.footer_legal {
+  color: inherit;
+  opacity: 0.85;
+  text-decoration: underline;
+  font-size: 0.9em;
+}
+.footer_legal:hover { opacity: 1; }
+/* Вложения к отзыву: кнопка «Прикрепить фото или видео» и список выбранных файлов */
+.review_attach { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.review_file { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.review_attach_btn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px;
+  border: 0; border-radius: 999px; background: #E5E7EB; color: #1F1F1F;
+  font-family: Inter, sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s ease;
+}
+.review_attach_btn:hover { background: #d8dbe0; }
+.review_attach_hint { font-size: 13px; color: #8b93a1; }
+.review_files { flex: 1 0 100%; list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.review_files:empty { display: none; }
+.review_file_item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; background: #fff; border-radius: 12px; }
+.review_file_thumb { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #e5e7eb; }
+.review_file_thumb.is-video { display: flex; align-items: center; justify-content: center; background: #1F1F1F; color: #fff; font-size: 14px; }
+.review_file_name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; color: #575757; }
+.review_file_del {
+  flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: 34px; height: 34px;
+  padding: 0; border: 0; border-radius: 50%; background: #F3F4F6; color: #374151; cursor: pointer;
+}
+.review_file_del:hover { background: #E5E7EB; }
+.review_file_del svg { display: block; pointer-events: none; }
+
+/* Кнопка «Забронировать» перед отзывами и увеличение картинок карточки «Мангальная зона / Прихожая» */
+.cta_mid { padding-top: 60px; padding-bottom: 30px; }
+[data-lightbox] { cursor: zoom-in; }

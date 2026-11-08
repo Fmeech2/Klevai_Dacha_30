@@ -968,14 +968,61 @@ function mask_token(string $s, string $token): string
     return $token !== '' ? str_replace($token, '***', $s) : $s;
 }
 
-/** @return array{ok: bool, error: string} */
-function telegram_send(string $text): array
+/**
+ * Отправка сообщения. $replyMarkup — необязательные кнопки под сообщением (inline_keyboard).
+ * @return array{ok: bool, error: string}
+ */
+function telegram_send(string $text, ?array $replyMarkup = null): array
 {
-    return telegram_api('sendMessage', [
+    $params = [
         'chat_id'                  => (string) cfg('telegram_chat_id', ''),
         'text'                     => $text,
         'disable_web_page_preview' => 'true',
-    ]);
+    ];
+    if ($replyMarkup !== null) {
+        $params['reply_markup'] = json_encode($replyMarkup, KD_JSON_FLAGS);
+    }
+    return telegram_api('sendMessage', $params);
+}
+
+/**
+ * Адрес сайта без слеша на конце. Берётся из config.php ('site_url', необязательно)
+ * или из адреса текущего запроса. Пустая строка, если определить нельзя.
+ */
+function site_base_url(): string
+{
+    $fromConfig = rtrim((string) cfg('site_url', ''), '/');
+    if ($fromConfig !== '') {
+        return $fromConfig;
+    }
+    $host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+    return preg_match('/^[a-z0-9.-]+(:\d+)?$/', $host) ? 'https://' . $host : '';
+}
+
+/** Подпись ссылки «Позвонить»: без неё номер заявки подобрать нельзя. */
+function call_link_signature(string $requestId): string
+{
+    return substr(hash_hmac('sha256', 'call|' . $requestId, form_secret()), 0, 24);
+}
+
+/**
+ * Кнопки под уведомлением о новой заявке: «Позвонить» и «Админ-панель».
+ * Telegram не принимает ссылки tel: в кнопках, поэтому «Позвонить» ведёт на booking/call.php,
+ * а та открывает набор номера. Кнопка админ-панели отключается параметром
+ * 'telegram_admin_button' => false в config.php.
+ */
+function request_keyboard(array $r): ?array
+{
+    $base = site_base_url();
+    if ($base === '') {
+        return null;
+    }
+    $id = (string) $r['id'];
+    $row = [['text' => 'Позвонить', 'url' => $base . '/booking/call.php?r=' . rawurlencode($id) . '&s=' . call_link_signature($id)]];
+    if ((bool) cfg('telegram_admin_button', true) && admin_key_valid_format()) {
+        $row[] = ['text' => 'Админ-панель', 'url' => $base . '/booking/admin.php?k=' . rawurlencode((string) cfg('admin_key', ''))];
+    }
+    return ['inline_keyboard' => [$row]];
 }
 
 function build_telegram_text(array $r): string
@@ -1021,7 +1068,15 @@ function notify_request(string $id): array
         return ['ok' => false, 'error' => 'Заявка не найдена.'];
     }
 
-    $res = telegram_send(build_telegram_text($req));
+    $text = build_telegram_text($req);
+    $keyboard = request_keyboard($req);
+    $res = telegram_send($text, $keyboard);
+    if (!$res['ok'] && $keyboard !== null && $res['error'] !== 'not_configured'
+        && preg_match('/button|reply_markup|url/i', $res['error'])) {
+        // Кнопки не приняты (например, адрес сайта не подошёл): само уведомление важнее кнопок
+        log_line('warning', 'Telegram не принял кнопки, отправляю без них: ' . $res['error']);
+        $res = telegram_send($text);
+    }
 
     try {
         $store->transaction(static function (array &$d) use ($id, $res): void {

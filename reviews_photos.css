@@ -65,15 +65,27 @@
   border-radius: 8px;
 }
 
+/* Значки (крестик и стрелки) — SVG внутри flex-кнопки: они всегда точно по центру круга.
+   Раньше стрелки были текстовыми символами («‹», «›»): у них в шрифте неравные боковые поля и сдвиг по высоте,
+   поэтому они «уезжали» от центра, и поправить это отступами нельзя: сдвиг зависит от шрифта на каждом устройстве. */
 .photo_lightbox_close,
 .photo_lightbox_nav {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.18);
   color: #fff;
   cursor: pointer;
-  line-height: 1;
+}
+
+.photo_lightbox_close svg,
+.photo_lightbox_nav svg {
+  display: block;
+  pointer-events: none;
 }
 
 .photo_lightbox_close:hover,
@@ -84,7 +96,6 @@
   right: 16px;
   width: 44px;
   height: 44px;
-  font-size: 30px;
 }
 
 .photo_lightbox_nav {
@@ -92,7 +103,6 @@
   transform: translateY(-50%);
   width: 48px;
   height: 48px;
-  font-size: 34px;
 }
 
 .photo_lightbox_prev { left: 16px; }
@@ -100,7 +110,23 @@
 .photo_lightbox_nav[hidden] { display: none; }
 
 @media (max-width: 600px) {
-  .photo_lightbox_nav { width: 40px; height: 40px; font-size: 28px; }
+  .photo_lightbox_nav { width: 40px; height: 40px; }
+  .photo_lightbox_nav svg { width: 22px; height: 22px; }
   .photo_lightbox_prev { left: 8px; }
   .photo_lightbox_next { right: 8px; }
+}
+/* ===== Видео в отзывах (вложения посетителей) ===== */
+.review_videos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.review_video {
+  display: block;
+  width: min(100%, 360px);
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background: #000;
 }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 ini_set('display_errors', '0');
 
 // ВАЖНО: секрет хранится только здесь, на сервере. В JS его нельзя.
-const AVITO_CLIENT_ID     = 'ПОДСТАВИТЬ_СВОЙ';
-const AVITO_CLIENT_SECRET = 'ПОДСТАВИТЬ_СВОЙ';//ВСТАВЬ_СЮДА_НОВЫЙ_СЕКРЕТ
-const AVITO_STATE         = 'ПОДСТАВИТЬ_СВОЙ'; // тот же state ставишь в ссылке для хозяина
-const AVITO_API           = 'ПОДСТАВИТЬ_СВОЙ';
+const AVITO_CLIENT_ID     = 'qQtxmb-AZlXc0gO3kaWY';
+const AVITO_CLIENT_SECRET = '11AoUNrq4Fb0CL9cD8U0DFaIreU81n9RVhqFu5xs';//ВСТАВЬ_СЮДА_НОВЫЙ_СЕКРЕТ
+const AVITO_STATE         = 'DPFGOHIPUDHPUGNLJ4739IG797g7686'; // тот же state ставишь в ссылке для хозяина
+const AVITO_API           = 'https://api.avito.ru';
 
 const TOKEN_FILE = __DIR__ . '/tokens.json';
 const CACHE_FILE = __DIR__ . '/reviews_cache.json';

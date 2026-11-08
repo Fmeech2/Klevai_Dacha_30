@@ -1,31 +1,54 @@
 <?php
 require_once __DIR__ . '/lib.php';
 
+// Отзывы, оставленные на сайте и опубликованные хозяином (booking/content.php)
+$kdPublic = dirname(__DIR__) . '/booking/public.php';
+if (is_file($kdPublic)) {
+    require_once $kdPublic;
+}
+
 function h(string $s): string
 {
     return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 // Пропускаем только https-ссылки (на всякий случай)
+// и файлы вложений, загруженные на этот же сайт (uploads/reviews/...)
 function safe_url(?string $u): string
 {
-    return ($u !== null && str_starts_with($u, 'https://')) ? $u : '';
+    if ($u === null) {
+        return '';
+    }
+    if (str_starts_with($u, 'https://')) {
+        return $u;
+    }
+    return preg_match('~^uploads/reviews/[A-Za-z0-9_.-]+$~', $u) ? $u : '';
 }
 
 // Возвращает карточки отзывов (без <section> и заголовка: они уже есть на странице).
+// Отзывы с Авито и с сайта идут одной лентой по дате написания: новые сверху.
 // Если отзывов нет, возвращает пустую строку.
 function render_reviews(): string
 {
     try {
         $data = get_reviews_data();
     } catch (Throwable $e) {
-        return '';
+        $data = null;
     }
 
     $reviews = array_values(array_filter($data['reviews'] ?? [], fn($r) => $r['text'] !== ''));
+    foreach ($reviews as &$r) {
+        $r['source'] = 'avito';
+    }
+    unset($r);
+
+    if (function_exists('kd_public_reviews')) {
+        $reviews = array_merge($reviews, kd_public_reviews());
+    }
     if (!$reviews) {
         return '';
     }
+    usort($reviews, fn($a, $b) => $b['createdAt'] <=> $a['createdAt']);
 
     $tz        = new DateTimeZone('Europe/Astrakhan');
     $hasPhotos = false;
@@ -48,7 +71,12 @@ function render_reviews(): string
         <div class="review_content">
           <div class="review_header">
             <span class="review_name"><?= h($r['name']) ?></span>
-            <span class="review_date"><?= h($date) ?></span>
+            <span class="review_meta">
+              <span class="review_date"><?= h($date) ?></span>
+<?php if (($r['source'] ?? '') === 'avito'): ?>
+              <span class="review_source">Отзыв с Авито</span>
+<?php endif; ?>
+            </span>
           </div>
           <p class="review_text">
             <?= nl2br(h($r['text'])) ?>
@@ -62,6 +90,14 @@ function render_reviews(): string
 <?php endforeach; ?>
           </div>
 <?php endif; ?>
+<?php $videos = array_filter($r['videos'] ?? [], fn($v) => safe_url($v['file'] ?? null)); ?>
+<?php if ($videos): ?>
+          <div class="review_videos">
+<?php foreach ($videos as $v): ?>
+            <video class="review_video" controls preload="metadata" playsinline src="<?= h($v['file']) ?>"></video>
+<?php endforeach; ?>
+          </div>
+<?php endif; ?>
         </div>
       </div>
 <?php
@@ -71,10 +107,10 @@ function render_reviews(): string
     if ($hasPhotos):
 ?>
       <dialog class="photo_lightbox" id="photo_lightbox">
-        <button type="button" class="photo_lightbox_close" aria-label="Закрыть">&times;</button>
-        <button type="button" class="photo_lightbox_nav photo_lightbox_prev" aria-label="Предыдущее фото">&#8249;</button>
+        <button type="button" class="photo_lightbox_close" aria-label="Закрыть"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        <button type="button" class="photo_lightbox_nav photo_lightbox_prev" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M15.5 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <img class="photo_lightbox_img" src="" alt="Фото из отзыва" referrerpolicy="no-referrer">
-        <button type="button" class="photo_lightbox_nav photo_lightbox_next" aria-label="Следующее фото">&#8250;</button>
+        <button type="button" class="photo_lightbox_nav photo_lightbox_next" aria-label="Следующее фото"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M8.5 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </dialog>
       <script>
         (function () {

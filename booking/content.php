@@ -184,7 +184,7 @@ const KD_REVIEW_STATUSES = ['pending', 'published', 'rejected'];
 
 function reviews_store(): JsonStore
 {
-    return new JsonStore('reviews-data', ['version' => 1, 'meta' => ['nextNumber' => 1], 'reviews' => []], ['reviews']);
+    return new JsonStore('reviews-data', ['version' => 1, 'meta' => ['nextNumber' => 1], 'reviews' => [], 'pending' => []], ['reviews']);
 }
 
 /** «Иван Иванов» -> «Иван И.»: на сайте фамилию целиком не показываем. */
@@ -232,10 +232,23 @@ function review_telegram_text(array $r): string
         $text = mb_substr($text, 0, 1500) . '…';
     }
     $phone = (string) ($r['phone'] ?? '');
+    $photos = 0;
+    $videos = 0;
+    foreach ((array) ($r['media'] ?? []) as $m) {
+        if (($m['type'] ?? '') === 'video') {
+            $videos++;
+        } else {
+            $photos++;
+        }
+    }
+    $attach = $photos + $videos > 0
+        ? 'Вложения: ' . ($photos ? $photos . ' фото' : '') . ($photos && $videos ? ', ' : '') . ($videos ? $videos . ' видео' : '') . "\n"
+        : '';
     return "Новый отзыв с сайта № {$r['number']} ждёт публикации\n"
         . 'Имя: ' . trim($r['firstName'] . ' ' . ($r['lastName'] ?? '')) . "\n"
         . 'Телефон: ' . ($phone !== '' ? format_phone($phone) : 'не указан') . "\n"
-        . 'Написан: ' . format_date_ru(substr((string) $r['createdAt'], 0, 10)) . ' в ' . substr((string) $r['createdAt'], 11, 5) . "\n\n"
+        . 'Написан: ' . format_date_ru(substr((string) $r['createdAt'], 0, 10)) . ' в ' . substr((string) $r['createdAt'], 11, 5) . "\n"
+        . $attach . "\n"
         . "Отзыв:\n" . $text . "\n\n"
         . 'Откройте админ-панель, вкладка «Отзывы»: там отзыв можно опубликовать, отредактировать перед публикацией или отклонить.';
 }
@@ -295,6 +308,20 @@ function kd_public_reviews(): array
         if ($ts <= 0) {
             continue;
         }
+        // Вложения посетителя: фото открываются в том же окне просмотра, что и фото с Авито
+        $images = [];
+        $videos = [];
+        foreach ((array) ($r['media'] ?? []) as $m) {
+            $file = (string) ($m['file'] ?? '');
+            if ($file === '' || !is_file(dirname(__DIR__) . '/' . $file)) {
+                continue;
+            }
+            if (($m['type'] ?? '') === 'video') {
+                $videos[] = ['file' => $file];
+            } else {
+                $images[] = ['thumb' => (string) (($m['thumb'] ?? '') !== '' ? $m['thumb'] : $file), 'full' => $file];
+            }
+        }
         $out[] = [
             'id'        => (string) $r['id'],
             'score'     => null,
@@ -302,11 +329,185 @@ function kd_public_reviews(): array
             'name'      => (string) ($r['displayName'] ?? $r['firstName'] ?? 'Гость'),
             'createdAt' => $ts,
             'answer'    => null,
-            'images'    => [],
+            'images'    => $images,
+            'videos'    => $videos,
             'source'    => 'site',
         ];
     }
     return $out;
+}
+
+/* ---------- вложения к отзывам: фото и видео посетителей ---------- */
+
+const KD_REVIEW_MAX_PHOTOS = 6;
+const KD_REVIEW_MAX_VIDEOS = 1;
+
+/** Ограничения вложений (учитывают лимиты PHP на хостинге). Необязательные настройки config.php: max_review_photo_mb, max_review_video_mb. */
+function review_media_limits(): array
+{
+    $cap = min(ini_bytes('post_max_size'), ini_bytes('upload_max_filesize'));
+    $room = max(0, $cap - 262144);   // запас на служебные поля запроса
+    return [
+        'photos'     => KD_REVIEW_MAX_PHOTOS,
+        'videos'     => KD_REVIEW_MAX_VIDEOS,
+        'photoBytes' => (int) min((int) cfg('max_review_photo_mb', 10) * 1048576, $room),
+        'videoBytes' => (int) min((int) cfg('max_review_video_mb', 50) * 1048576, $room),
+    ];
+}
+
+/** Уменьшенная копия сохранённого JPEG для превью в отзыве. Возвращает относительный путь или ''. */
+function media_make_thumb(string $rel, int $max = 480): string
+{
+    if (!media_limits()['gd'] || !str_ends_with($rel, '.jpg')) {
+        return '';
+    }
+    $root = dirname(__DIR__);
+    $src = @imagecreatefromjpeg($root . '/' . $rel);
+    if ($src === false) {
+        return '';
+    }
+    $w = imagesx($src);
+    $h = imagesy($src);
+    $scale = min(1.0, $max / max($w, $h));
+    $nw = max(1, (int) round($w * $scale));
+    $nh = max(1, (int) round($h * $scale));
+    $dst = imagecreatetruecolor($nw, $nh);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $nw, $nh, $w, $h);
+    $thumb = substr($rel, 0, -4) . '_t.jpg';
+    $ok = imagejpeg($dst, $root . '/' . $thumb, 78);
+    imagedestroy($src);
+    imagedestroy($dst);
+    if (!$ok) {
+        return '';
+    }
+    @chmod($root . '/' . $thumb, 0644);
+    return $thumb;
+}
+
+/** Удаляет файлы вложений (оригинал и превью). */
+function review_media_delete_files(array $media): void
+{
+    foreach ($media as $m) {
+        media_delete_file((string) ($m['file'] ?? ''));
+        media_delete_file((string) ($m['thumb'] ?? ''));
+    }
+}
+
+/** Убирает из списка ожидающих вложения, которые не привязали к отзыву за сутки (и их файлы). */
+function review_cleanup_pending(array &$data): void
+{
+    $keep = [];
+    foreach ((array) ($data['pending'] ?? []) as $p) {
+        if (time() - (int) ($p['createdAt'] ?? 0) > 86400) {
+            review_media_delete_files([$p]);
+        } else {
+            $keep[] = $p;
+        }
+    }
+    $data['pending'] = $keep;
+}
+
+/** Владелец загрузки: хеш токена формы. Привязать загруженное к отзыву может только тот, у кого тот же токен. */
+function review_media_owner(string $token): string
+{
+    return substr(hash('sha256', 'rvm|' . $token), 0, 16);
+}
+
+/**
+ * Принимает ОДИН файл (фото или видео) от посетителя, проверяет и временно сохраняет.
+ * Фото перекодируются в JPEG (метаданные и любая «начинка» в файле пропадают), видео проверяются по
+ * сигнатуре MP4/WebM. Файл ждёт привязки к отзыву до суток. Возвращает запись ожидающего вложения.
+ */
+function review_upload_file(array $f, string $owner): array
+{
+    if ((int) ($f['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+        throw new ApiError('upload', upload_error_message((int) ($f['error'] ?? UPLOAD_ERR_NO_FILE)), 422);
+    }
+    $tmp = (string) ($f['tmp_name'] ?? '');
+    if (!is_uploaded_file($tmp)) {
+        throw new ApiError('upload', 'Некорректная загрузка.', 400);
+    }
+    $size = (int) ($f['size'] ?? 0);
+    $lim = review_media_limits();
+    $dir = media_ensure_dir('reviews');
+    $base = bin2hex(random_bytes(8));
+    $thumb = '';
+
+    if (@getimagesize($tmp) !== false) {
+        if ($size > $lim['photoBytes']) {
+            throw new ApiError('too_large', 'Фото больше ' . (int) ($lim['photoBytes'] / 1048576) . ' МБ.', 413);
+        }
+        $saved = media_save_image($tmp, $dir, $base, 1600, 82);
+        $type = 'photo';
+        $file = $saved['file'];
+        $thumb = media_make_thumb($file);
+    } else {
+        $head = (string) file_get_contents($tmp, false, null, 0, 12);
+        $ext = null;
+        if (strlen($head) >= 8 && substr($head, 4, 4) === 'ftyp') {
+            $ext = 'mp4';
+        } elseif (str_starts_with($head, "\x1A\x45\xDF\xA3")) {
+            $ext = 'webm';
+        }
+        if ($ext === null) {
+            throw new ApiError('bad_file', 'Подходят фото (JPG, PNG, WebP) и видео (MP4, WebM).', 422);
+        }
+        if ($size > $lim['videoBytes']) {
+            throw new ApiError('too_large', 'Видео больше ' . (int) ($lim['videoBytes'] / 1048576) . ' МБ.', 413);
+        }
+        if (!@move_uploaded_file($tmp, $dir . '/' . $base . '.' . $ext)) {
+            throw new ApiError('storage', 'Не удалось сохранить видео.', 500);
+        }
+        @chmod($dir . '/' . $base . '.' . $ext, 0644);
+        $type = 'video';
+        $file = 'uploads/reviews/' . $base . '.' . $ext;
+    }
+
+    $entry = ['id' => 'up_' . bin2hex(random_bytes(8)), 'type' => $type, 'file' => $file, 'thumb' => $thumb, 'owner' => $owner, 'createdAt' => time()];
+    try {
+        reviews_store()->transaction(static function (array &$data) use ($entry): void {
+            review_cleanup_pending($data);
+            $mine = count(array_filter($data['pending'], static fn($p) => ($p['owner'] ?? '') === $entry['owner']));
+            if ($mine >= 12) {
+                throw new ApiError('too_many', 'Слишком много загруженных файлов. Отправьте отзыв или повторите позже.', 429);
+            }
+            $data['pending'][] = $entry;
+        });
+    } catch (Throwable $e) {
+        review_media_delete_files([$entry]);
+        throw $e;
+    }
+    return $entry;
+}
+
+/** Привязывает загруженные вложения к отзыву (внутри транзакции). Возвращает список для записи в отзыв. */
+function review_claim_media(array &$data, array $ids, string $owner): array
+{
+    $media = [];
+    $photos = 0;
+    $videos = 0;
+    $pending = array_values((array) ($data['pending'] ?? []));
+    foreach (array_unique($ids) as $id) {
+        $index = null;
+        foreach ($pending as $i => $p) {
+            if (($p['id'] ?? '') === $id && ($p['owner'] ?? '') === $owner) {
+                $index = $i;
+                break;
+            }
+        }
+        if ($index === null) {
+            throw new ApiError('media', 'Вложение устарело. Прикрепите файл заново.', 422);
+        }
+        $p = $pending[$index];
+        ($p['type'] ?? '') === 'video' ? $videos++ : $photos++;
+        if ($photos > KD_REVIEW_MAX_PHOTOS || $videos > KD_REVIEW_MAX_VIDEOS) {
+            throw new ApiError('media', 'Можно прикрепить не больше ' . KD_REVIEW_MAX_PHOTOS . ' фото и ' . KD_REVIEW_MAX_VIDEOS . ' видео.', 422);
+        }
+        $media[] = ['type' => (string) $p['type'], 'file' => (string) $p['file'], 'thumb' => (string) ($p['thumb'] ?? '')];
+        unset($pending[$index]);
+    }
+    $data['pending'] = array_values($pending);
+    return $media;
 }
 
 /* ====================================================================

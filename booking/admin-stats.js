@@ -26,7 +26,7 @@
   ];
   const TYPE_LABEL = Object.fromEntries(TYPES.map(t => [t[0], t[1]]));
   const BUTTONS = {
-    phone: 'Телефон', booking: 'Бронирование', booking_hero: 'Бронирование (первый экран)', booking_bottom: 'Бронирование (низ страницы)',
+    phone: 'Телефон', booking: 'Бронирование', booking_hero: 'Бронирование (первый экран)', booking_bottom: 'Бронирование (низ страницы)', booking_middle: 'Бронирование (перед отзывами)',
     whatsapp: 'WhatsApp', telegram: 'Telegram', max: 'MAX', vk: 'ВКонтакте', review_submit: 'Отправка отзыва',
   };
   const btnLabel = k => BUTTONS[k] || k;

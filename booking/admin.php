@@ -51,7 +51,7 @@ if (!admin_key_matches($key)) {
 $nonce = base64_encode(random_bytes(16));
 header(
     "Content-Security-Policy: default-src 'none'; script-src 'nonce-$nonce'; style-src 'self'; "
-    . "font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+    . "font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 );
 $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 ?>
@@ -89,6 +89,9 @@ $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HE
     <button type="button" role="tab" data-tab="requests" aria-selected="true">Заявки <span class="ad-badge" id="adBadge" hidden>0</span></button>
     <button type="button" role="tab" data-tab="calendar" aria-selected="false">Календарь</button>
     <button type="button" role="tab" data-tab="bookings" aria-selected="false">Брони</button>
+    <button type="button" role="tab" data-tab="reviews" aria-selected="false">Отзывы <span class="ad-badge" id="adRevBadge" hidden>0</span></button>
+    <button type="button" role="tab" data-tab="media" aria-selected="false">Медиа</button>
+    <button type="button" role="tab" data-tab="stats" aria-selected="false">Статистика</button>
     <button type="button" role="tab" data-tab="service" aria-selected="false">Служебное</button>
   </nav>
 
@@ -139,6 +142,21 @@ $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HE
   <!-- ===== Брони и блокировки ===== -->
   <section id="tab-bookings" role="tabpanel" hidden>
     <div id="adBookingList"></div>
+  </section>
+
+  <!-- ===== Отзывы с сайта (модерация) ===== -->
+  <section id="tab-reviews" role="tabpanel" hidden>
+    <div id="adReviews"></div>
+  </section>
+
+  <!-- ===== Фото и видео главной страницы ===== -->
+  <section id="tab-media" role="tabpanel" hidden>
+    <div id="adMedia"></div>
+  </section>
+
+  <!-- ===== Статистика посещений ===== -->
+  <section id="tab-stats" role="tabpanel" hidden>
+    <div id="adStats"></div>
   </section>
 
   <!-- ===== Служебное ===== -->
@@ -266,6 +284,8 @@ $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HE
   /* ================= Состояние ================= */
 
   const S = { today: '', requests: [], bookings: [], health: null, loaded: false, seenMax: 0, filter: 'active', exposed: false, netError: false };
+  // Модули вкладок (admin-*.js) подключаются через KDAdmin.register(): у каждого есть init(), render() и onTab(имя)
+  const modules = [];
   // Календарь. mode: block — ручная блокировка; request — подтверждение заявки; edit — изменение брони
   const C = { y: 0, m: 1, in: null, out: null, mode: 'block', requestId: null, bookingId: null, note: '', busy: false, error: null };
 
@@ -332,14 +352,16 @@ $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HE
     renderBookings();
     renderCalendar();
     renderService();
+    modules.forEach(m => { if (m.render) m.render(); });
   }
 
   /* ================= Вкладки ================= */
 
   function setTab(name) {
     $$('.ad-tabs [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false'));
-    ['requests', 'calendar', 'bookings', 'service'].forEach(t => { $('#tab-' + t).hidden = (t !== name); });
+    $$('[id^="tab-"]').forEach(sec => { sec.hidden = (sec.id !== 'tab-' + name); });
     window.scrollTo(0, 0);
+    modules.forEach(m => { if (m.onTab) m.onTab(name); });
   }
 
   /* ================= Баннеры ================= */
@@ -830,8 +852,23 @@ $keyJs = json_encode($key, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HE
     document.addEventListener('visibilitychange', () => { if (!document.hidden) load(true); });
   }
 
+  // Точка расширения для модулей вкладок (admin-alerts.js, admin-reviews.js, admin-media.js, admin-stats.js)
+  window.KDAdmin = {
+    $, $$, h, api, toast, confirmBox, withBusy, setChildren, D, fmtDT, nightsWord, S, KEY, ApiErr,
+    setTab, load,
+    register(mod) {
+      modules.push(mod);
+      if (mod.init) mod.init();
+      if (S.loaded && mod.render) mod.render();
+    },
+  };
+
   init();
 })();
 </script>
+<script nonce="<?= $nonce ?>" src="admin-alerts.js" defer></script>
+<script nonce="<?= $nonce ?>" src="admin-reviews.js" defer></script>
+<script nonce="<?= $nonce ?>" src="admin-media.js" defer></script>
+<script nonce="<?= $nonce ?>" src="admin-stats.js" defer></script>
 </body>
 </html>

@@ -1,4 +1,9 @@
 <?php require __DIR__ . '/avito/render_reviews.php'; ?>
+<?php
+// Фото и видео главной страницы берутся из админ-панели (booking/data/content-data.json)
+$kdGallery = function_exists('kd_gallery_html') ? kd_gallery_html('desktop') : ['tabs' => '', 'panels' => ''];
+$kdVideos  = function_exists('kd_videos_html') ? kd_videos_html('desktop') : '';
+?>
 
 <!doctype html>
 <html lang="ru">
@@ -7,7 +12,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>
-    // Переадресация на мобильную версию (mobile.html).
+    // Переадресация на мобильную версию (mobile.php).
     // Когда уходим: телефон/небольшой планшет (по User-Agent или сенсорный экран с короткой стороной <= 900px)
     //               или узкое окно браузера (<= 768px).
     // Не уходим, если посетитель сам выбрал «Полную версию» (?desktop=1 — запоминаем на время вкладки).
@@ -35,7 +40,10 @@
         var narrow = window.innerWidth <= 768;
 
         if (ua || smallTouch || narrow) {
-          location.replace('mobile.php' + location.hash);
+          // Запоминаем, откуда пришёл посетитель: на мобильной версии referrer уже будет «этот же сайт».
+          // UTM-метки из адреса сохраняются (location.search), иначе статистика источников их потеряет.
+          try { sessionStorage.setItem('kd_ref0', document.referrer || ''); } catch (e) { }
+          location.replace('mobile.php' + location.search + location.hash);
         }
       } catch (e) { /* при любой ошибке просто остаёмся на этой странице */ }
     })();
@@ -142,7 +150,7 @@
           конечно, отличная рыбалка. Собирайте компанию, берите снасти — и приезжайте за впечатлениями!»</div>
         <div class="hero_left_4">+7 (917) 172-55-58</div>
         <a class="hero_left_5" href="">Написать в Вацап</a>
-        <button class="hero_left_BUTTON" type="button" data-booking-open>Забронировать</button>
+        <button class="hero_left_BUTTON" type="button" data-booking-open data-track="booking_hero">Забронировать</button>
       </div>
       <div class="hero_right">
         <img src="img/Рыба на превью.png" class="hero_right_PROMO">
@@ -162,8 +170,8 @@
               </div>
             </div>
             <div class="hero_right_3_img">
-              <img src="img/Шашлык превью.png" class="hero_right_3_img_1">
-              <img src="img/Прихожая превью.png" class="hero_right_3_img_2">
+              <img src="img/Шашлык превью.png" class="hero_right_3_img_1" alt="Мангальная зона" data-lightbox>
+              <img src="img/Прихожая превью.png" class="hero_right_3_img_2" alt="Прихожая" data-lightbox>
             </div>
           </div>
         </div>
@@ -195,96 +203,35 @@
         Фотогалерея
       </div>
       <nav class="nav" style="justify-content: left; padding-left: 0; margin-left: 0; margin-bottom: 20px ;">
-        <button class="nav_button videleno" data-gallery="main">Фото</button>
-        <button class="nav_button" data-gallery="visitors">Фото от посетителей</button>
+        <?= $kdGallery['tabs'] ?>
       </nav>
 
 
       <div class="gallery">
-        <div class="gallery_images" id="gallery_main">
-
-          <!-- Вариант 1: 4 маленьких -->
-          <img src="img_saita/1.jpg" alt="..." class="gallery_img">
-          <img src="img_saita/2.jpg" alt="..." class="gallery_img small">
-
-          <!-- Вариант 2: 1 большая + 2 маленьких -->
-          <img src="img_saita/3.jpg" alt="..." class="gallery_img small">
-          <img src="img_saita/4.jpg" alt="..." class="gallery_img small">
-          <img src="img_saita/5.jpg" alt="..." class="gallery_img large">
-
-          <!-- Вариант 3: 2 больших -->
-          <img src="img_saita/6.jpg" alt="..." class="gallery_img large">
-          <img src="img_saita/7.jpg" alt="..." class="gallery_img small">
-          <img src="img_saita/8.jpg" alt="..." class="gallery_img small">
-
-
-          <img src="img_saita/9.jpg" alt="..." class="gallery_img large">
-          <img src="img_saita/10.jpg" alt="..." class="gallery_img large">
-
-
-          <img src="img_saita/11.jpg" alt="..." class="gallery_img large">
-          <img src="img_saita/12.jpg" alt="..." class="gallery_img small pos_right">
-
-          
-          <img src="img_saita/13.jpg" alt="..." class="gallery_img">
-          <img src="img_saita/14.jpg" alt="..." class="gallery_img">
-          <img src="img_saita/15.jpg" alt="..." class="gallery_img">
-
-        </div>
-
-        <!-- Галерея посетителей (заглушки) -->
-        <div class="gallery_images is-hidden" id="gallery_visitors" hidden>
-
-          <img src="img_gostei/1.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/2.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/3.jpg" alt="..." class="gallery_img large">
-
-
-          <img src="img_gostei/4.jpg" alt="..." class="gallery_img large">
-          <img src="img_gostei/5.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/6.jpg" alt="..." class="gallery_img small">
-
-
-          <img src="img_gostei/7.jpg" alt="..." class="gallery_img large">
-          <img src="img_gostei/9.jpg" alt="..." class="gallery_img large">
-
-          <img src="img_gostei/8.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/10.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/11.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/12.jpg" alt="..." class="gallery_img small">
-
-          <img src="img_gostei/13.jpg" alt="..." class="gallery_img small">
-          <img src="img_gostei/14.jpg" alt="..." class="gallery_img small">
-
-        </div>
+        <?= $kdGallery['panels'] ?>
       </div>
 
 
 
+<?php if ($kdVideos !== ''): ?>
       <nav class="nav" style="justify-content: left; padding-left: 0; margin-left: 0; margin-bottom: 20px ;">
         <a href="#hero" class="nav_link videleno"><button>Видео</button></a>
       </nav>
       <div class="gallery_images gallery_videos">
-
-        <div class="video-wrapper">
-          <video class="gallery_img gallery_video" muted preload="metadata">
-            <source src="video/video_2026-09-11_22-33-57.mp4" type="video/mp4">
-          </video>
-          <div class="play-icon">▶</div>
-        </div>
-
-        <div class="video-wrapper">
-          <video class="gallery_img gallery_video" muted preload="metadata">
-            <source src="video/video_2026-09-11_22-34-23.mp4" type="video/mp4">
-          </video>
-          <div class="play-icon">▶</div>
-        </div>
-
+<?= $kdVideos ?>
       </div>
+<?php endif; ?>
 
 
 
     </section>
+    <!-- Кнопка «Забронировать» перед отзывами -->
+    <section class="cta_end cta_mid" id="cta_mid">
+      <h2 class="cta_end_title">Понравилось у нас?</h2>
+      <p class="cta_end_text">Выберите даты и оставьте заявку: хозяин перезвонит и подтвердит бронь.</p>
+      <button class="cta_end_BUTTON" type="button" data-booking-open data-track="booking_middle">Забронировать</button>
+    </section>
+
 
     <section class="reviews" id="reviews">
       <h2 class="reviews_title">Отзывы</h2>
@@ -296,17 +243,37 @@
       <div class="review_form_wrapper">
         <h3 class="review_form_title">Оставить отзыв</h3>
 
-        <form class="review_form" action="#" method="post">
+        <form class="review_form" id="reviewForm" action="#" method="post" novalidate>
           <div class="review_form_row">
-            <input type="text" name="name" class="review_input" placeholder="Имя*" required>
-            <input type="text" name="surname" class="review_input" placeholder="Фамилия">
+            <input type="text" name="firstName" class="review_input" placeholder="Имя*" maxlength="50" autocomplete="given-name" required>
+            <input type="text" name="lastName" class="review_input" placeholder="Фамилия" maxlength="50" autocomplete="family-name">
           </div>
 
-          <input type="tel" name="phone" class="review_input review_input_phone" placeholder="Номер телефона">
+          <input type="tel" name="phone" class="review_input review_input_phone" placeholder="Номер телефона (по желанию)" maxlength="30" autocomplete="tel" inputmode="tel">
 
-          <textarea name="review" class="review_textarea" placeholder="Ваш отзыв" rows="4"></textarea>
+          <textarea name="text" class="review_textarea" placeholder="Ваш отзыв*" rows="4" maxlength="2000" required></textarea>
 
-          <button type="submit" class="review_submit">Отправить</button>
+          <div class="review_attach">
+            <input type="file" id="reviewFiles" class="review_file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,.mp4,.webm" multiple tabindex="-1" aria-hidden="true">
+            <button type="button" class="review_attach_btn" id="reviewAttach">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5 5 0 01-7.1-7.1l8.6-8.6a3.3 3.3 0 014.7 4.7l-8.6 8.6a1.7 1.7 0 01-2.4-2.4l7.9-7.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Прикрепить фото или видео
+            </button>
+            <span class="review_attach_hint" id="reviewAttachHint">до 6 фото и 1 видео</span>
+            <ul class="review_files" id="reviewFileList"></ul>
+          </div>
+
+          <!-- Ловушка для спам-ботов: человек это поле не видит и не заполняет -->
+          <div class="review_hp" aria-hidden="true"><label>Сайт <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+          <label class="review_check">
+            <input type="checkbox" name="consent">
+            <span>Я даю <a href="consent.html" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и ознакомлен(а) с <a href="privacy.html" target="_blank" rel="noopener">Политикой обработки персональных данных</a>.</span>
+          </label>
+          <p class="review_note">Отзыв появится на сайте после проверки хозяином. Телефон нужен только хозяину и на сайте не показывается.</p>
+          <div class="review_msg" id="reviewMsg" role="alert" hidden></div>
+
+          <button type="submit" class="review_submit" data-track="review_submit">Отправить</button>
         </form>
       </div>
     </section>
@@ -315,6 +282,13 @@
     </section>
 
     <section class="contacts" id="contacts">
+    </section>
+
+    <!-- Ещё одна кнопка «Забронировать» в самом конце страницы -->
+    <section class="cta_end" id="cta_end">
+      <h2 class="cta_end_title">Готовы приехать?</h2>
+      <p class="cta_end_text">Выберите даты в календаре и оставьте заявку. Хозяин перезвонит и подтвердит бронь.</p>
+      <button class="cta_end_BUTTON" type="button" data-booking-open data-track="booking_bottom">Забронировать</button>
     </section>
 
   </main>
@@ -328,6 +302,7 @@
 
     <div class="footer_text">
       © Клёвая Дача 2026. Все права защищены.
+      <br><a class="footer_legal" href="privacy.html">Политика обработки персональных данных</a>
     </div>
 
     <div class="footer_contacts">
@@ -382,7 +357,7 @@
 
 
   <!-- ===================== БРОНИРОВАНИЕ: модальное окно =====================
-       Разметка одинаковая в index.html и mobile.html; оформление — в style.css / mobile.css (классы bk-*).
+       Разметка одинаковая в index.php и mobile.php; оформление — в style.css / mobile.css (классы bk-*).
        Скрипт — в конце страницы, блок «БРОНИРОВАНИЕ». -->
   <div class="bk-overlay" id="bkModal" hidden>
     <div class="bk-dialog" id="bkDialog" role="dialog" aria-modal="true" aria-labelledby="bkTitle" tabindex="-1">
@@ -446,7 +421,7 @@
 
               <label class="bk-field">
                 <span class="bk-label">Номер телефона<span class="bk-req" aria-hidden="true">*</span></span>
-                <input class="bk-input" type="tel" name="phone" maxlength="30" inputmode="tel" autocomplete="tel" placeholder="+7 917 123-45-67" required aria-describedby="bkErr-phone">
+                <input class="bk-input" type="tel" name="phone" maxlength="30" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required aria-describedby="bkErr-phone">
                 <span class="bk-err" id="bkErr-phone"></span>
               </label>
 
@@ -462,7 +437,7 @@
 
               <label class="bk-check">
                 <input type="checkbox" name="consent" aria-describedby="bkErr-consent">
-                <span>Я согласен(на) на обработку персональных данных в соответствии с <a href="privacy.html" id="bkPrivacy" target="_blank" rel="noopener">политикой сайта</a>.</span>
+                <span>Я даю <a href="consent.html" id="bkConsent" target="_blank" rel="noopener">согласие на обработку персональных данных</a> и ознакомлен(а) с <a href="privacy.html" id="bkPrivacy" target="_blank" rel="noopener">Политикой обработки персональных данных</a>.</span>
               </label>
               <span class="bk-err" id="bkErr-consent"></span>
 
@@ -591,7 +566,7 @@
     function getVisibleGalleryItems() {
       // Собираем все элементы с классом .gallery_img на странице,
       // которые сейчас видимы
-      const allItems = Array.from(document.querySelectorAll('.gallery_img'));
+      const allItems = Array.from(document.querySelectorAll('.gallery_img, [data-lightbox]'));
 
       return allItems.filter(item => {
         // Проверяем, не скрыт ли родительский контейнер
@@ -661,7 +636,7 @@
 
     // Навешиваем клик на все текущие и будущие .gallery_img
     function bindGalleryClicks() {
-      document.querySelectorAll('.gallery_img').forEach(item => {
+      document.querySelectorAll('.gallery_img, [data-lightbox]').forEach(item => {
         // Убираем старые обработчики, чтобы не дублировались
         item.onclick = null;
 
@@ -736,8 +711,7 @@
 
 
     const galleryButtons = document.querySelectorAll('.nav_button[data-gallery]');
-    const galleryMain = document.getElementById('gallery_main');
-    const galleryVisitors = document.getElementById('gallery_visitors');
+    const galleryPanels = document.querySelectorAll('.gallery_images[data-gallery-panel]');
 
     galleryButtons.forEach(button => {
       button.addEventListener('click', () => {
@@ -748,13 +722,9 @@
         button.classList.add('videleno');
 
         // Переключаем галереи
-        if (target === 'main') {
-          galleryMain.classList.remove('is-hidden');
-          galleryVisitors.classList.add('is-hidden');
-        } else {
-          galleryMain.classList.add('is-hidden');
-          galleryVisitors.classList.remove('is-hidden');
-        }
+        galleryPanels.forEach(panel => {
+          panel.classList.toggle('is-hidden', panel.dataset.galleryPanel !== target);
+        });
       });
     });
   </script>
@@ -763,7 +733,7 @@
     // БРОНИРОВАНИЕ: модальное окно, календарь доступности, отправка заявки
     // ====================================================================
     // Блок не зависит от галереи, меню и шапки: свой масштаб видимости, свои обработчики,
-    // наружу выставлен только window.KDBooking.open(). Код одинаков в index.html и mobile.html,
+    // наружу выставлен только window.KDBooking.open(). Код одинаков в index.php и mobile.php,
     // различается только CONFIG. Серверная часть общая: booking/api.php.
     //
     // Для переноса в отдельный файл: вынесите всё, что находится внутри этого блока, в booking.js
@@ -780,7 +750,7 @@
 
       // ---------- 1. Настройки и тексты ----------
       const CONFIG = {
-        page: 'desktop',            // 'desktop' в index.html, 'mobile' в mobile.html
+        page: 'desktop',            // 'desktop' в index.php, 'mobile' в mobile.php
         api: 'booking/api.php',      // общий серверный обработчик
         privacyUrl: 'privacy.html',  // страница политики обработки персональных данных
         useHistory: false,     // true: кнопка «Назад» на телефоне закрывает окно
@@ -1219,7 +1189,7 @@
           firstName: cleanLine(form.elements.firstName.value),
           lastName: cleanLine(form.elements.lastName.value),
           patronymic: cleanLine(form.elements.patronymic.value),
-          phone: cleanLine(form.elements.phone.value),
+          phone: /^\+7[\s(]*$/.test(cleanLine(form.elements.phone.value)) ? '' : cleanLine(form.elements.phone.value),   // «+7 (» без цифр — поле пустое
           comment: String(form.elements.comment.value || '').replace(/\r\n?/g, '\n').trim(),
         };
         if (!v.firstName) errors.firstName = 'Укажите имя.';
@@ -1228,7 +1198,7 @@
         if (v.patronymic && !NAME_RE.test(v.patronymic)) errors.patronymic = 'Допустимы только буквы, пробел, дефис и апостроф.';
 
         if (!v.phone) errors.phone = 'Укажите номер телефона, чтобы хозяин мог вам перезвонить.';
-        else if (!normalizePhone(v.phone)) errors.phone = 'Проверьте номер телефона. Пример: +7 917 123-45-67.';
+        else if (!normalizePhone(v.phone)) errors.phone = 'Проверьте номер телефона. Пример: +7 (917) 123-45-67.';
 
         if (!form.elements.consent.checked) errors.consent = 'Необходимо согласие на обработку персональных данных.';
 
@@ -1251,16 +1221,110 @@
         }
       }
 
+      /**
+       * Маска телефона «+7 (917) 123-45-67». «+7» ставится сам и не стирается; вставка и автозаполнение
+       * («8 917…», «+7 917…», «7917…», «+7+7 917…») превращаются в один и тот же номер; цифры разделены
+       * скобками и дефисами. В поле всегда лежит текст в этом виде, сервер принимает его как есть.
+       */
+      function attachPhoneMask(input) {
+        const PREFIX_LEN = 4;                                     // «+7 (» — столько символов занимает начало
+        const digits = s => String(s).replace(/\D/g, '');
+
+        /** Цифры номера без кода страны (не больше 10) из того, что оказалось в поле. */
+        function parse(raw) {
+          raw = String(raw || '').trim();
+          let d;
+          if (/^\+\s*7/.test(raw)) d = digits(raw.replace(/^\+\s*7/, ''));
+          else if (/^7[\s(]/.test(raw)) d = digits(raw.slice(1));                    // стёрли «+»
+          else d = digits(raw);
+          while (d.length > 10 && /^[78]/.test(d)) d = d.slice(1);                  // лишний код страны: 8…, 7…, «+7+7…»
+          return d.slice(0, 10);
+        }
+
+        function format(d) {
+          let s = '+7 (' + d.slice(0, 3);
+          if (d.length > 3) s += ') ' + d.slice(3, 6);
+          if (d.length > 6) s += '-' + d.slice(6, 8);
+          if (d.length > 8) s += '-' + d.slice(8, 10);
+          return s;
+        }
+
+        /** Позиция курсора сразу после count-й цифры номера. */
+        function caretAfter(text, count) {
+          if (count <= 0) return Math.min(text.length, PREFIX_LEN);
+          let seen = 0;
+          for (let i = PREFIX_LEN; i < text.length; i++) {
+            if (/\d/.test(text[i]) && ++seen === count) return i + 1;
+          }
+          return text.length;
+        }
+
+        function put(d, caretDigits) {
+          const text = format(d);
+          if (input.value !== text) input.value = text;
+          const p = caretAfter(text, caretDigits);
+          try { input.setSelectionRange(p, p); } catch (e) { /* поле не в фокусе */ }
+        }
+
+        input.addEventListener('input', () => {
+          const raw = input.value;
+          const pos = input.selectionStart == null ? raw.length : input.selectionStart;
+          const all = parse(raw);
+          put(all, Math.min(parse(raw.slice(0, pos)).length, all.length));
+        });
+
+        // Вставка: «+7+7 000…», «8 000…» и т. п. не должны давать двойной код страны
+        input.addEventListener('paste', e => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+          let p = digits(text);
+          while (p.length > 10 && /^[78]/.test(p)) p = p.slice(1);                // «+7+7…», «8…», «7…» — без лишнего кода
+          p = p.slice(0, 10);
+          const cur = parse(input.value);
+          const from = parse(input.value.slice(0, input.selectionStart || 0)).length;
+          const to = parse(input.value.slice(0, input.selectionEnd || 0)).length;
+          const merged = (p.length >= 10 ? p : cur.slice(0, from) + p + cur.slice(to)).slice(0, 10);
+          put(merged, p.length >= 10 ? merged.length : Math.min(from + p.length, merged.length));
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
+        // Backspace и Delete перепрыгивают скобки и дефисы и никогда не трогают «+7 (»
+        input.addEventListener('keydown', e => {
+          if (e.ctrlKey || e.metaKey || e.altKey) return;
+          const start = input.selectionStart, end = input.selectionEnd, v = input.value;
+          if (e.key === 'Backspace' && start === end) {
+            let p = start;
+            while (p > PREFIX_LEN && !/\d/.test(v[p - 1])) p--;
+            if (p <= PREFIX_LEN) { e.preventDefault(); input.setSelectionRange(PREFIX_LEN, PREFIX_LEN); return; }
+            input.setSelectionRange(p, p);
+          } else if (e.key === 'Delete' && start === end) {
+            let p = Math.max(start, PREFIX_LEN);
+            while (p < v.length && !/\d/.test(v[p])) p++;
+            if (p >= v.length) { e.preventDefault(); return; }
+            input.setSelectionRange(p, p);
+          }
+        });
+
+        // При входе в поле сразу видно «+7 (», при выходе пустое поле очищается (чтобы сработала проверка «Укажите номер»)
+        input.addEventListener('focus', () => {
+          if (!parse(input.value).length) {
+            input.value = '+7 (';
+            setTimeout(() => { try { input.setSelectionRange(input.value.length, input.value.length); } catch (e) { } }, 0);
+          }
+        });
+        input.addEventListener('blur', () => { if (!parse(input.value).length) input.value = ''; });
+
+        // Автозаполнение браузера при загрузке страницы
+        if (input.value) put(parse(input.value), 10);
+      }
+
       // Подсказки на лету: убираем ошибку, как только поле исправлено
       FIELDS.slice(0, 5).forEach(name => {
         const input = form.elements[name];
         if (!input) return;
         input.addEventListener(name === 'consent' ? 'change' : 'input', () => setFieldError(name, ''));
       });
-      form.elements.phone.addEventListener('blur', () => {
-        const n = normalizePhone(form.elements.phone.value);
-        if (n) form.elements.phone.value = prettyPhone(n);
-      });
+      attachPhoneMask(form.elements.phone);
 
       // ---------- 7. Отправка заявки ----------
       function showFormMsg(text, kind) {
@@ -1435,6 +1499,416 @@
       if (privacy) privacy.setAttribute('href', CONFIG.privacyUrl);
 
       window.KDBooking = { open: () => openModal(document.activeElement) };
+    })();
+  </script>
+  <script>
+    // ====================================================================
+    // СТАТИСТИКА ПОСЕЩЕНИЙ (без сторонних сервисов; данные хранятся на этом же сайте)
+    // ====================================================================
+    // Что делает: даёт устройству случайный ID, определяет «новый визит» (прошло больше 30 минут
+    // с последней активности) и отправляет его в booking/track.php вместе с UTM-метками, адресом
+    // источника, типом устройства и шириной экрана. Клики по ключевым кнопкам (телефон, бронирование,
+    // мессенджеры) отправляются отдельно и только увеличивают счётчик у уже известного посетителя.
+    // Якоря, обновление страницы и переходы между index.php и mobile.php визит не увеличивают.
+    (function () {
+      'use strict';
+
+      const ENDPOINT = 'booking/track.php';
+      const VISIT_GAP_MS = 30 * 60 * 1000;     // пауза, после которой заход считается новым визитом
+      const COOKIE_DAYS = 3 * 365;
+      const K_ID = 'kd_did';                   // ID устройства (localStorage и cookie)
+      const K_LAST = 'kd_last';                // время последней активности (localStorage, общее для вкладок и версий сайта)
+      const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
+      const ls = {
+        get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+        set(k, v) { try { localStorage.setItem(k, v); } catch (e) { } },
+      };
+
+      function uuid() {
+        if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+        const b = new Uint8Array(16);
+        if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(b);
+        else for (let i = 0; i < 16; i++) b[i] = Math.random() * 256 | 0;
+        b[6] = (b[6] & 15) | 64;
+        b[8] = (b[8] & 63) | 128;
+        const h = Array.from(b, x => x.toString(16).padStart(2, '0')).join('');
+        return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+      }
+
+      function readCookie() {
+        const m = document.cookie.match(/(?:^|;\s*)kd_did=([^;]+)/);
+        return m ? m[1] : '';
+      }
+
+      /** ID из localStorage; если его там нет — из cookie; если нет нигде — новый. Всегда дублируется в cookie на 3 года. */
+      function deviceId() {
+        let id = ls.get(K_ID) || '';
+        if (!UUID_RE.test(id)) id = readCookie();
+        if (!UUID_RE.test(id)) id = uuid();
+        ls.set(K_ID, id);
+        document.cookie = K_ID + '=' + id + '; max-age=' + (COOKIE_DAYS * 86400) + '; path=/; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+        return id;
+      }
+
+      const id = deviceId();
+      const coarse = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+      const isMobile = /Android.+Mobile|iPhone|iPod|IEMobile|Windows Phone|Opera Mini|Mobi/i.test(navigator.userAgent)
+        || (coarse && Math.min(screen.width, screen.height) <= 900);
+
+      function send(payload) {
+        const body = JSON.stringify(payload);
+        try {
+          if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, new Blob([body], { type: 'application/json' }))) return;
+        } catch (e) { }
+        try {
+          fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true, credentials: 'same-origin' }).catch(function () { });
+        } catch (e) { }
+      }
+
+      /** firstLoad = true: заход с загрузкой страницы (есть UTM и referrer). Иначе возврат на давно открытую вкладку: источник неизвестен. */
+      function sendVisit(firstLoad) {
+        const p = { type: 'visit', id: id, device: isMobile ? 'mobile' : 'desktop', width: Math.round(screen.width || window.innerWidth || 0) };
+        if (firstLoad) {
+          const q = new URLSearchParams(location.search);
+          ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'].forEach(function (k) { p[k] = (q.get(k) || '').slice(0, 100); });
+          let ref = '';
+          try { ref = sessionStorage.getItem('kd_ref0') || ''; sessionStorage.removeItem('kd_ref0'); } catch (e) { }   // referrer, сохранённый до редиректа на мобильную версию
+          p.referrer = ref || document.referrer || '';
+        }
+        send(p);
+      }
+
+      /** Отмечает активность. Если с прошлой активности прошло больше 30 минут — это новый визит. */
+      function touch(firstLoad) {
+        const now = Date.now();
+        const last = parseInt(ls.get(K_LAST) || '0', 10) || 0;
+        const isNewVisit = !last || now - last > VISIT_GAP_MS;
+        ls.set(K_LAST, String(now));            // сначала фиксируем время, чтобы вторая вкладка не продублировала визит
+        if (isNewVisit) sendVisit(firstLoad);
+      }
+
+      touch(true);
+
+      // Дальше активность только продлевает визит (не чаще раза в 20 секунд)
+      let lastTouch = Date.now();
+      function onActivity() {
+        const now = Date.now();
+        if (now - lastTouch < 20000) return;
+        lastTouch = now;
+        touch(false);
+      }
+      ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (ev) {
+        window.addEventListener(ev, onActivity, { passive: true, capture: true });
+      });
+      document.addEventListener('visibilitychange', function () { if (!document.hidden) onActivity(); });
+
+      // ---------- клики по ключевым кнопкам ----------
+      const lastClick = {};
+
+      /** Название кнопки: явное data-track, иначе по типу ссылки. Пустая строка — кнопка не отслеживается. */
+      function buttonName(el) {
+        const t = el.closest('[data-track]');
+        if (t) return t.getAttribute('data-track') || '';
+        const a = el.closest('a[href]');
+        if (a) {
+          const h = a.getAttribute('href') || '';
+          if (/^tel:/i.test(h)) return 'phone';
+          if (/wa\.me|whatsapp/i.test(h)) return 'whatsapp';
+          if (/t\.me|telegram/i.test(h)) return 'telegram';
+          if (/max\.ru/i.test(h)) return 'max';
+          if (/vk\.(com|ru)/i.test(h)) return 'vk';
+        }
+        return el.closest('[data-booking-open]') ? 'booking' : '';
+      }
+
+      document.addEventListener('click', function (e) {
+        const name = e.target && e.target.closest ? buttonName(e.target) : '';
+        if (!/^[a-z0-9_]{1,32}$/.test(name)) return;
+        const now = Date.now();
+        if (lastClick[name] && now - lastClick[name] < 1500) return;   // двойные нажатия не считаем
+        lastClick[name] = now;
+        touch(false);
+        send({ type: 'click', id: id, button: name });
+      }, true);
+    })();
+  </script>
+  <script>
+    // ====================================================================
+    // ОТЗЫВЫ: отправка формы «Оставить отзыв» (с фото и видео)
+    // ====================================================================
+    // Отзыв уходит на сервер (booking/api.php?action=review), хозяин получает сообщение в Telegram
+    // и сам решает, публиковать его на сайте или нет. До публикации отзыв на странице не появляется.
+    // Фото и видео загружаются по одному (action=reviewUpload) в момент отправки, затем уходит сам отзыв
+    // со списком загруженных файлов. Большие фото перед загрузкой сжимаются в браузере.
+    (function () {
+      'use strict';
+
+      const API = 'booking/api.php';
+      const PAGE = 'desktop';               // 'desktop' в index.php, 'mobile' в mobile.php
+      const form = document.getElementById('reviewForm');
+      if (!form) return;
+
+      const msg = document.getElementById('reviewMsg');
+      const btn = form.querySelector('.review_submit');
+      const NAME_RE = /^[\p{L}][\p{L}\p{M} .'’-]{0,49}$/u;
+      let token = '', tokenAt = 0, loadingToken = null, sending = false;
+
+      // ---------- вложения ----------
+      const fileInput = document.getElementById('reviewFiles');
+      const attachBtn = document.getElementById('reviewAttach');
+      const fileList = document.getElementById('reviewFileList');
+      const attachHint = document.getElementById('reviewAttachHint');
+      let limits = { photos: 6, videos: 1, photoBytes: 10 * 1048576, videoBytes: 50 * 1048576 };   // уточняются ответом сервера
+      const picked = [];                      // { file, kind: 'photo' | 'video', preview, uploadId }
+
+      const mb = n => n < 1048576 ? Math.max(1, Math.round(n / 1024)) + ' КБ' : (n / 1048576).toFixed(n >= 10485760 ? 0 : 1).replace('.', ',') + ' МБ';
+
+      function kindOf(f) {
+        if (/^image\/(jpeg|png|webp)$/.test(f.type)) return 'photo';
+        if (/^video\/(mp4|webm)$/.test(f.type) || /\.(mp4|webm)$/i.test(f.name)) return 'video';
+        return '';
+      }
+
+      function updateHint() {
+        if (attachHint) attachHint.textContent = 'до ' + limits.photos + ' фото и ' + limits.videos + ' видео (видео до ' + mb(limits.videoBytes) + ')';
+      }
+
+      function renderFiles() {
+        if (!fileList) return;
+        fileList.replaceChildren(...picked.map((it, i) => {
+          const li = document.createElement('li');
+          li.className = 'review_file_item';
+          const thumb = document.createElement(it.preview ? 'img' : 'span');
+          thumb.className = 'review_file_thumb' + (it.preview ? '' : ' is-video');
+          if (it.preview) { thumb.src = it.preview; thumb.alt = ''; } else { thumb.textContent = '▶'; }
+          const name = document.createElement('span');
+          name.className = 'review_file_name';
+          name.textContent = it.file.name + ' (' + mb(it.file.size) + ')';
+          const del = document.createElement('button');
+          del.type = 'button';
+          del.className = 'review_file_del';
+          del.setAttribute('aria-label', 'Убрать файл ' + it.file.name);
+          del.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+          del.addEventListener('click', () => {
+            if (it.preview) URL.revokeObjectURL(it.preview);
+            picked.splice(picked.indexOf(it), 1);
+            renderFiles();
+          });
+          li.append(thumb, name, del);
+          return li;
+        }));
+      }
+
+      function addFiles(files) {
+        const problems = [];
+        Array.from(files).forEach(f => {
+          const kind = kindOf(f);
+          const photos = picked.filter(p => p.kind === 'photo').length;
+          const videos = picked.filter(p => p.kind === 'video').length;
+          if (!kind) problems.push('«' + f.name + '»: подходят фото JPG, PNG, WebP и видео MP4, WebM.');
+          else if (kind === 'photo' && photos >= limits.photos) problems.push('Можно прикрепить не больше ' + limits.photos + ' фото.');
+          else if (kind === 'video' && videos >= limits.videos) problems.push('Можно прикрепить не больше ' + limits.videos + ' видео.');
+          else if (kind === 'video' && f.size > limits.videoBytes) problems.push('«' + f.name + '»: видео больше ' + mb(limits.videoBytes) + '.');
+          else if (kind === 'photo' && f.size > 60 * 1048576) problems.push('«' + f.name + '»: слишком большой файл.');
+          else picked.push({ file: f, kind: kind, preview: kind === 'photo' ? URL.createObjectURL(f) : '', uploadId: '' });
+        });
+        renderFiles();
+        showMsg(problems.length ? problems.join(' ') : '', problems.length ? 'error' : '');
+      }
+
+      if (attachBtn && fileInput) {
+        attachBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+      }
+
+      /** Фото с телефона весит 5–12 МБ: уменьшаем до 2000 px по длинной стороне (поворот из EXIF учитывается браузером). */
+      async function shrinkImage(file) {
+        if (file.size < 1.2 * 1048576) return file;
+        try {
+          const bmp = await createImageBitmap(file);
+          const s = Math.min(1, 2000 / Math.max(bmp.width, bmp.height));
+          const c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(bmp.width * s));
+          c.height = Math.max(1, Math.round(bmp.height * s));
+          c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+          const blob = await new Promise(res => c.toBlob(res, 'image/jpeg', 0.86));
+          return blob && blob.size < file.size ? new File([blob], 'photo.jpg', { type: 'image/jpeg' }) : file;
+        } catch (e) { return file; }
+      }
+
+      /** Загрузка одного файла с процентами. Возвращает идентификатор, который сервер привяжет к отзыву. */
+      function uploadOne(blob, name, onProgress) {
+        return new Promise((resolve, reject) => {
+          const fd = new FormData();
+          fd.append('file', blob, name);
+          fd.append('token', token);
+          const x = new XMLHttpRequest();
+          x.open('POST', API + '?action=reviewUpload');
+          x.responseType = 'json';
+          x.timeout = 180000;
+          x.upload.onprogress = e => { if (e.lengthComputable) onProgress(e.loaded / e.total); };
+          x.onerror = x.ontimeout = () => reject(new Error('Не удалось загрузить файл «' + name + '». Проверьте интернет и попробуйте ещё раз.'));
+          x.onload = () => {
+            const j = x.response;
+            if (j && j.ok) { resolve(j.data.id); return; }
+            const err = (j && j.error) || {};
+            if (err.code === 'form_expired') token = '';
+            reject(new Error(err.message || 'Не удалось загрузить файл «' + name + '» (ошибка сервера).'));
+          };
+          x.send(fd);
+        });
+      }
+
+      function showMsg(text, kind) {
+        msg.hidden = !text;
+        msg.textContent = text || '';
+        msg.className = 'review_msg' + (kind ? ' is-' + kind : '');
+      }
+
+      function mark(name, bad) {
+        const el = form.elements[name];
+        if (!el) return;
+        if (bad) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+      }
+
+      // Подписанный токен формы просим при первом касании формы: так он «созревает» к моменту отправки
+      function getToken() {
+        if (token) return Promise.resolve();
+        if (!loadingToken) {
+          loadingToken = fetch(API + '?action=token', { cache: 'no-store', credentials: 'same-origin' })
+            .then(r => r.json())
+            .then(j => {
+              if (j && j.ok) {
+                token = j.data.formToken;
+                tokenAt = Date.now();
+                if (j.data.media) { limits = j.data.media; updateHint(); }
+              }
+            })
+            .catch(() => { })
+            .then(() => { loadingToken = null; });
+        }
+        return loadingToken;
+      }
+      form.addEventListener('focusin', getToken, { once: true });
+
+      /** +7XXXXXXXXXX (или +код другой страны); null — номер некорректен. Те же правила, что на сервере. */
+      function normalizePhone(raw) {
+        raw = String(raw || '').trim();
+        if (!raw || raw.length > 30 || /[^\d\s()+\-.]/.test(raw)) return null;
+        const d = raw.replace(/\D+/g, '');
+        let num;
+        if (raw.charAt(0) === '+') {
+          if (d.length < 8 || d.length > 15 || (d.charAt(0) === '7' && d.length !== 11)) return null;
+          num = '+' + d;
+        } else if (d.length === 11 && (d.charAt(0) === '8' || d.charAt(0) === '7')) {
+          num = '+7' + d.slice(1);
+        } else if (d.length === 10 && /^[3-9]/.test(d)) {
+          num = '+7' + d;
+        } else {
+          return null;
+        }
+        if (/^(\d)\1+$/.test(num.slice(1)) || (num.indexOf('+7') === 0 && !/^\+7[3-9]/.test(num))) return null;
+        return num;
+      }
+
+      const line = s => String(s || '').replace(/\s+/g, ' ').trim();
+
+      function validate() {
+        const v = {
+          firstName: line(form.elements.firstName.value),
+          lastName: line(form.elements.lastName.value),
+          phone: line(form.elements.phone.value),
+          text: String(form.elements.text.value || '').replace(/\r\n?/g, '\n').trim(),
+        };
+        const bad = {};
+        if (!v.firstName) bad.firstName = 'Укажите имя.';
+        else if (!NAME_RE.test(v.firstName)) bad.firstName = 'В имени допустимы только буквы, пробел, дефис и апостроф.';
+        if (v.lastName && !NAME_RE.test(v.lastName)) bad.lastName = 'В фамилии допустимы только буквы, пробел, дефис и апостроф.';
+        if (v.phone && !normalizePhone(v.phone)) bad.phone = 'Проверьте номер телефона или оставьте поле пустым.';
+        if (v.text.length < 10) bad.text = 'Напишите отзыв хотя бы в паре предложений.';
+        if (!form.elements.consent.checked) bad.consent = 'Нужно согласие на обработку персональных данных.';
+        return { v: v, bad: bad };
+      }
+
+      function showBad(bad) {
+        ['firstName', 'lastName', 'phone', 'text', 'consent'].forEach(n => mark(n, !!bad[n]));
+        const first = ['firstName', 'lastName', 'phone', 'text', 'consent'].find(n => bad[n]);
+        if (first) {
+          showMsg(bad[first], 'error');
+          form.elements[first].focus();
+        }
+      }
+
+      form.addEventListener('input', e => { if (e.target.name) mark(e.target.name, false); });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (sending) return;
+        showMsg('');
+        const r = validate();
+        if (Object.keys(r.bad).length) { showBad(r.bad); return; }
+
+        sending = true;
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        const label = btn.textContent;
+        btn.textContent = 'Отправляем…';
+        try {
+          await getToken();
+          if (!token) throw new Error('Не удалось связаться с сервером. Попробуйте ещё раз.');
+          const wait = 2300 - (Date.now() - tokenAt);   // сервер не принимает форму, отправленную мгновенно
+          if (wait > 0) await new Promise(res => setTimeout(res, wait));
+
+          // Файлы: по одному, уже загруженные при прошлой попытке повторно не отправляются
+          for (let i = 0; i < picked.length; i++) {
+            const it = picked[i];
+            if (it.uploadId) continue;
+            const prefix = 'Загружаем файл ' + (i + 1) + ' из ' + picked.length;
+            btn.textContent = prefix + '…';
+            const blob = it.kind === 'photo' ? await shrinkImage(it.file) : it.file;
+            it.uploadId = await uploadOne(blob, it.file.name, p => { btn.textContent = prefix + ' (' + Math.round(p * 100) + '%)'; });
+          }
+          btn.textContent = 'Отправляем…';
+
+          const res = await fetch(API + '?action=review', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              firstName: r.v.firstName, lastName: r.v.lastName, phone: r.v.phone, text: r.v.text,
+              media: picked.map(it => it.uploadId),
+              consent: true, website: form.elements.website.value, token: token,
+              device: { page: PAGE, screen: Math.round(screen.width) + 'x' + Math.round(screen.height), lang: navigator.language || '', touch: (navigator.maxTouchPoints || 0) > 1 },
+            }),
+          });
+          const j = await res.json();
+          if (j && j.ok) {
+            form.reset();
+            picked.forEach(it => { if (it.preview) URL.revokeObjectURL(it.preview); });
+            picked.length = 0;
+            renderFiles();
+            token = '';
+            showMsg('Спасибо! Ваш отзыв отправлен на проверку. Он появится на сайте после того, как хозяин его опубликует.', 'ok');
+          } else {
+            const err = (j && j.error) || {};
+            if (err.code === 'validation' && err.fields) showBad(err.fields);
+            else {
+              if (err.code === 'form_expired') token = '';
+              if (err.code === 'media') picked.forEach(it => { it.uploadId = ''; });   // вложения устарели: загрузим заново
+              showMsg(err.message || 'Не удалось отправить отзыв. Попробуйте позже.', 'error');
+            }
+          }
+        } catch (err) {
+          if (!token) token = '';
+          showMsg(err && err.message ? err.message : 'Не удалось отправить отзыв. Проверьте интернет и попробуйте ещё раз.', 'error');
+        } finally {
+          sending = false;
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+          btn.textContent = label;
+        }
+      });
     })();
   </script>
 </body>

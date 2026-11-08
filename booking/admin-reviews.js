@@ -61,6 +61,25 @@
     } catch (e) { toast(e.message, 'error'); }
   }
 
+  /** Фото и видео, которые приложил посетитель. Неподходящее вложение можно убрать, не отклоняя отзыв. */
+  function mediaBlock(r) {
+    if (!r.media || !r.media.length) return null;
+    return h('div', { class: 'rv-media' }, r.media.map(m => h('div', { class: 'rv-m' },
+      m.type === 'video'
+        ? h('video', { src: '../' + m.file, controls: true, preload: 'metadata', playsinline: true })
+        : h('a', { href: '../' + m.file, target: '_blank', rel: 'noopener' }, h('img', { src: '../' + (m.thumb || m.file), alt: 'Фото к отзыву', loading: 'lazy' })),
+      h('button', { type: 'button', class: 'ad-btn ad-btn-sm', onclick: e => withBusy(e.currentTarget, async () => {
+        const ok = await confirmBox({ title: 'Убрать вложение?', text: (m.type === 'video' ? 'Видео' : 'Фото') + ' будет удалено с сервера. Сам отзыв останется.', ok: 'Убрать', danger: true });
+        if (!ok) return;
+        try {
+          const d = await api('reviewMediaDelete', { method: 'POST', body: { id: r.id, file: m.file } });
+          replace(d.review);
+          toast('Вложение убрано.', 'ok');
+          draw();
+        } catch (err) { toast(err.message, 'error'); }
+      }) }, 'Убрать'))));
+  }
+
   function card(r) {
     const editing = R.editing === r.id;
     const created = fmtDT(r.createdAt);
@@ -94,6 +113,7 @@
       nodes.push(
         h('label', { class: 'ad-field' }, 'Имя, которое увидят на сайте', name),
         h('label', { class: 'ad-field' }, 'Текст отзыва', text),
+        mediaBlock(r),
         h('div', { class: 'ad-actions' },
           h('button', { type: 'button', class: 'ad-btn ad-btn-primary ad-btn-sm', onclick: save(r.status !== 'published') }, r.status === 'published' ? 'Сохранить' : 'Сохранить и опубликовать'),
           r.status !== 'published' ? h('button', { type: 'button', class: 'ad-btn ad-btn-sm', onclick: save(false) }, 'Сохранить без публикации') : null,
@@ -101,7 +121,8 @@
     } else {
       nodes.push(
         h('div', { class: 'rv-name' }, r.displayName),
-        h('p', { class: 'rv-body' }, r.text));
+        h('p', { class: 'rv-body' }, r.text),
+        mediaBlock(r));
       if (r.editedAt) {
         nodes.push(h('details', { class: 'ad-details' }, h('summary', null, 'Изменён вами ' + fmtDT(r.editedAt) + '. Исходный текст посетителя'),
           h('p', { class: 'rv-body ad-dim' }, r.originalText || '')));
